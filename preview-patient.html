@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient View Preview - SlotlyMed</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .preview-banner {
+            background: #FEF3C7;
+            border: 2px solid #F59E0B;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .preview-banner h2 {
+            color: #92400E;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .preview-banner p {
+            color: #78350F;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #E5E7EB;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            object-fit: cover;
+        }
+
+        .doctor-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 8px;
+        }
+
+        .specialty {
+            color: #6B7280;
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+
+        .welcome-message {
+            color: #374151;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .calendar-section {
+            margin-top: 32px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        .month-nav {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .month-nav button {
+            background: #3B82F6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .day-header {
+            text-align: center;
+            font-weight: 600;
+            color: #6B7280;
+            padding: 8px;
+            font-size: 0.85rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .calendar-day:hover {
+            background: #F3F4F6;
+        }
+
+        .calendar-day.available {
+            background: #D1FAE5;
+            border-color: #10B981;
+            color: #065F46;
+        }
+
+        .calendar-day.available:hover {
+            background: #A7F3D0;
+        }
+
+        .calendar-day.selected {
+            background: #3B82F6;
+            color: white;
+            border-color: #2563EB;
+        }
+
+        .calendar-day.disabled {
+            color: #D1D5DB;
+            cursor: not-allowed;
+        }
+
+        .slots-section {
+            margin-top: 24px;
+            padding: 20px;
+            background: #F9FAFB;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .slots-section.active {
+            display: block;
+        }
+
+        .slots-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 16px;
+        }
+
+        .slots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 8px;
+        }
+
+        .slot-button {
+            padding: 10px;
+            background: white;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #374151;
+            transition: all 0.2s;
+        }
+
+        .slot-button:hover {
+            background: #3B82F6;
+            color: white;
+            border-color: #3B82F6;
+        }
+
+        .info-section {
+            margin-top: 32px;
+            padding: 20px;
+            background: #F3F4F6;
+            border-radius: 12px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            color: #374151;
+        }
+
+        .info-icon {
+            margin-right: 12px;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-banner">
+        <h2>👁️ Preview Mode - Patient View</h2>
+        <p>This is how patients will see your booking page. Close this tab to return to the dashboard.</p>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <img id="doctorLogo" class="logo" src="" alt="Doctor" style="display: none;">
+            <h1 class="doctor-name" id="doctorName">Loading...</h1>
+            <p class="specialty" id="doctorSpecialty"></p>
+            <p class="welcome-message" id="welcomeMessage"></p>
+        </div>
+
+        <div class="calendar-section">
+            <div class="calendar-header">
+                <h2 class="calendar-title">Select Appointment Date</h2>
+                <div class="month-nav">
+                    <button onclick="changeMonth(-1)">◄ Prev</button>
+                    <span id="currentMonth" style="font-weight: 600; min-width: 150px; text-align: center;"></span>
+                    <button onclick="changeMonth(1)">Next ►</button>
+                </div>
+            </div>
+
+            <div class="calendar-grid" id="calendarGrid"></div>
+
+            <div class="slots-section" id="slotsSection">
+                <h3 class="slots-title" id="slotsTitle">Available times:</h3>
+                <div class="slots-grid" id="slotsGrid"></div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <div class="info-row">
+                <span class="info-icon">📍</span>
+                <span id="doctorAddress">Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="info-icon">📞</span>
+                <span id="doctorPhone">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentDate = new Date();
+        let selectedDate = null;
+        let slots = [];
+        let doctorData = {};
+
+        // Carregar dados do sessionStorage
+        function loadData() {
+            const slotsData = sessionStorage.getItem('tempPreviewSlots');
+            const doctorDataStr = sessionStorage.getItem('tempPreviewDoctor');
+            
+            if (!slotsData || !doctorDataStr) {
+                alert('No preview data found. Please generate slots first.');
+                window.close();
+                return;
+            }
+
+            slots = JSON.parse(slotsData);
+            doctorData = JSON.parse(doctorDataStr);
+
+            // Atualizar informações do médico
+            document.getElementById('doctorName').textContent = doctorData.name;
+            document.getElementById('doctorSpecialty').textContent = doctorData.specialty;
+            document.getElementById('welcomeMessage').textContent = doctorData.welcome_message;
+            document.getElementById('doctorAddress').textContent = doctorData.address;
+            document.getElementById('doctorPhone').textContent = doctorData.phone;
+
+            if (doctorData.logo_url) {
+                const logo = document.getElementById('doctorLogo');
+                logo.src = doctorData.logo_url;
+                logo.style.display = 'block';
+            }
+
+            // Aplicar cor do médico
+            if (doctorData.color) {
+                document.querySelectorAll('button').forEach(btn => {
+                    if (btn.textContent.includes('Prev') || btn.textContent.includes('Next')) {
+                        btn.style.background = doctorData.color;
+                    }
+                });
+            }
+
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            document.getElementById('currentMonth').textContent = 
+                currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startingDayOfWeek = firstDay.getDay();
+            
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+
+            // Cabeçalhos dos dias
+            ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(day => {
+                const header = document.createElement('div');
+                header.className = 'day-header';
+                header.textContent = day;
+                grid.appendChild(header);
+            });
+
+            // Dias vazios antes do primeiro dia
+            for (let i = 0; i < startingDayOfWeek; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day disabled';
+                grid.appendChild(emptyDay);
+            }
+
+            // Dias do mês
+            for (let day = 1; day <= lastDay.getDate(); day++) {
+                const date = new Date(year, month, day);
+                const dateStr = date.toISOString().split('T')[0];
+                
+                const dayEl = document.createElement('div');
+                dayEl.className = 'calendar-day';
+                dayEl.textContent = day;
+
+                // Verificar se tem slots disponíveis
+                const hasSlots = slots.some(slot => slot.date === dateStr);
+                
+                if (hasSlots) {
+                    dayEl.classList.add('available');
+                    dayEl.onclick = () => selectDate(dateStr);
+                } else {
+                    dayEl.classList.add('disabled');
+                }
+
+                grid.appendChild(dayEl);
+            }
+        }
+
+        function selectDate(dateStr) {
+            selectedDate = dateStr;
+            
+            // Atualizar UI do calendário
+            document.querySelectorAll('.calendar-day').forEach(el => {
+                el.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+
+            // Mostrar slots
+            const dateSlots = slots.filter(slot => slot.date === dateStr);
+            const slotsSection = document.getElementById('slotsSection');
+            const slotsGrid = document.getElementById('slotsGrid');
+            
+            const dateObj = new Date(dateStr + 'T00:00:00');
+            const formattedDate = dateObj.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            document.getElementById('slotsTitle').textContent = `Available times for ${formattedDate}:`;
+            
+            slotsGrid.innerHTML = '';
+            dateSlots.forEach(slot => {
+                const slotBtn = document.createElement('button');
+                slotBtn.className = 'slot-button';
+                slotBtn.textContent = slot.time;
+                slotBtn.onclick = () => {
+                    alert(`In production, this would open booking form for ${formattedDate} at ${slot.time}`);
+                };
+                slotsGrid.appendChild(slotBtn);
+            });
+
+            slotsSection.classList.add('active');
+            slotsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function changeMonth(delta) {
+            currentDate.setMonth(currentDate.getMonth() + delta);
+            selectedDate = null;
+            document.getElementById('slotsSection').classList.remove('active');
+            renderCalendar();
+        }
+
+        // Inicializar
+        loadData();
+    </script>
+</body>
+</html>
