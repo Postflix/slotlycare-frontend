@@ -1294,6 +1294,9 @@ document.getElementById('doctorName').addEventListener('input', function() {
 });
 
 // Validar link enquanto digita
+// Variável para controlar debounce da verificação de link
+let linkCheckTimeout = null;
+
 document.getElementById('customLink').addEventListener('input', function() {
     let value = this.value;
     
@@ -1314,11 +1317,39 @@ document.getElementById('customLink').addEventListener('input', function() {
         availabilityDiv.innerHTML = '⏳ Checking availability...';
         availabilityDiv.style.color = '#64748B';
         
-        // Simular verificação (será real na próxima versão)
-        setTimeout(() => {
-            availabilityDiv.innerHTML = '✓ Available';
-            availabilityDiv.style.color = '#10B981';
-        }, 300);
+        // Cancelar verificação anterior (debounce)
+        if (linkCheckTimeout) {
+            clearTimeout(linkCheckTimeout);
+        }
+        
+        // Aguardar 500ms após parar de digitar para verificar
+        linkCheckTimeout = setTimeout(async () => {
+            // Se é o mesmo link já salvo, está disponível (é do próprio usuário)
+            if (savedDoctorLink && savedDoctorLink === value) {
+                availabilityDiv.innerHTML = '✓ Available (your current link)';
+                availabilityDiv.style.color = '#10B981';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`https://slotlymed-backend.vercel.app/api/get-doctor?id=${value}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Link já existe
+                    availabilityDiv.innerHTML = '✗ Already taken';
+                    availabilityDiv.style.color = '#EF4444';
+                } else {
+                    // Link disponível
+                    availabilityDiv.innerHTML = '✓ Available';
+                    availabilityDiv.style.color = '#10B981';
+                }
+            } catch (e) {
+                // Erro na API (provavelmente 404 = não existe = disponível)
+                availabilityDiv.innerHTML = '✓ Available';
+                availabilityDiv.style.color = '#10B981';
+            }
+        }, 500);
     } else {
         availabilityDiv.style.display = 'none';
     }
