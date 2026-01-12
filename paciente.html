@@ -549,7 +549,7 @@ body {
         <div class="contact-info">
             <span><i class="fas fa-map-marker-alt"></i> <span id="doctorAddress">123 Medical St, New York, NY</span></span>
             <span><i class="fas fa-phone"></i> <span id="doctorPhone">+1 (555) 123-4567</span></span>
-            <span><i class="fas fa-envelope"></i> <span id="doctorEmail">doctor@example.com</span></span>
+            <span><i class="fas fa-envelope"></i> <span id="doctorEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a8ccc7cbdcc7dae8cdd0c9c5d8c4cd86cbc7c5">[email&#160;protected]</a></span></span>
         </div>
 
         <div class="welcome-message" id="welcomeMessage" style="display: none;">
@@ -667,7 +667,7 @@ body {
     </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ==================== API CONFIGURATION ====================
 const API_BASE_URL = 'https://slotlymed-backend.vercel.app/api';
 let realDoctorId = null;
@@ -693,6 +693,8 @@ const translations = {
         success_message: "Your appointment has been successfully scheduled. You will receive a confirmation email shortly.",
         close: "Close",
         no_available_slots: "No available time slots for this date",
+        add_to_calendar: "Add to Calendar",
+        cancel_message: "Need to cancel or reschedule? Contact:",
         days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     },
@@ -715,6 +717,8 @@ const translations = {
         success_message: "Sua consulta foi agendada com sucesso. Você receberá um email de confirmação em breve.",
         close: "Fechar",
         no_available_slots: "Sem horários disponíveis para esta data",
+        add_to_calendar: "Adicionar ao Calendário",
+        cancel_message: "Precisa cancelar ou remarcar? Contate:",
         days: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
         months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
     },
@@ -737,6 +741,8 @@ const translations = {
         success_message: "Su cita ha sido programada con éxito. Recibirá un email de confirmación en breve.",
         close: "Cerrar",
         no_available_slots: "No hay horarios disponibles para esta fecha",
+        add_to_calendar: "Añadir al Calendario",
+        cancel_message: "¿Necesita cancelar o reprogramar? Contacte:",
         days: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
         months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
     },
@@ -759,6 +765,8 @@ const translations = {
         success_message: "Votre rendez-vous a été programmé avec succès. Vous recevrez un email de confirmation sous peu.",
         close: "Fermer",
         no_available_slots: "Aucun créneau disponible pour cette date",
+        add_to_calendar: "Ajouter au Calendrier",
+        cancel_message: "Besoin d'annuler ou de reprogrammer? Contactez:",
         days: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
         months: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
     },
@@ -781,6 +789,8 @@ const translations = {
         success_message: "Ihr Termin wurde erfolgreich gebucht. Sie erhalten in Kürze eine Bestätigungs-E-Mail.",
         close: "Schließen",
         no_available_slots: "Keine verfügbaren Zeitfenster für dieses Datum",
+        add_to_calendar: "Zum Kalender hinzufügen",
+        cancel_message: "Müssen Sie absagen oder umbuchen? Kontaktieren Sie:",
         days: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
         months: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
     },
@@ -803,6 +813,8 @@ const translations = {
         success_message: "Il tuo appuntamento è stato programmato con successo. Riceverai un'email di conferma a breve.",
         close: "Chiudi",
         no_available_slots: "Nessun orario disponibile per questa data",
+        add_to_calendar: "Aggiungi al Calendario",
+        cancel_message: "Devi cancellare o riprogrammare? Contatta:",
         days: ["Dom", "Lun", "Mar", "Mer", "Gio", "Ven", "Sab"],
         months: ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"]
     }
@@ -1287,15 +1299,71 @@ function showSuccessModal(appointment) {
         day: 'numeric'
     });
     
+    const t = translations[currentLanguage];
+    const calendarLink = generateCalendarLink(appointment);
+    
     details.innerHTML = `
         <p><i class="fas fa-calendar"></i> <strong>${dateStr}</strong></p>
         <p><i class="fas fa-clock"></i> <strong>${appointment.time}</strong></p>
         <p><i class="fas fa-user"></i> ${appointment.name}</p>
         <p><i class="fas fa-envelope"></i> ${appointment.email}</p>
         <p><i class="fas fa-phone"></i> ${appointment.phone}</p>
+        
+        <a href="${calendarLink}" target="_blank" class="add-calendar-btn" style="
+            display: block;
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(16,185,129,0.4)';" 
+           onmouseout="this.style.transform=''; this.style.boxShadow='';">
+            <i class="fas fa-calendar-plus"></i> ${t.add_to_calendar}
+        </a>
+        
+        <p style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #E2E8F0; font-size: 0.9rem; color: #64748B;">
+            ${t.cancel_message}<br>
+            <strong style="color: #1E293B;"><i class="fas fa-phone"></i> ${doctorData.phone}</strong>
+        </p>
     `;
     
     modal.classList.add('active');
+}
+
+function generateCalendarLink(appointment) {
+    // Formatar data para Google Calendar (YYYYMMDD)
+    const year = appointment.date.getFullYear();
+    const month = String(appointment.date.getMonth() + 1).padStart(2, '0');
+    const day = String(appointment.date.getDate()).padStart(2, '0');
+    
+    // Formatar hora de início (HHMMSS)
+    const [startHour, startMin] = appointment.time.split(':');
+    const startTime = `${startHour}${startMin}00`;
+    
+    // Calcular hora de fim (assumindo 30 minutos de consulta)
+    let endHour = parseInt(startHour);
+    let endMin = parseInt(startMin) + 30;
+    if (endMin >= 60) {
+        endHour += 1;
+        endMin -= 60;
+    }
+    const endTime = `${String(endHour).padStart(2, '0')}${String(endMin).padStart(2, '0')}00`;
+    
+    // Datas no formato Google Calendar
+    const startDate = `${year}${month}${day}T${startTime}`;
+    const endDate = `${year}${month}${day}T${endTime}`;
+    
+    // Título e detalhes
+    const title = encodeURIComponent(`${translations[currentLanguage].book_appointment} - ${doctorData.name}`);
+    const location = encodeURIComponent(doctorData.address);
+    const description = encodeURIComponent(`${doctorData.phone}\n${doctorData.email}`);
+    
+    // Link do Google Calendar
+    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&location=${location}&details=${description}`;
 }
 
 function closeModal() {
