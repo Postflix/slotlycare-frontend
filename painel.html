@@ -1380,12 +1380,63 @@ document.getElementById('languageSelector').addEventListener('change', (e) => {
 document.getElementById('logoUpload').addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
+        // Verificar se é imagem
+        if (!file.type.startsWith('image/')) {
+            showMessage('Please select an image file (JPG, PNG, etc.)', 'error');
+            return;
+        }
+        
         const reader = new FileReader();
         reader.onload = (event) => {
-            const logo = document.getElementById('previewLogo');
-            logo.src = event.target.result;
-            logo.classList.add('active');
-            document.getElementById('btnRemoveLogo').style.display = 'block';
+            const img = new Image();
+            img.onload = () => {
+                // Criar canvas para redimensionar
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Tamanho máximo 150x150
+                const maxSize = 150;
+                let width = img.width;
+                let height = img.height;
+                
+                // Calcular novo tamanho mantendo proporção
+                if (width > height) {
+                    if (width > maxSize) {
+                        height = Math.round((height * maxSize) / width);
+                        width = maxSize;
+                    }
+                } else {
+                    if (height > maxSize) {
+                        width = Math.round((width * maxSize) / height);
+                        height = maxSize;
+                    }
+                }
+                
+                canvas.width = width;
+                canvas.height = height;
+                
+                // Desenhar imagem redimensionada
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                // Converter para base64 com qualidade 70%
+                const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                
+                // Verificar tamanho
+                if (compressedBase64.length > 40000) {
+                    showMessage('Image is too large. Please use a smaller or simpler logo.', 'error');
+                    document.getElementById('logoUpload').value = '';
+                    return;
+                }
+                
+                // Aplicar no preview
+                const logo = document.getElementById('previewLogo');
+                logo.src = compressedBase64;
+                logo.classList.add('active');
+                document.getElementById('btnRemoveLogo').style.display = 'block';
+                
+                console.log('Logo compressed:', Math.round(compressedBase64.length / 1024) + 'KB');
+            };
+            img.src = event.target.result;
         };
         reader.readAsDataURL(file);
     }
