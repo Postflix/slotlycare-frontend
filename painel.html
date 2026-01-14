@@ -1715,7 +1715,8 @@ async function saveConfiguration() {
             language: currentLanguage,
             welcome_message: document.getElementById('welcomeMsg').value.trim() || '',
             link: doctorId,
-            slots: generatedSlots // Slots gerados pela IA
+            slots: generatedSlots, // Slots gerados pela IA
+            customer_id: localStorage.getItem('slotlycare_customer_id') || '' // Vincular ao Stripe
         };
         
         // Enviar para API
