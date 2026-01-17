@@ -884,6 +884,13 @@ textarea {
             <input type="text" id="welcomeMsg" placeholder="">
         </div>
 
+        <!-- Informações Adicionais -->
+        <div class="control-group">
+            <label>ℹ️ <span data-i18n="additional_info_label">Additional information</span> <span data-i18n="optional_text">(optional)</span></label>
+            <textarea id="additionalInfo" placeholder="" rows="3"></textarea>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;" data-i18n="additional_info_hint">E.g.: accepted insurance, consultation fee, cancellation policy</p>
+        </div>
+
         <!-- Horários -->
         <div class="control-group">
             <label>🤖 <span data-i18n="schedule_label">AI Schedule Configuration</span></label>
@@ -1051,6 +1058,8 @@ const translations = {
         name_text: "Name",
         specialty_text: "Specialty",
         message_text: "Message",
+        additional_info_label: "Additional information",
+        additional_info_hint: "E.g.: accepted insurance, consultation fee, cancellation policy",
         phone_label: "Phone",
         email_label: "Email",
         address_label: "Address",
@@ -1097,6 +1106,8 @@ const translations = {
         name_text: "Nome",
         specialty_text: "Especialidade",
         message_text: "Mensagem",
+        additional_info_label: "Informações adicionais",
+        additional_info_hint: "Ex: convênios aceitos, valor da consulta, política de cancelamento",
         phone_label: "Telefone",
         email_label: "Email",
         address_label: "Endereço",
@@ -1143,6 +1154,8 @@ const translations = {
         name_text: "Nombre",
         specialty_text: "Especialidad",
         message_text: "Mensaje",
+        additional_info_label: "Información adicional",
+        additional_info_hint: "Ej: seguros aceptados, precio de consulta, política de cancelación",
         phone_label: "Teléfono",
         email_label: "Email",
         address_label: "Dirección",
@@ -1189,6 +1202,8 @@ const translations = {
         name_text: "Nom",
         specialty_text: "Spécialité",
         message_text: "Message",
+        additional_info_label: "Informations complémentaires",
+        additional_info_hint: "Ex: assurances acceptées, tarif de consultation, politique d'annulation",
         phone_label: "Téléphone",
         email_label: "Email",
         address_label: "Adresse",
@@ -1235,6 +1250,8 @@ const translations = {
         name_text: "Name",
         specialty_text: "Fachrichtung",
         message_text: "Nachricht",
+        additional_info_label: "Zusätzliche Informationen",
+        additional_info_hint: "Z.B.: akzeptierte Versicherungen, Beratungsgebühr, Stornierungsbedingungen",
         phone_label: "Telefon",
         email_label: "Email",
         address_label: "Adresse",
@@ -1281,6 +1298,8 @@ const translations = {
         name_text: "Nome",
         specialty_text: "Specialità",
         message_text: "Messaggio",
+        additional_info_label: "Informazioni aggiuntive",
+        additional_info_hint: "Es: assicurazioni accettate, costo della visita, politica di cancellazione",
         phone_label: "Telefono",
         email_label: "Email",
         address_label: "Indirizzo",
@@ -1701,6 +1720,7 @@ async function saveConfiguration() {
             color: currentPrimaryColor,
             language: currentLanguage,
             welcome_message: document.getElementById('welcomeMsg').value.trim() || '',
+            additional_info: document.getElementById('additionalInfo').value.trim() || '',
             link: doctorId,
             slots: generatedSlots, // Slots gerados pela IA
             customer_id: localStorage.getItem('slotlycare_customer_id') || '' // Vincular ao Stripe
@@ -2151,6 +2171,7 @@ async function loadExistingDoctorData() {
             document.getElementById('phone').value = doctor.phone || '';
             document.getElementById('email').value = doctor.email || '';
             document.getElementById('welcomeMsg').value = doctor.welcome_message || '';
+            document.getElementById('additionalInfo').value = doctor.additional_info || '';
             document.getElementById('customLink').value = doctor.link || '';
             
             // Set color
