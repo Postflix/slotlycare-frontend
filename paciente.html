@@ -1173,7 +1173,7 @@ function renderTimeSlots() {
     slots.forEach(time => {
         const slot = document.createElement('div');
         slot.className = 'time-slot';
-        slot.textContent = time;
+        slot.textContent = time.substring(0, 5);
         slot.onclick = () => selectTime(time);
         
         if (selectedTime === time) {
