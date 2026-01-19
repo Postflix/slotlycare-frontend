@@ -1013,7 +1013,8 @@ function loadDoctorData() {
     }
     
     if (doctorData.additionalInfo) {
-        document.getElementById('additionalInfo').textContent = doctorData.additionalInfo;
+        const formattedInfo = doctorData.additionalInfo.replace(/\\n/g, '\n');
+        document.getElementById('additionalInfo').textContent = formattedInfo;
         document.getElementById('additionalInfo').style.display = 'block';
     }
     
