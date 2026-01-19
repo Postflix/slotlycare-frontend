@@ -206,7 +206,7 @@ h1 span {
 
 .preview {
     width: 100%;
-    height: 620px;
+    height: 720px;
     border-radius: 24px;
     background: white;
     box-shadow: var(--shadow-lg);
@@ -1003,6 +1003,10 @@ textarea {
                         <strong data-i18n="preview_email_label">Email</strong>
                         <span id="previewEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f1929e9f85909285b1829d9e859d889c9495df929e9c">[email&#160;protected]</a></span>
                     </div>
+                    <div class="preview-info-item" id="previewAdditionalInfoContainer" style="display: none;">
+                        <strong>ℹ️ <span data-i18n="preview_additional_info_label">Additional Info</span></strong>
+                        <span id="previewAdditionalInfo" style="white-space: pre-line;"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1410,9 +1414,19 @@ function updatePreview() {
     } else {
         msgEl.classList.remove('active');
     }
+
+    const additionalInfo = document.getElementById('additionalInfo').value;
+    const additionalInfoEl = document.getElementById('previewAdditionalInfo');
+    const additionalInfoContainer = document.getElementById('previewAdditionalInfoContainer');
+    if (additionalInfo) {
+        additionalInfoEl.textContent = additionalInfo;
+        additionalInfoContainer.style.display = 'block';
+    } else {
+        additionalInfoContainer.style.display = 'none';
+    }
 }
 
-['doctorName', 'specialty', 'address', 'phone', 'email', 'welcomeMsg'].forEach(id => {
+['doctorName', 'specialty', 'address', 'phone', 'email', 'welcomeMsg', 'additionalInfo'].forEach(id => {
     document.getElementById(id).addEventListener('input', updatePreview);
 });
 
