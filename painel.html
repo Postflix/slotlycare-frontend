@@ -213,6 +213,8 @@ h1 span {
     border: 8px solid #1E293B;
     overflow: hidden;
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .preview-header {
@@ -221,6 +223,7 @@ h1 span {
     padding: 40px 24px;
     text-align: center;
     transition: background 0.4s ease;
+    flex-shrink: 0;
 }
 
 .preview-logo {
@@ -275,8 +278,9 @@ h1 span {
 .preview-content {
     padding: 24px;
     background: white;
-    height: calc(100% - 180px);
+    flex: 1;
     overflow-y: auto;
+    min-height: 0;
 }
 
 .preview-calendar-title {
