@@ -226,6 +226,8 @@ h1 span {
 .preview-logo {
     width: 80px;
     height: 80px;
+    max-width: 80px;
+    max-height: 80px;
     border-radius: 50%;
     margin-bottom: 16px;
     border: 3px solid white;
@@ -2189,7 +2191,8 @@ async function loadExistingDoctorData() {
             // Set logo
             if (doctor.logo_url && doctor.logo_url.startsWith('data:image')) {
                 document.getElementById('previewLogo').src = doctor.logo_url;
-                document.getElementById('previewLogo').style.display = 'block';
+                document.getElementById('previewLogo').classList.add('active');
+                document.getElementById('btnRemoveLogo').style.display = 'block';
             }
             
             // Set language
