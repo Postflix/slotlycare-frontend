@@ -571,7 +571,7 @@
                         <td>
                             <div class="appointment-date">
                                 <span class="date">${formatDate(apt.date)}</span>
-                                <span class="time">${apt.time}</span>
+                                <span class="time">${formatTime(apt.time)}</span>
                             </div>
                         </td>
                         <td class="contact-info">
@@ -664,6 +664,14 @@
                 day: 'numeric',
                 year: 'numeric'
             });
+        }
+
+        function formatTime(timeStr) {
+            // Remove seconds if present (13:00:00 -> 13:00)
+            if (timeStr && timeStr.length > 5) {
+                return timeStr.substring(0, 5);
+            }
+            return timeStr;
         }
 
         function escapeHtml(text) {
