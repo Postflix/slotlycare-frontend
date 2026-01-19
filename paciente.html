@@ -104,16 +104,14 @@ body {
 }
 
 .additional-info {
-    background: #F8FAFC;
+    background: var(--bg-card);
     padding: 16px 20px;
     border-radius: 12px;
-    margin-top: 20px;
-    font-size: 0.9rem;
-    color: var(--text-muted);
+    margin-top: 16px;
+    font-size: 0.95rem;
+    color: var(--text-main);
     border: 1px solid var(--border);
-    text-align: left;
-    white-space: pre-line;
-    line-height: 1.6;
+    box-shadow: var(--shadow-sm);
 }
 
 .additional-info::before {
@@ -576,11 +574,10 @@ body {
             <span><i class="fas fa-envelope"></i> <span id="doctorEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a8ccc7cbdcc7dae8cdd0c9c5d8c4cd86cbc7c5">[email&#160;protected]</a></span></span>
         </div>
 
-        <!-- Welcome message comes first, then additional info -->
         <div class="welcome-message" id="welcomeMessage" style="display: none;">
             Welcome to our clinic! We look forward to seeing you.
         </div>
-
+        
         <div class="additional-info" id="additionalInfo" style="display: none;">
         </div>
     </div>
@@ -864,6 +861,7 @@ const doctorData = {
     email: "doctor@example.com",
     logo: "",
     welcomeMessage: "Welcome to our clinic! We look forward to seeing you.",
+    additionalInfo: "",
     color: "#3B82F6",
     language: "en",
     schedule: {
@@ -1016,9 +1014,12 @@ function loadDoctorData() {
     }
     
     if (doctorData.additionalInfo) {
-        const formattedInfo = doctorData.additionalInfo.replace(/\\n/g, '\n');
-        document.getElementById('additionalInfo').textContent = formattedInfo;
-        document.getElementById('additionalInfo').style.display = 'block';
+        const additionalInfoEl = document.getElementById('additionalInfo');
+        if (additionalInfoEl) {
+            // Converter quebras de linha em <br>
+            additionalInfoEl.innerHTML = doctorData.additionalInfo.replace(/\n/g, '<br>');
+            additionalInfoEl.style.display = 'block';
+        }
     }
     
     document.documentElement.style.setProperty('--primary', doctorData.color);
