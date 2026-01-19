@@ -206,13 +206,12 @@ h1 span {
 
 .preview {
     width: 100%;
-    min-height: 620px;
-    height: auto;
+    height: 620px;
     border-radius: 24px;
     background: white;
     box-shadow: var(--shadow-lg);
     border: 8px solid #1E293B;
-    overflow: visible;
+    overflow: hidden;
     position: relative;
 }
 
@@ -274,6 +273,8 @@ h1 span {
 .preview-content {
     padding: 24px;
     background: white;
+    height: calc(100% - 180px);
+    overflow-y: auto;
 }
 
 .preview-calendar-title {
@@ -1000,10 +1001,6 @@ textarea {
                         <strong data-i18n="preview_email_label">Email</strong>
                         <span id="previewEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f1929e9f85909285b1829d9e859d889c9495df929e9c">[email&#160;protected]</a></span>
                     </div>
-                    <div class="preview-info-item" id="previewAdditionalInfoContainer" style="display: none;">
-                        <strong>ℹ️ <span data-i18n="additional_info_label">Additional information</span></strong>
-                        <span id="previewAdditionalInfo" style="white-space: pre-line;"></span>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1411,24 +1408,11 @@ function updatePreview() {
     } else {
         msgEl.classList.remove('active');
     }
-
-    const additionalInfo = document.getElementById('additionalInfo').value;
-    const additionalInfoEl = document.getElementById('previewAdditionalInfo');
-    const additionalInfoContainer = document.getElementById('previewAdditionalInfoContainer');
-    if (additionalInfo) {
-        additionalInfoEl.textContent = additionalInfo;
-        additionalInfoContainer.style.display = 'block';
-    } else {
-        additionalInfoContainer.style.display = 'none';
-    }
 }
 
 ['doctorName', 'specialty', 'address', 'phone', 'email', 'welcomeMsg'].forEach(id => {
     document.getElementById(id).addEventListener('input', updatePreview);
 });
-
-// Listener separado para textarea
-document.getElementById('additionalInfo').addEventListener('input', updatePreview);
 
 // Gerar sugestão de link quando o nome mudar
 document.getElementById('doctorName').addEventListener('input', function() {
@@ -2022,6 +2006,7 @@ function previewPatientView() {
         color: currentPrimaryColor || '#3B82F6',
         language: currentLanguage || 'en',
         welcome_message: getFieldValue('welcomeMsg', ''),
+        additional_info: getFieldValue('additionalInfo', ''),
         link: 'preview'
     };
     
@@ -2204,7 +2189,7 @@ async function loadExistingDoctorData() {
             // Set logo
             if (doctor.logo_url && doctor.logo_url.startsWith('data:image')) {
                 document.getElementById('previewLogo').src = doctor.logo_url;
-                document.getElementById('previewLogo').style.display = 'inline-block';
+                document.getElementById('previewLogo').style.display = 'block';
             }
             
             // Set language
