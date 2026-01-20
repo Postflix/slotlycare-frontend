@@ -103,24 +103,6 @@ body {
     border-left: 4px solid var(--primary);
 }
 
-.additional-info {
-    background: var(--bg-card);
-    padding: 16px 20px;
-    border-radius: 12px;
-    margin-top: 16px;
-    font-size: 0.95rem;
-    color: var(--text-main);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-sm);
-    text-align: left;
-}
-
-.additional-info::before {
-    content: "ℹ️";
-    display: block;
-    margin-bottom: 8px;
-}
-
 /* MAIN CONTENT */
 .main-content {
     display: grid;
@@ -578,9 +560,6 @@ body {
         <div class="welcome-message" id="welcomeMessage" style="display: none;">
             Welcome to our clinic! We look forward to seeing you.
         </div>
-        
-        <div class="additional-info" id="additionalInfo" style="display: none;">
-        </div>
     </div>
 
     <!-- Main Content -->
@@ -862,7 +841,6 @@ const doctorData = {
     email: "doctor@example.com",
     logo: "",
     welcomeMessage: "Welcome to our clinic! We look forward to seeing you.",
-    additionalInfo: "",
     color: "#3B82F6",
     language: "en",
     schedule: {
@@ -895,7 +873,6 @@ async function loadFromBackend() {
             doctorData.email = doctorPreview.email;
             doctorData.logo = doctorPreview.logo_url || '';
             doctorData.welcomeMessage = doctorPreview.welcome_message || '';
-            doctorData.additionalInfo = doctorPreview.additional_info || '';
             doctorData.color = doctorPreview.color || '#3B82F6';
             doctorData.language = doctorPreview.language || 'en';
             
@@ -946,7 +923,6 @@ async function loadFromBackend() {
         doctorData.email = realData.email;
         doctorData.logo = realData.logo_url || '';
         doctorData.welcomeMessage = realData.welcome_message || '';
-        doctorData.additionalInfo = realData.additional_info || '';
         doctorData.color = realData.color || '#3B82F6';
         doctorData.language = realData.language || 'en';
         
@@ -1012,15 +988,6 @@ function loadDoctorData() {
     if (doctorData.welcomeMessage) {
         document.getElementById('welcomeMessage').textContent = doctorData.welcomeMessage;
         document.getElementById('welcomeMessage').style.display = 'block';
-    }
-    
-    if (doctorData.additionalInfo) {
-        const additionalInfoEl = document.getElementById('additionalInfo');
-        if (additionalInfoEl) {
-            // Converter quebras de linha em <br>
-            additionalInfoEl.innerHTML = doctorData.additionalInfo.replace(/\n/g, '<br>');
-            additionalInfoEl.style.display = 'block';
-        }
     }
     
     document.documentElement.style.setProperty('--primary', doctorData.color);
@@ -1192,6 +1159,9 @@ function renderTimeSlots() {
     
     const dateKey = formatDateKey(selectedDate);
     const slots = availableSlots[dateKey] || [];
+    
+    // Ordenar horários
+    slots.sort((a, b) => a.localeCompare(b));
     
     if (slots.length === 0) {
         grid.innerHTML = `
