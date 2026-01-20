@@ -559,7 +559,7 @@
             `;
 
             appointments.forEach(apt => {
-                const aptDate = new Date(apt.date);
+                const aptDate = new Date(apt.date + 'T12:00:00');
                 const isUpcoming = aptDate >= today;
 
                 html += `
@@ -616,7 +616,7 @@
             let thisWeek = 0;
 
             appointments.forEach(apt => {
-                const aptDate = new Date(apt.date);
+                const aptDate = new Date(apt.date + 'T12:00:00');
                 
                 if (aptDate >= today) {
                     upcoming++;
@@ -657,7 +657,8 @@
         }
 
         function formatDate(dateStr) {
-            const date = new Date(dateStr);
+            // Adiciona T12:00:00 para evitar problemas de fuso horário
+            const date = new Date(dateStr + 'T12:00:00');
             return date.toLocaleDateString('en-US', {
                 weekday: 'short',
                 month: 'short',
@@ -687,8 +688,9 @@
         function cancelAppointment(appointmentId, patientName, date, time) {
             pendingCancelId = appointmentId;
             const formattedDate = formatDate(date);
+            const formattedTime = formatTime(time);
             document.getElementById('cancelModalBody').innerHTML = `
-                Are you sure you want to cancel the appointment with <strong>${patientName}</strong> on <strong>${formattedDate}</strong> at <strong>${time}</strong>?
+                Are you sure you want to cancel the appointment with <strong>${patientName}</strong> on <strong>${formattedDate}</strong> at <strong>${formattedTime}</strong>?
                 <br><br>
                 <span style="color: #10B981;">✓ The time slot will be released for other patients.</span>
             `;
