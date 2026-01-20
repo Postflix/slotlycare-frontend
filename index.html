@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SlotlyMed - Medical Appointment Scheduling</title>
+    <title>SlotlyCare - Medical Appointment Scheduling</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -32,16 +32,15 @@
             width: 100%;
         }
         
-        .logo {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-        
         h1 {
             font-size: 2.5rem;
             font-weight: 800;
             color: #1a1a2e;
             margin-bottom: 16px;
+        }
+        
+        h1 span {
+            color: #667eea;
         }
         
         p {
@@ -95,20 +94,35 @@
             font-weight: bold;
             flex-shrink: 0;
         }
+        
+        .login-link {
+            margin-top: 30px;
+            font-size: 0.95rem;
+            color: #64748b;
+        }
+        
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">🩺</div>
-        <h1>SlotlyMed</h1>
+        <h1>Slotly<span>Care</span></h1>
         <p>Simple, fast, and professional appointment scheduling for healthcare providers</p>
         
-        <a href="/painel.html" class="btn">Start Your Free Trial →</a>
+        <a href="/subscribe.html" class="btn">Get Started →</a>
         
         <div class="features">
             <div class="feature">
                 <div class="feature-icon">✓</div>
-                <span>Setup in 5 minutes</span>
+                <span>Just describe your routine — AI organizes your availability</span>
             </div>
             <div class="feature">
                 <div class="feature-icon">✓</div>
@@ -116,12 +130,16 @@
             </div>
             <div class="feature">
                 <div class="feature-icon">✓</div>
-                <span>Your personalized booking page</span>
+                <span>Your own booking link: slotlycare.com/your-name</span>
             </div>
             <div class="feature">
                 <div class="feature-icon">✓</div>
-                <span>No credit card required</span>
+                <span>7-day money-back guarantee</span>
             </div>
+        </div>
+        
+        <div class="login-link">
+            Already have an account? <a href="login.html">Sign in</a>
         </div>
     </div>
 </body>
