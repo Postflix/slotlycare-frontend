@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Reset Password</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1E293B;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            color: #DC2626;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748B;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #DC2626;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: #DC2626;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #B91C1C;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .message.error {
+            background: #FEE2E2;
+            color: #DC2626;
+            display: block;
+        }
+
+        .message.success {
+            background: #D1FAE5;
+            color: #059669;
+            display: block;
+        }
+
+        .warning {
+            background: #FEF3C7;
+            color: #92400E;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔐 Admin - Reset Password</h1>
+            <p>Use this page to reset user passwords</p>
+        </div>
+
+        <div class="warning">
+            ⚠️ This page is for administrators only. Do not share the admin key.
+        </div>
+
+        <div id="messageBox" class="message"></div>
+
+        <form id="resetForm" onsubmit="handleReset(event)">
+            <div class="form-group">
+                <label for="adminKey">Admin Key</label>
+                <input 
+                    type="password" 
+                    id="adminKey" 
+                    placeholder="Enter admin key"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email">User Email</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    placeholder="user@email.com"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <input 
+                    type="text" 
+                    id="newPassword" 
+                    placeholder="Enter new password"
+                    required
+                    minlength="6"
+                >
+            </div>
+
+            <button type="submit" class="btn" id="btnReset">
+                Reset Password
+            </button>
+        </form>
+    </div>
+
+    <script>
+        const API_BASE = 'https://slotlycare-backend.vercel.app';
+
+        async function handleReset(event) {
+            event.preventDefault();
+            
+            const adminKey = document.getElementById('adminKey').value;
+            const email = document.getElementById('email').value.trim();
+            const newPassword = document.getElementById('newPassword').value;
+            const btn = document.getElementById('btnReset');
+            const messageBox = document.getElementById('messageBox');
+            
+            messageBox.className = 'message';
+            messageBox.style.display = 'none';
+            
+            btn.disabled = true;
+            btn.textContent = 'Resetting...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/admin-reset-password`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        admin_key: adminKey,
+                        email: email,
+                        new_password: newPassword
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage(data.message, 'success');
+                    document.getElementById('email').value = '';
+                    document.getElementById('newPassword').value = '';
+                } else {
+                    showMessage(data.error || 'Failed to reset password', 'error');
+                }
+            } catch (error) {
+                showMessage('Connection error. Please try again.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Reset Password';
+            }
+        }
+        
+        function showMessage(text, type) {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = text;
+            messageBox.className = `message ${type}`;
+        }
+    </script>
+</body>
+</html>
