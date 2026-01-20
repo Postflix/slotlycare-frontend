@@ -59,59 +59,43 @@
             margin-bottom: 30px;
         }
 
-        .customer-id-box {
+        .email-box {
             background: #F1F5F9;
             border-radius: 10px;
             padding: 16px;
             margin-bottom: 24px;
         }
 
-        .customer-id-box label {
+        .email-box label {
             font-size: 0.85rem;
             color: #64748B;
             display: block;
             margin-bottom: 6px;
         }
 
-        .customer-id-box .id-value {
-            font-family: monospace;
+        .email-box .email-value {
             font-size: 1.1rem;
             color: #0F172A;
             font-weight: 600;
             word-break: break-all;
         }
 
-        .copy-btn {
-            background: #3B82F6;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            margin-top: 8px;
-        }
-
-        .copy-btn:hover {
-            background: #2563EB;
-        }
-
-        .warning-box {
-            background: #FEF3C7;
-            border: 1px solid #F59E0B;
+        .info-box {
+            background: #EFF6FF;
+            border: 1px solid #3B82F6;
             border-radius: 10px;
             padding: 16px;
             margin-bottom: 24px;
             text-align: left;
         }
 
-        .warning-box p {
-            color: #92400E;
+        .info-box p {
+            color: #1E40AF;
             font-size: 0.9rem;
         }
 
-        .warning-box strong {
-            color: #78350F;
+        .info-box strong {
+            color: #1E3A8A;
         }
 
         .form-group {
@@ -241,14 +225,13 @@
             <h1>Payment Successful!</h1>
             <p class="subtitle">Welcome to SlotlyCare. Let's set up your account.</p>
 
-            <div class="customer-id-box">
-                <label>Your Customer ID (save this!)</label>
-                <div class="id-value" id="customerIdDisplay"></div>
-                <button class="copy-btn" onclick="copyCustomerId()">📋 Copy</button>
+            <div class="email-box">
+                <label>Your login email</label>
+                <div class="email-value" id="emailDisplay"></div>
             </div>
 
-            <div class="warning-box">
-                <p><strong>⚠️ Important:</strong> Save your Customer ID! You'll need it along with your password to log in. This is your unique access key.</p>
+            <div class="info-box">
+                <p><strong>ℹ️ Remember:</strong> Use this email and the password you create below to log in to your account.</p>
             </div>
 
             <div id="messageBox" class="message"></div>
@@ -293,6 +276,7 @@
     <script>
         const API_BASE = 'https://slotlycare-backend.vercel.app';
         let customerId = null;
+        let customerEmail = null;
 
         // Get session_id from URL
         async function init() {
@@ -311,7 +295,8 @@
 
                 if (data.success && data.customer_id) {
                     customerId = data.customer_id;
-                    document.getElementById('customerIdDisplay').textContent = customerId;
+                    customerEmail = data.customer_email;
+                    document.getElementById('emailDisplay').textContent = customerEmail;
                     
                     document.getElementById('loadingState').style.display = 'none';
                     document.getElementById('successState').style.display = 'block';
@@ -327,15 +312,6 @@
         function showError() {
             document.getElementById('loadingState').style.display = 'none';
             document.getElementById('errorState').style.display = 'block';
-        }
-
-        function copyCustomerId() {
-            navigator.clipboard.writeText(customerId);
-            const btn = event.target;
-            btn.textContent = '✓ Copied!';
-            setTimeout(() => {
-                btn.textContent = '📋 Copy';
-            }, 2000);
         }
 
         async function handleSetPassword(event) {
