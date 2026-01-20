@@ -132,6 +132,21 @@ body {
     background: #DC2626;
 }
 
+.btn-change-password {
+    background: #8B5CF6;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-change-password:hover {
+    background: #7C3AED;
+}
+
 .language-selector {
     position: fixed;
     top: 70px;
@@ -206,11 +221,12 @@ h1 span {
 
 .preview {
     width: 100%;
-    min-height: 720px;
+    height: 620px;
     border-radius: 24px;
     background: white;
     box-shadow: var(--shadow-lg);
     border: 8px solid #1E293B;
+    overflow: hidden;
     position: relative;
 }
 
@@ -225,8 +241,6 @@ h1 span {
 .preview-logo {
     width: 80px;
     height: 80px;
-    max-width: 80px;
-    max-height: 80px;
     border-radius: 50%;
     margin-bottom: 16px;
     border: 3px solid white;
@@ -274,6 +288,8 @@ h1 span {
 .preview-content {
     padding: 24px;
     background: white;
+    height: calc(100% - 180px);
+    overflow-y: auto;
 }
 
 .preview-calendar-title {
@@ -804,6 +820,7 @@ textarea {
     <div class="top-bar-logo">Slotly<span>Care</span></div>
     <div class="top-bar-actions">
         <a href="dashboard.html" class="btn-dashboard">📊 Dashboard</a>
+        <button class="btn-change-password" onclick="openChangePasswordModal()">🔑 Password</button>
         <button class="btn-logout" onclick="logout()">Logout</button>
     </div>
 </div>
@@ -1000,10 +1017,6 @@ textarea {
                         <strong data-i18n="preview_email_label">Email</strong>
                         <span id="previewEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f1929e9f85909285b1829d9e859d889c9495df929e9c">[email&#160;protected]</a></span>
                     </div>
-                    <div class="preview-info-item" id="previewAdditionalInfoContainer" style="display: none;">
-                        <strong>ℹ️ <span data-i18n="preview_additional_info_label">Additional Info</span></strong>
-                        <span id="previewAdditionalInfo" style="white-space: pre-line;"></span>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1050,6 +1063,35 @@ textarea {
     </div>
 </div>
 
+<!-- Modal de Trocar Senha -->
+<div id="changePasswordModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header">
+            <span class="modal-icon">🔑</span>
+            <h3 class="modal-title">Change Password</h3>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px; color: var(--text-main);">Current Password</label>
+                <input type="password" id="currentPassword" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.95rem;" placeholder="Enter current password">
+            </div>
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px; color: var(--text-main);">New Password</label>
+                <input type="password" id="newPassword" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.95rem;" placeholder="Enter new password">
+            </div>
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px; color: var(--text-main);">Confirm New Password</label>
+                <input type="password" id="confirmNewPassword" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.95rem;" placeholder="Confirm new password">
+            </div>
+            <div id="passwordChangeMessage" style="display: none; padding: 10px; border-radius: 6px; margin-bottom: 12px; font-size: 0.9rem;"></div>
+        </div>
+        <div class="modal-actions">
+            <button class="modal-btn modal-btn-cancel" onclick="closeChangePasswordModal()">Cancel</button>
+            <button class="modal-btn modal-btn-confirm" id="btnChangePassword" onclick="changePassword()" style="background: #8B5CF6;">Change Password</button>
+        </div>
+    </div>
+</div>
+
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const translations = {
     en: {
@@ -1087,7 +1129,6 @@ const translations = {
         preview_address: "Location",
         preview_phone: "Contact",
         preview_email_label: "Email",
-        preview_additional_info_label: "Additional Info",
         success_message: "✅ Configuration saved successfully!",
         schedule_processed: "✅ Schedule processed!",
         copied: "Copied!",
@@ -1136,7 +1177,6 @@ const translations = {
         preview_address: "Localização",
         preview_phone: "Contato",
         preview_email_label: "Email",
-        preview_additional_info_label: "Informações Adicionais",
         success_message: "✅ Configuração salva com sucesso!",
         schedule_processed: "✅ Agenda processada!",
         copied: "Copiado!",
@@ -1185,7 +1225,6 @@ const translations = {
         preview_address: "Ubicación",
         preview_phone: "Contacto",
         preview_email_label: "Email",
-        preview_additional_info_label: "Información Adicional",
         success_message: "✅ ¡Configuración guardada!",
         schedule_processed: "✅ ¡Agenda procesada!",
         copied: "¡Copiado!",
@@ -1234,7 +1273,6 @@ const translations = {
         preview_address: "Localisation",
         preview_phone: "Contact",
         preview_email_label: "Email",
-        preview_additional_info_label: "Informations Complémentaires",
         success_message: "✅ Configuration enregistrée!",
         schedule_processed: "✅ Agenda traité!",
         copied: "Copié!",
@@ -1283,7 +1321,6 @@ const translations = {
         preview_address: "Standort",
         preview_phone: "Kontakt",
         preview_email_label: "E-Mail",
-        preview_additional_info_label: "Zusätzliche Informationen",
         success_message: "✅ Konfiguration gespeichert!",
         schedule_processed: "✅ Zeitplan verarbeitet!",
         copied: "Kopiert!",
@@ -1332,7 +1369,6 @@ const translations = {
         preview_address: "Posizione",
         preview_phone: "Contatto",
         preview_email_label: "Email",
-        preview_additional_info_label: "Informazioni Aggiuntive",
         success_message: "✅ Configurazione salvata!",
         schedule_processed: "✅ Agenda elaborata!",
         copied: "Copiato!",
@@ -1417,19 +1453,9 @@ function updatePreview() {
     } else {
         msgEl.classList.remove('active');
     }
-
-    const additionalInfo = document.getElementById('additionalInfo').value;
-    const additionalInfoEl = document.getElementById('previewAdditionalInfo');
-    const additionalInfoContainer = document.getElementById('previewAdditionalInfoContainer');
-    if (additionalInfo) {
-        additionalInfoEl.textContent = additionalInfo;
-        additionalInfoContainer.style.display = 'block';
-    } else {
-        additionalInfoContainer.style.display = 'none';
-    }
 }
 
-['doctorName', 'specialty', 'address', 'phone', 'email', 'welcomeMsg', 'additionalInfo'].forEach(id => {
+['doctorName', 'specialty', 'address', 'phone', 'email', 'welcomeMsg'].forEach(id => {
     document.getElementById(id).addEventListener('input', updatePreview);
 });
 
@@ -2025,7 +2051,6 @@ function previewPatientView() {
         color: currentPrimaryColor || '#3B82F6',
         language: currentLanguage || 'en',
         welcome_message: getFieldValue('welcomeMsg', ''),
-        additional_info: getFieldValue('additionalInfo', ''),
         link: 'preview'
     };
     
@@ -2208,8 +2233,7 @@ async function loadExistingDoctorData() {
             // Set logo
             if (doctor.logo_url && doctor.logo_url.startsWith('data:image')) {
                 document.getElementById('previewLogo').src = doctor.logo_url;
-                document.getElementById('previewLogo').classList.add('active');
-                document.getElementById('btnRemoveLogo').style.display = 'block';
+                document.getElementById('previewLogo').style.display = 'block';
             }
             
             // Set language
@@ -2240,6 +2264,84 @@ function logout() {
     localStorage.removeItem('slotlycare_logged_in');
     localStorage.removeItem('slotlycare_customer_id');
     window.location.href = 'login.html';
+}
+
+// Funções do Modal de Trocar Senha
+function openChangePasswordModal() {
+    document.getElementById('currentPassword').value = '';
+    document.getElementById('newPassword').value = '';
+    document.getElementById('confirmNewPassword').value = '';
+    document.getElementById('passwordChangeMessage').style.display = 'none';
+    document.getElementById('changePasswordModal').classList.add('active');
+}
+
+function closeChangePasswordModal() {
+    document.getElementById('changePasswordModal').classList.remove('active');
+}
+
+async function changePassword() {
+    const currentPassword = document.getElementById('currentPassword').value;
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+    const messageEl = document.getElementById('passwordChangeMessage');
+    const btn = document.getElementById('btnChangePassword');
+    
+    // Validações
+    if (!currentPassword || !newPassword || !confirmNewPassword) {
+        showPasswordMessage('Please fill in all fields', 'error');
+        return;
+    }
+    
+    if (newPassword.length < 6) {
+        showPasswordMessage('New password must be at least 6 characters', 'error');
+        return;
+    }
+    
+    if (newPassword !== confirmNewPassword) {
+        showPasswordMessage('New passwords do not match', 'error');
+        return;
+    }
+    
+    btn.disabled = true;
+    btn.textContent = 'Changing...';
+    
+    try {
+        const customerId = localStorage.getItem('slotlycare_customer_id');
+        
+        const response = await fetch(`${API_BASE_URL}/change-password`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                customer_id: customerId,
+                current_password: currentPassword,
+                new_password: newPassword
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            showPasswordMessage('Password changed successfully!', 'success');
+            setTimeout(() => {
+                closeChangePasswordModal();
+            }, 1500);
+        } else {
+            showPasswordMessage(data.error || 'Failed to change password', 'error');
+        }
+    } catch (error) {
+        showPasswordMessage('Connection error. Please try again.', 'error');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Change Password';
+    }
+}
+
+function showPasswordMessage(text, type) {
+    const messageEl = document.getElementById('passwordChangeMessage');
+    messageEl.textContent = text;
+    messageEl.style.display = 'block';
+    messageEl.style.background = type === 'error' ? '#FEE2E2' : '#D1FAE5';
+    messageEl.style.color = type === 'error' ? '#DC2626' : '#059669';
 }
 </script>
 </body>
