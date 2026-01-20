@@ -1312,7 +1312,7 @@ function showSuccessModal(appointment) {
     
     details.innerHTML = `
         <p><i class="fas fa-calendar"></i> <strong>${dateStr}</strong></p>
-        <p><i class="fas fa-clock"></i> <strong>${appointment.time}</strong></p>
+        <p><i class="fas fa-clock"></i> <strong>${appointment.time.substring(0, 5)}</strong></p>
         <p><i class="fas fa-user"></i> ${appointment.name}</p>
         <p><i class="fas fa-envelope"></i> ${appointment.email}</p>
         <p><i class="fas fa-phone"></i> ${appointment.phone}</p>
