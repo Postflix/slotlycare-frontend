@@ -560,6 +560,9 @@ body {
         <div class="welcome-message" id="welcomeMessage" style="display: none;">
             Welcome to our clinic! We look forward to seeing you.
         </div>
+
+        <div class="additional-info" id="additionalInfo" style="display: none; margin-top: 16px; text-align: left; font-size: 0.95rem; color: #6B7280; line-height: 1.6;">
+        </div>
     </div>
 
     <!-- Main Content -->
@@ -873,6 +876,7 @@ async function loadFromBackend() {
             doctorData.email = doctorPreview.email;
             doctorData.logo = doctorPreview.logo_url || '';
             doctorData.welcomeMessage = doctorPreview.welcome_message || '';
+            doctorData.additionalInfo = doctorPreview.additional_info || '';
             doctorData.color = doctorPreview.color || '#3B82F6';
             doctorData.language = doctorPreview.language || 'en';
             
@@ -923,6 +927,7 @@ async function loadFromBackend() {
         doctorData.email = realData.email;
         doctorData.logo = realData.logo_url || '';
         doctorData.welcomeMessage = realData.welcome_message || '';
+        doctorData.additionalInfo = realData.additional_info || '';
         doctorData.color = realData.color || '#3B82F6';
         doctorData.language = realData.language || 'en';
         
@@ -988,6 +993,11 @@ function loadDoctorData() {
     if (doctorData.welcomeMessage) {
         document.getElementById('welcomeMessage').textContent = doctorData.welcomeMessage;
         document.getElementById('welcomeMessage').style.display = 'block';
+    }
+
+    if (doctorData.additionalInfo) {
+        document.getElementById('additionalInfo').innerHTML = doctorData.additionalInfo.replace(/\n/g, '<br>');
+        document.getElementById('additionalInfo').style.display = 'block';
     }
     
     document.documentElement.style.setProperty('--primary', doctorData.color);
