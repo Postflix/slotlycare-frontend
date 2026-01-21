@@ -944,7 +944,7 @@ textarea {
         <div class="control-group">
             <label>🔗 Your Custom Link</label>
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                <span style="color: var(--text-muted); font-size: 0.9rem; white-space: nowrap;">slotlycare.com/</span>
+                <span style="color: var(--text-muted); font-size: 0.9rem; white-space: nowrap;">slotlycare-frontend.vercel.app/</span>
                 <input type="text" id="customLink" placeholder="my-clinic" style="flex: 1;" maxlength="50">
             </div>
             <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">
@@ -965,7 +965,7 @@ textarea {
                 <code id="bookingLink" data-i18n="link_placeholder">Save to generate link</code>
                 <button class="btn-copy" onclick="copyLink()" data-i18n="copy_btn">Copy</button>
             </div>
-
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; text-align: center;" data-i18n="pricing_hint">Professional Plan: $49/month</p>
         </div>
     </div>
 
@@ -1039,8 +1039,8 @@ textarea {
             <p style="margin-bottom: 12px;">You are about to change your booking link:</p>
             
             <div class="modal-link-change">
-                <div class="modal-link-old" id="modalOldLink">Old: slotlycare.com/old-link</div>
-                <div class="modal-link-new" id="modalNewLink">New: slotlycare.com/new-link</div>
+                <div class="modal-link-old" id="modalOldLink">Old: slotlycare-frontend.vercel.app/old-link</div>
+                <div class="modal-link-new" id="modalNewLink">New: slotlycare-frontend.vercel.app/new-link</div>
             </div>
 
             <p style="font-weight: 600; color: #DC2626; margin-bottom: 12px;">⚠️ Important:</p>
@@ -1127,6 +1127,7 @@ const translations = {
         link_label: "Your Personal Booking Link",
         link_placeholder: "Save to generate link",
         copy_btn: "Copy",
+        pricing_hint: "Professional Plan: $49/month",
         preview_label: "Live Preview",
         preview_select_date: "Select Appointment Date",
         preview_continue: "Book Appointment",
@@ -1174,6 +1175,7 @@ const translations = {
         link_label: "Seu Link de Agendamento",
         link_placeholder: "Salve para gerar o link",
         copy_btn: "Copiar",
+        pricing_hint: "Plano Profissional: $49/mês",
         preview_label: "Pré-visualização ao Vivo",
         preview_select_date: "Selecione a Data da Consulta",
         preview_continue: "Agendar Consulta",
@@ -1221,6 +1223,7 @@ const translations = {
         link_label: "Tu Enlace de Reserva",
         link_placeholder: "Guarda para generar el enlace",
         copy_btn: "Copiar",
+        pricing_hint: "Plan Profesional: $49/mes",
         preview_label: "Vista Previa en Vivo",
         preview_select_date: "Selecciona Fecha de Cita",
         preview_continue: "Reservar Cita",
@@ -1268,6 +1271,7 @@ const translations = {
         link_label: "Votre Lien de Réservation",
         link_placeholder: "Enregistrez pour générer le lien",
         copy_btn: "Copier",
+        pricing_hint: "Plan Professionnel: $49/mois",
         preview_label: "Aperçu en Direct",
         preview_select_date: "Sélectionnez la Date du Rendez-vous",
         preview_continue: "Réserver un Rendez-vous",
@@ -1315,6 +1319,7 @@ const translations = {
         link_label: "Ihr persönlicher Buchungslink",
         link_placeholder: "Speichern um Link zu generieren",
         copy_btn: "Kopieren",
+        pricing_hint: "Professioneller Plan: $49/Monat",
         preview_label: "Live-Vorschau",
         preview_select_date: "Wählen Sie das Terminsdatum",
         preview_continue: "Termin Buchen",
@@ -1362,6 +1367,7 @@ const translations = {
         link_label: "Il Tuo Link di Prenotazione",
         link_placeholder: "Salva per generare il link",
         copy_btn: "Copia",
+        pricing_hint: "Piano Professionale: $49/mese",
         preview_label: "Anteprima Live",
         preview_select_date: "Seleziona Data Appuntamento",
         preview_continue: "Prenota Appuntamento",
@@ -1796,7 +1802,7 @@ async function saveConfiguration() {
             savedDoctorLink = doctorId;
             
             // Atualizar link na interface
-            const fullLink = `slotlycare.com/${doctorId}`;
+            const fullLink = `slotlycare-frontend.vercel.app/${doctorId}`;
             document.getElementById('bookingLink').textContent = fullLink;
             
             // Calcular data de expiração (180 dias)
@@ -1875,8 +1881,8 @@ let pendingLinkChange = false;
 
 // Funções do Modal
 function showLinkChangeModal(oldLink, newLink) {
-    document.getElementById('modalOldLink').textContent = `Old: slotlycare.com/${oldLink}`;
-    document.getElementById('modalNewLink').textContent = `New: slotlycare.com/${newLink}`;
+    document.getElementById('modalOldLink').textContent = `Old: slotlycare-frontend.vercel.app/${oldLink}`;
+    document.getElementById('modalNewLink').textContent = `New: slotlycare-frontend.vercel.app/${newLink}`;
     document.getElementById('linkChangeModal').classList.add('active');
 }
 
@@ -2260,7 +2266,7 @@ async function loadExistingDoctorData() {
             
             // Show the booking link if exists
             if (doctor.link) {
-                const fullLink = `slotlycare.com/${doctor.link}`;
+                const fullLink = `slotlycare-frontend.vercel.app/${doctor.link}`;
                 document.getElementById('bookingLink').textContent = fullLink;
             }
         }
