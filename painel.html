@@ -221,12 +221,13 @@ h1 span {
 
 .preview {
     width: 100%;
-    height: 620px;
+    min-height: 620px;
+    height: auto;
     border-radius: 24px;
     background: white;
     box-shadow: var(--shadow-lg);
     border: 8px solid #1E293B;
-    overflow: hidden;
+    overflow: visible;
     position: relative;
 }
 
@@ -288,8 +289,6 @@ h1 span {
 .preview-content {
     padding: 24px;
     background: white;
-    height: calc(100% - 180px);
-    overflow-y: auto;
 }
 
 .preview-calendar-title {
@@ -1015,7 +1014,11 @@ textarea {
                     </div>
                     <div class="preview-info-item">
                         <strong data-i18n="preview_email_label">Email</strong>
-                        <span id="previewEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f1929e9f85909285b1829d9e859d889c9495df929e9c">[email&#160;protected]</a></span>
+                        <span id="previewEmail">doctor@email.com</span>
+                    </div>
+                    <div class="preview-info-item" id="previewAdditionalInfoContainer" style="display: none;">
+                        <strong data-i18n="additional_info_label">Additional information</strong>
+                        <span id="previewAdditionalInfo"></span>
                     </div>
                 </div>
             </div>
@@ -1447,9 +1450,19 @@ function updatePreview() {
     } else {
         msgEl.classList.remove('active');
     }
+
+    const additionalInfo = document.getElementById('additionalInfo').value;
+    const additionalInfoContainer = document.getElementById('previewAdditionalInfoContainer');
+    const additionalInfoEl = document.getElementById('previewAdditionalInfo');
+    if (additionalInfo) {
+        additionalInfoEl.innerHTML = additionalInfo.replace(/\n/g, '<br>');
+        additionalInfoContainer.style.display = 'block';
+    } else {
+        additionalInfoContainer.style.display = 'none';
+    }
 }
 
-['doctorName', 'specialty', 'address', 'phone', 'email', 'welcomeMsg'].forEach(id => {
+['doctorName', 'specialty', 'address', 'phone', 'email', 'welcomeMsg', 'additionalInfo'].forEach(id => {
     document.getElementById(id).addEventListener('input', updatePreview);
 });
 
