@@ -226,6 +226,14 @@
             margin-right: 12px;
             font-size: 1.2rem;
         }
+
+        .additional-info {
+            color: #6B7280;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-top: 12px;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -240,6 +248,7 @@
             <h1 class="doctor-name" id="doctorName">Loading...</h1>
             <p class="specialty" id="doctorSpecialty"></p>
             <p class="welcome-message" id="welcomeMessage"></p>
+            <p class="additional-info" id="additionalInfo" style="display: none;"></p>
         </div>
 
         <div class="calendar-section">
@@ -298,6 +307,12 @@
             document.getElementById('welcomeMessage').textContent = doctorData.welcome_message;
             document.getElementById('doctorAddress').textContent = doctorData.address;
             document.getElementById('doctorPhone').textContent = doctorData.phone;
+
+            if (doctorData.additional_info) {
+                const additionalInfoEl = document.getElementById('additionalInfo');
+                additionalInfoEl.innerHTML = doctorData.additional_info.replace(/\n/g, '<br>');
+                additionalInfoEl.style.display = 'block';
+            }
 
             if (doctorData.logo_url) {
                 const logo = document.getElementById('doctorLogo');
