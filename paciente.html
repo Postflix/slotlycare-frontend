@@ -857,7 +857,65 @@ const doctorData = {
 
 // ==================== BACKEND INTEGRATION ====================
 async function loadFromBackend() {
-    // MODO 1: PREVIEW - Dados temporários do painel médico
+    // Primeiro: verificar se é acesso por URL real (produção)
+    const path = window.location.pathname;
+    const urlParams = new URLSearchParams(window.location.search);
+    realDoctorId = path.split('/').pop() || urlParams.get('id');
+    
+    // Se tem um ID real na URL (não é .html, não é vazio, não é 'paciente')
+    const isRealAccess = realDoctorId && 
+                         !realDoctorId.includes('.html') && 
+                         realDoctorId !== '' && 
+                         realDoctorId !== 'paciente';
+    
+    // Se é acesso real, limpar dados de preview antigos e carregar do backend
+    if (isRealAccess) {
+        sessionStorage.removeItem('tempPreviewSlots');
+        sessionStorage.removeItem('tempPreviewDoctor');
+        
+        try {
+            console.log('📡 Loading from backend:', realDoctorId);
+            
+            const doctorResponse = await fetch(`${API_BASE_URL}/get-doctor?id=${realDoctorId}`);
+            const doctorResult = await doctorResponse.json();
+            
+            if (!doctorResult.success) {
+                console.error('❌ Doctor not found');
+                return false;
+            }
+            
+            const realData = doctorResult.doctor;
+            doctorData.name = realData.name;
+            doctorData.specialty = realData.specialty || '';
+            doctorData.address = realData.address;
+            doctorData.phone = realData.phone;
+            doctorData.email = realData.email;
+            doctorData.logo = realData.logo_url || '';
+            doctorData.welcomeMessage = realData.welcome_message || '';
+            doctorData.additionalInfo = realData.additional_info || '';
+            doctorData.color = realData.color || '#3B82F6';
+            doctorData.language = realData.language || 'en';
+            
+            const slotsResponse = await fetch(`${API_BASE_URL}/get-slots?doctor_id=${realDoctorId}`);
+            const slotsResult = await slotsResponse.json();
+            
+            if (slotsResult.success && slotsResult.slots) {
+                availableSlots = {};
+                slotsResult.slots.forEach(slot => {
+                    if (!availableSlots[slot.date]) availableSlots[slot.date] = [];
+                    availableSlots[slot.date].push(slot.time);
+                });
+            }
+            
+            console.log('✅ Doctor loaded from backend');
+            return true;
+        } catch (error) {
+            console.error('❌ Error loading from backend:', error);
+            return false;
+        }
+    }
+    
+    // MODO PREVIEW - Dados temporários do painel médico (só se NÃO for acesso real)
     const previewSlots = sessionStorage.getItem('tempPreviewSlots');
     const previewDoctor = sessionStorage.getItem('tempPreviewDoctor');
     
@@ -898,56 +956,9 @@ async function loadFromBackend() {
         }
     }
     
-    // MODO 2: PRODUÇÃO - Dados reais do backend
-    const path = window.location.pathname;
-    const urlParams = new URLSearchParams(window.location.search);
-    realDoctorId = path.split('/').pop() || urlParams.get('id');
-    
-    if (!realDoctorId || realDoctorId.includes('.html') || realDoctorId === '') {
-        console.log('🧪 DEMO MODE - Running locally');
-        return false;
-    }
-    
-    try {
-        console.log('📡 Loading from backend:', realDoctorId);
-        
-        const doctorResponse = await fetch(`${API_BASE_URL}/get-doctor?id=${realDoctorId}`);
-        const doctorResult = await doctorResponse.json();
-        
-        if (!doctorResult.success) {
-            console.error('❌ Doctor not found');
-            return false;
-        }
-        
-        const realData = doctorResult.doctor;
-        doctorData.name = realData.name;
-        doctorData.specialty = realData.specialty || '';
-        doctorData.address = realData.address;
-        doctorData.phone = realData.phone;
-        doctorData.email = realData.email;
-        doctorData.logo = realData.logo_url || '';
-        doctorData.welcomeMessage = realData.welcome_message || '';
-        doctorData.additionalInfo = realData.additional_info || '';
-        doctorData.color = realData.color || '#3B82F6';
-        doctorData.language = realData.language || 'en';
-        
-        const slotsResponse = await fetch(`${API_BASE_URL}/get-slots?doctor_id=${realDoctorId}`);
-        const slotsResult = await slotsResponse.json();
-        
-        if (slotsResult.success && slotsResult.slots) {
-            availableSlots = {};
-            slotsResult.slots.forEach(slot => {
-                if (!availableSlots[slot.date]) availableSlots[slot.date] = [];
-                availableSlots[slot.date].push(slot.time);
-            });
-            console.log('✅ Loaded', slotsResult.count, 'slots from backend');
-        }
-        
-        return true;
-    } catch (error) {
-        console.error('❌ Backend error:', error);
-        return false;
-    }
+    // MODO DEMO - Nenhum dado encontrado
+    console.log('🧪 DEMO MODE - Running locally');
+    return false;
 }
 
 // INITIALIZE
