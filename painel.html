@@ -245,7 +245,7 @@ h1 span {
     max-width: 80px;
     max-height: 80px;
     border-radius: 50%;
-    margin-bottom: 16px;
+    margin: 0 auto 16px auto;
     border: 3px solid white;
     background: white;
     display: none;
@@ -253,7 +253,7 @@ h1 span {
 }
 
 .preview-logo.active {
-    display: inline-block;
+    display: block;
 }
 
 .preview-doctor-name {
@@ -944,7 +944,7 @@ textarea {
         <div class="control-group">
             <label>🔗 Your Custom Link</label>
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                <span style="color: var(--text-muted); font-size: 0.9rem; white-space: nowrap;">slotlycare.com/</span>
+                <span style="color: var(--text-muted); font-size: 0.9rem; white-space: nowrap;">https://slotlycare.com/</span>
                 <input type="text" id="customLink" placeholder="my-clinic" style="flex: 1;" maxlength="50">
             </div>
             <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">
@@ -1039,8 +1039,8 @@ textarea {
             <p style="margin-bottom: 12px;">You are about to change your booking link:</p>
             
             <div class="modal-link-change">
-                <div class="modal-link-old" id="modalOldLink">Old: slotlycare.com/old-link</div>
-                <div class="modal-link-new" id="modalNewLink">New: slotlycare.com/new-link</div>
+                <div class="modal-link-old" id="modalOldLink">Old: https://slotlycare.com/old-link</div>
+                <div class="modal-link-new" id="modalNewLink">New: https://slotlycare.com/new-link</div>
             </div>
 
             <p style="font-weight: 600; color: #DC2626; margin-bottom: 12px;">⚠️ Important:</p>
@@ -1796,7 +1796,7 @@ async function saveConfiguration() {
             savedDoctorLink = doctorId;
             
             // Atualizar link na interface
-            const fullLink = `slotlycare.com/${doctorId}`;
+            const fullLink = `https://slotlycare.com/${doctorId}`;
             document.getElementById('bookingLink').textContent = fullLink;
             
             // Calcular data de expiração (180 dias)
@@ -1875,8 +1875,8 @@ let pendingLinkChange = false;
 
 // Funções do Modal
 function showLinkChangeModal(oldLink, newLink) {
-    document.getElementById('modalOldLink').textContent = `Old: slotlycare.com/${oldLink}`;
-    document.getElementById('modalNewLink').textContent = `New: slotlycare.com/${newLink}`;
+    document.getElementById('modalOldLink').textContent = `Old: https://slotlycare.com/${oldLink}`;
+    document.getElementById('modalNewLink').textContent = `New: https://slotlycare.com/${newLink}`;
     document.getElementById('linkChangeModal').classList.add('active');
 }
 
@@ -2260,7 +2260,7 @@ async function loadExistingDoctorData() {
             
             // Show the booking link if exists
             if (doctor.link) {
-                const fullLink = `slotlycare.com/${doctor.link}`;
+                const fullLink = `https://slotlycare.com/${doctor.link}`;
                 document.getElementById('bookingLink').textContent = fullLink;
             }
         }
