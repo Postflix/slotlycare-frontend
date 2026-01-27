@@ -2211,6 +2211,9 @@ async function loadExistingDoctorData() {
     const customerId = localStorage.getItem('slotlycare_customer_id');
     if (!customerId) return;
     
+    let doctorHasLink = false;
+    let doctorHasName = false;
+    
     try {
         // Try to find doctor by customer_id
         const response = await fetch(`https://slotlycare-backend.vercel.app/api/get-doctor-by-customer?customer_id=${customerId}`);
@@ -2228,6 +2231,9 @@ async function loadExistingDoctorData() {
             document.getElementById('welcomeMsg').value = doctor.welcome_message || '';
             document.getElementById('additionalInfo').value = doctor.additional_info || '';
             document.getElementById('customLink').value = doctor.link || '';
+            
+            doctorHasLink = !!doctor.link;
+            doctorHasName = !!doctor.name;
             
             // Set color
             if (doctor.color) {
@@ -2267,6 +2273,29 @@ async function loadExistingDoctorData() {
         }
     } catch (error) {
         console.log('No existing doctor data found or error loading:', error);
+    }
+    
+    // Check if there's a reserved slug from the landing page
+    const reservedSlug = localStorage.getItem('slotlycare_reserved_slug');
+    const reservedName = localStorage.getItem('slotlycare_reserved_name');
+    
+    // Pre-fill link if doctor doesn't have one yet
+    if (!doctorHasLink && reservedSlug) {
+        document.getElementById('customLink').value = reservedSlug;
+        console.log('Pre-filled link from landing page:', reservedSlug);
+    }
+    
+    // Pre-fill name if doctor doesn't have one yet
+    if (!doctorHasName && reservedName) {
+        document.getElementById('doctorName').value = reservedName;
+        updatePreview();
+        console.log('Pre-filled name from landing page:', reservedName);
+    }
+    
+    // Clear the reserved data from localStorage (one-time use)
+    if (reservedSlug || reservedName) {
+        localStorage.removeItem('slotlycare_reserved_slug');
+        localStorage.removeItem('slotlycare_reserved_name');
     }
 }
 
