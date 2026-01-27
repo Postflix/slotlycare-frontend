@@ -3,144 +3,2285 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SlotlyCare - Medical Appointment Scheduling</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>SlotlyCare — Your Own Booking Infrastructure</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #FAFAF9;
+            --text: #1A1A1A;
+            --text-muted: #6B6B6B;
+            --accent: #0D9488;
+            --accent-light: #CCFBF1;
+            --accent-dark: #0F766E;
+            --white: #FFFFFF;
+            --border: #E5E5E5;
+            --success: #10B981;
+            --error: #EF4444;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .serif {
+            font-family: 'Instrument Serif', Georgia, serif;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(250, 250, 249, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
         }
-        
-        .container {
-            background: white;
-            padding: 60px 40px;
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            text-align: center;
-            max-width: 500px;
-            width: 100%;
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1a1a2e;
-            margin-bottom: 16px;
-        }
-        
-        h1 span {
-            color: #667eea;
-        }
-        
-        p {
-            font-size: 1.1rem;
-            color: #64748b;
-            margin-bottom: 40px;
-            line-height: 1.6;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 18px 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+        .logo-icon svg {
+            width: 18px;
+            height: 18px;
             color: white;
+        }
+
+        .nav-cta {
+            background: var(--text);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 100px;
             text-decoration: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
             font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
         }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+
+        .nav-cta:hover {
+            background: var(--accent-dark);
+            transform: translateY(-1px);
         }
-        
-        .features {
-            margin-top: 50px;
-            text-align: left;
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            padding: 8rem 4rem 4rem;
+            max-width: 1300px;
+            margin: 0 auto;
         }
-        
-        .feature {
+
+        .hero-content {
+            max-width: 540px;
+        }
+
+        .badge {
+            background: var(--accent-light);
+            color: var(--accent-dark);
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        h1 {
+            font-size: 3.25rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        h1 .serif {
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .hero-tagline {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .hero-sub {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.9;
+        }
+
+        .hero-sub strong {
+            color: var(--text);
+        }
+
+        /* Link Checker - Two Fields */
+        .link-checker {
+            margin-bottom: 1.5rem;
+        }
+
+        .field-group {
+            margin-bottom: 1rem;
+        }
+
+        .field-label {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .name-input-wrapper {
+            background: var(--white);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 0.4rem;
+            transition: all 0.2s ease;
+        }
+
+        .name-input-wrapper:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-light);
+        }
+
+        .name-input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 1.125rem;
+            font-family: inherit;
+            padding: 0.875rem 1rem;
+            background: transparent;
+        }
+
+        .name-input::placeholder {
+            color: #C4C4C4;
+        }
+
+        .slug-field-wrapper {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-            color: #475569;
+            gap: 0.5rem;
         }
-        
-        .feature-icon {
-            width: 24px;
-            height: 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+        .slug-input-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: var(--white);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 0.3rem;
+            transition: all 0.2s ease;
+        }
+
+        .slug-input-wrapper:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-light);
+        }
+
+        .slug-prefix {
+            padding: 0.5rem 0 0.5rem 0.75rem;
+            color: var(--text-muted);
+            font-size: 0.8125rem;
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        .slug-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 0.8125rem;
+            font-family: inherit;
+            padding: 0.5rem 0;
+            background: transparent;
+            min-width: 0;
+        }
+
+        .slug-input::placeholder {
+            color: #C4C4C4;
+        }
+
+        .check-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.625rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.8125rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        .check-btn:hover {
+            background: var(--accent-dark);
+        }
+
+        .check-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .field-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.375rem;
+        }
+
+        .link-result {
+            margin-top: 0.75rem;
+            padding: 0.875rem 1rem;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            display: none;
+            align-items: center;
+            gap: 0.625rem;
+        }
+
+        .link-result.available {
+            display: flex;
+            background: #ECFDF5;
+            color: #065F46;
+        }
+
+        .link-result.taken {
+            display: flex;
+            background: #FEF2F2;
+            color: #991B1B;
+        }
+
+        .link-result svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .reservation-timer {
+            margin-top: 0.5rem;
+            padding: 0.625rem 1rem;
+            background: #FEF3C7;
+            border-radius: 8px;
+            font-size: 0.8125rem;
+            color: #92400E;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .reservation-timer svg {
+            flex-shrink: 0;
+            stroke: #D97706;
+        }
+
+        .reservation-timer strong {
+            font-variant-numeric: tabular-nums;
+            color: #B45309;
+        }
+
+        .hero-footer {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .hero-footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .hero-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Reserve Button */
+        .reserve-btn {
+            display: block;
+            background: var(--accent);
+            color: white;
+            text-align: center;
+            padding: 1.125rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .reserve-btn:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(13, 148, 136, 0.25);
+        }
+
+        /* Before/After Section */
+        .before-after-section {
+            background-color: var(--white);
+            border-radius: 1.5rem;
+            padding: 4rem 2rem;
+            margin: 3rem auto;
+            max-width: 1400px;
+        }
+
+        .before-after-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .before-after-header h2 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .before-after-header p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+        }
+
+        .before-after-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .before-after-card {
+            padding: 2.5rem;
+            border-radius: 1rem;
+            border: 2px solid;
+        }
+
+        .before-after-card.before {
+            background-color: #FEF2F2;
+            border-color: #EF4444;
+        }
+
+        .before-after-card.after {
+            background-color: #F0FDF4;
+            border-color: #10B981;
+        }
+
+        .before-after-card h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .before-after-card.before h3 {
+            color: #EF4444;
+        }
+
+        .before-after-card.after h3 {
+            color: #10B981;
+        }
+
+        .before-after-card ul {
+            list-style: none;
+        }
+
+        .before-after-card li {
+            padding: 0.75rem 0;
+            color: var(--text-muted);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .before-after-card li:last-child {
+            border-bottom: none;
+        }
+
+        .before-after-card.before li::before {
+            content: "✕";
+            color: #EF4444;
+            font-weight: 800;
+            font-size: 1.25rem;
+        }
+
+        .before-after-card.after li::before {
+            content: "✓";
+            color: #10B981;
+            font-weight: 800;
+            font-size: 1.25rem;
+        }
+
+        .before-after-cta {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .before-after-cta p {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+        }
+
+        .before-after-cta .reserve-btn {
+            display: inline-block;
+        }
+
+        /* Phone Mockup */
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--accent-light) 0%, #E0F2FE 100%);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            min-height: 580px;
+        }
+
+        .phone-mockup {
+            width: 280px;
+            height: 560px;
+            background: var(--white);
+            border-radius: 40px;
+            border: 10px solid var(--text);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .phone-notch {
+            background: var(--text);
+            height: 28px;
+            border-radius: 0 0 20px 20px;
+            margin: 0 auto;
+            width: 120px;
+        }
+
+        .phone-screen {
+            flex: 1;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .phone-header {
+            text-align: center;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.25rem;
+        }
+
+        .phone-avatar {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            border-radius: 50%;
+            margin: 0 auto 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .phone-name {
+            font-weight: 600;
+            font-size: 1.125rem;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+            min-height: 1.4em;
+        }
+
+        .phone-specialty {
+            color: var(--text-muted);
+            font-size: 0.8125rem;
+        }
+
+        .phone-slots {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .phone-slots-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .phone-slot {
+            background: var(--bg);
+            padding: 0.875rem 1rem;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .phone-slot:hover {
+            background: var(--accent-light);
+        }
+
+        .phone-slot.selected {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Setup Section */
+        .setup-section {
+            background-color: #F9FAFB;
+            border-radius: 1.5rem;
+            padding: 4rem 2rem;
+            margin: 3rem auto;
+            max-width: 1400px;
+        }
+
+        .setup-section h2 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .setup-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            margin-bottom: 3rem;
+        }
+
+        .setup-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+
+        .setup-card {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .setup-number {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--white) 0%, var(--accent-light) 100%);
+            color: var(--accent);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 24px rgba(13, 148, 136, 0.15);
+        }
+
+        .setup-card h3 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .setup-card p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            background-color: var(--white);
+            border-radius: 1.5rem;
+            padding: 4rem 2rem;
+            margin: 3rem auto;
+            max-width: 1400px;
+        }
+
+        .comparison-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .comparison-header h2 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-header p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .comparison-card {
+            padding: 2.5rem;
+            border-radius: 1rem;
+            border: 2px solid;
+        }
+
+        .comparison-card.marketplace {
+            background-color: #FEF2F2;
+            border-color: #EF4444;
+        }
+
+        .comparison-card.slotlycare {
+            background-color: #F0FDF4;
+            border-color: #10B981;
+        }
+
+        .comparison-card h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .comparison-card.marketplace h3 {
+            color: #EF4444;
+        }
+
+        .comparison-card.slotlycare h3 {
+            color: #10B981;
+        }
+
+        .comparison-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .marketplace .comparison-icon {
+            background: #FEE2E2;
+        }
+
+        .marketplace .comparison-icon svg {
+            color: #EF4444;
+        }
+
+        .slotlycare .comparison-icon {
+            background: var(--accent);
+        }
+
+        .comparison-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .slotlycare .comparison-icon svg {
             color: white;
-            font-size: 0.8rem;
-            font-weight: bold;
+        }
+
+        .comparison-list {
+            list-style: none;
+        }
+
+        .comparison-list li {
+            padding: 0.75rem 0;
+            color: var(--text-muted);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .comparison-list li:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-list li svg {
+            width: 18px;
+            height: 18px;
             flex-shrink: 0;
         }
-        
-        .login-link {
-            margin-top: 30px;
-            font-size: 0.95rem;
-            color: #64748b;
+
+        .marketplace .comparison-list li::before {
+            content: "✕";
+            color: #EF4444;
+            font-weight: 800;
+            font-size: 1.25rem;
         }
-        
-        .login-link a {
-            color: #667eea;
+
+        .marketplace .comparison-list li svg {
+            display: none;
+        }
+
+        .slotlycare .comparison-list li::before {
+            content: "✓";
+            color: #10B981;
+            font-weight: 800;
+            font-size: 1.25rem;
+        }
+
+        .slotlycare .comparison-list li svg {
+            display: none;
+        }
+
+        .comparison-bottom {
+            display: none;
+        }
+
+        /* Demo Section */
+        .demo-section {
+            background-color: #F0FDF4;
+            border: 2px solid #10B981;
+            border-radius: 1.5rem;
+            padding: 4rem 2rem;
+            margin: 3rem auto;
+            max-width: 1400px;
+            text-align: center;
+        }
+
+        .demo-section h2 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .demo-section p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .demo-section p strong {
+            color: var(--text);
+        }
+
+        .demo-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--accent);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 100px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
+            transition: all 0.2s ease;
         }
-        
-        .login-link a:hover {
+
+        .demo-btn:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+
+        .demo-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Pain Section */
+        .pain-section {
+            padding: 6rem 2rem;
+            background: var(--text);
+            color: var(--white);
+        }
+
+        .pain-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .pain-header h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .pain-header p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.125rem;
+        }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pain-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .pain-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .pain-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--accent);
+        }
+
+        .pain-card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .pain-card p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9375rem;
+        }
+
+        /* Features Section */
+        .features-section {
+            background-color: #F9FAFB;
+            border-radius: 1.5rem;
+            padding: 4rem 2rem;
+            margin: 3rem auto;
+            max-width: 1400px;
+        }
+
+        .features-section h2 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+            text-align: center;
+        }
+
+        .features-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-size: 1.15rem;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+        }
+
+        .feature-item {
+            padding: 2rem;
+            border-left: 5px solid var(--accent);
+            background-color: var(--white);
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-item h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+
+        .feature-item p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* Social Proof Section */
+        .social-proof-section {
+            background-color: var(--white);
+            border-radius: 1.5rem;
+            padding: 4rem 2rem;
+            margin: 3rem auto;
+            max-width: 1400px;
+            text-align: center;
+        }
+
+        .social-proof-section h2 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .social-proof-subtitle {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .specialties-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .specialty-tag {
+            background-color: var(--accent-light);
+            color: var(--accent-dark);
+            padding: 0.75rem 1.5rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            border: 1px solid var(--accent);
+        }
+
+        .social-proof-note {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Objections Section */
+        .objections-section {
+            background-color: #F9FAFB;
+            border-radius: 1.5rem;
+            padding: 4rem 2rem;
+            margin: 3rem auto;
+            max-width: 1400px;
+        }
+
+        .objections-section h2 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 3rem;
+            letter-spacing: -0.5px;
+        }
+
+        .objections-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .objection-item {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 1rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .objection-item h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+            font-style: italic;
+        }
+
+        .objection-item p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            text-align: center;
+            background-color: var(--white);
+            border-radius: 1.5rem;
+            padding: 4rem 2rem;
+            margin: 3rem auto;
+            max-width: 1400px;
+        }
+
+        .pricing h2 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+
+        .pricing-badge {
+            display: inline-block;
+            background-color: var(--accent-light);
+            color: var(--accent-dark);
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pricing-card {
+            background: linear-gradient(135deg, var(--white) 0%, #F3F4F6 100%);
+            border: 3px solid var(--accent);
+            border-radius: 1.5rem;
+            padding: 3.5rem 2.5rem;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(13, 148, 136, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: "FOUNDERS ONLY";
+            position: absolute;
+            top: -35px;
+            right: -35px;
+            width: 150px;
+            height: 150px;
+            background-color: var(--accent);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 0.75rem;
+            transform: rotate(45deg);
+            box-shadow: 0 8px 24px rgba(13, 148, 136, 0.3);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .price {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .price-description {
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 2.5rem;
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 1rem;
+        }
+
+        .pricing-features li {
+            padding: 1rem 0;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 500;
+        }
+
+        .pricing-features li:before {
+            content: "✓";
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-cta {
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 1.5rem 3rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pricing-cta:hover {
+            background-color: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(13, 148, 136, 0.3);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 6rem 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .faq-header h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-size: 1.0625rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+
+        .faq-answer {
+            color: var(--text-muted);
+            font-size: 0.9375rem;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            background: var(--text);
+            text-align: center;
+        }
+
+        .footer-text {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-early {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8125rem;
+        }
+
+        .footer-early a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .footer-early a:hover {
             text-decoration: underline;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 5% auto;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-content h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .modal-content p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content ul {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .modal-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .modal-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .modal-content a:hover {
+            text-decoration: underline;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text);
+        }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 7rem 2rem 4rem;
+                text-align: center;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .hero-visual {
+                order: -1;
+                min-height: 480px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .field-label {
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .comparison-grid,
+            .before-after-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .setup-grid,
+            .pain-grid,
+            .features-grid,
+            .objections-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .hero-sub {
+                font-size: 1rem;
+            }
+
+            .hero-visual {
+                padding: 2rem 1rem;
+                min-height: 420px;
+            }
+
+            .phone-mockup {
+                width: 240px;
+                height: 480px;
+            }
+
+            .slug-field-wrapper {
+                flex-direction: column;
+            }
+
+            .slug-input-wrapper {
+                width: 100%;
+            }
+
+            .check-btn {
+                width: 100%;
+            }
+
+            .comparison-card {
+                padding: 1.5rem;
+            }
+
+            .pricing-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .pricing-amount .price {
+                font-size: 3rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Slotly<span>Care</span></h1>
-        <p>Simple, fast, and professional appointment scheduling for healthcare providers</p>
-        
-        <a href="/subscribe.html" class="btn">Get Started →</a>
-        
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon">✓</div>
-                <span>Just describe your routine — AI organizes your availability</span>
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="logo">
+            <div class="logo-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
             </div>
-            <div class="feature">
-                <div class="feature-icon">✓</div>
-                <span>Multi-language support</span>
+            SlotlyCare
+        </a>
+        <a href="#pricing" class="nav-cta">Get Founders Access</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="badge">Founders Access — Limited Spots</span>
+            <h1>Marketplaces help patients find you. <span class="serif">Now control what happens next.</span></h1>
+            <p class="hero-tagline">Your scheduling. Your rules. Your patients.</p>
+            <p class="hero-sub">One link. Your name. Full control.<br>No chaos. No back-and-forth. No lost appointments.<br><strong>Professional scheduling infrastructure.</strong></p>
+            
+            <div class="link-checker">
+                <!-- Campo 1: Nome profissional -->
+                <div class="field-group">
+                    <label class="field-label">Your professional name</label>
+                    <div class="name-input-wrapper">
+                        <input type="text" class="name-input" id="nameInput" placeholder="Dr. John" autocomplete="off">
+                    </div>
+                </div>
+
+                <!-- Campo 2: Slug editável -->
+                <div class="field-group">
+                    <label class="field-label">Your booking link</label>
+                    <div class="slug-field-wrapper">
+                        <div class="slug-input-wrapper">
+                            <span class="slug-prefix">slotlycare.com/</span>
+                            <input type="text" class="slug-input" id="slugInput" placeholder="dr-john" autocomplete="off">
+                        </div>
+                        <button class="check-btn" id="checkBtn" onclick="checkAvailability()">Check</button>
+                    </div>
+                    <p class="field-hint">This link is available now. Once taken, it's gone.</p>
+                </div>
+
+                <div class="link-result" id="linkResult">
+                    <svg id="resultIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    <span id="resultText"></span>
+                </div>
+                <div class="reservation-timer" id="reservationTimer" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="16" height="16">
+                        <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                        <path stroke-linecap="round" stroke-width="2" d="M12 6v6l4 2"/>
+                    </svg>
+                    <span>Reserved for <strong id="timerCount">15:00</strong> — complete your purchase to secure it.</span>
+                </div>
             </div>
-            <div class="feature">
-                <div class="feature-icon">✓</div>
-                <span>Your own booking link: slotlycare.com/your-name</span>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">✓</div>
-                <span>7-day money-back guarantee</span>
+
+            <a href="#pricing" class="reserve-btn">Reserve Your Link Now</a>
+
+            <p class="hero-footer">Want to see how patients book? <a href="#demo">Try the live demo</a></p>
+        </div>
+
+        <div class="hero-visual">
+            <div class="phone-mockup">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                    <div class="phone-header">
+                        <div class="phone-avatar" id="phoneAvatar">DJ</div>
+                        <div class="phone-name" id="phoneName">Dr. John</div>
+                        <div class="phone-specialty">Health Professional</div>
+                    </div>
+                    <div class="phone-slots">
+                        <div class="phone-slots-label">Available times</div>
+                        <div class="phone-slot">9:00</div>
+                        <div class="phone-slot selected">9:30</div>
+                        <div class="phone-slot">10:00</div>
+                        <div class="phone-slot">10:30</div>
+                        <div class="phone-slot">11:00</div>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
+
+    <!-- Before/After Section -->
+    <section class="before-after-section">
+        <div class="before-after-header">
+            <h2>Discovery is solved. Scheduling isn't.</h2>
+            <p>Marketplaces bring patients. SlotlyCare organizes what happens after.</p>
+        </div>
+        <div class="before-after-grid">
+                <div class="before-after-card before">
+                    <h3>❌ Without SlotlyCare</h3>
+                    <ul>
+                        <li>Hours lost to WhatsApp coordination</li>
+                        <li>Texts at midnight: "Do you have Tuesday?"</li>
+                        <li>Secretary buried in back-and-forth</li>
+                        <li>Empty slots no one knew existed</li>
+                        <li>No control over your own schedule</li>
+                        <li>Patients waiting for a response that takes too long</li>
+                    </ul>
+                </div>
+                <div class="before-after-card after">
+                    <h3>✓ With SlotlyCare</h3>
+                    <ul>
+                        <li>One link. Patients book in 30 seconds.</li>
+                        <li>Automatic reminders reduce no-shows.</li>
+                        <li>Secretary manages patients, not calendars.</li>
+                        <li>Every slot visible. Every slot bookable.</li>
+                        <li>Full control over your schedule.</li>
+                        <li>Professional experience for every patient.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- CTA após Before/After -->
+            <div class="before-after-cta">
+                <p>Ready to take control of your schedule?</p>
+                <a href="#pricing" class="reserve-btn">Claim Your Link Now</a>
+            </div>
+    </section>
+
+    <!-- Setup Section -->
+    <section class="setup-section">
+        <h2>From chaos to control. In 2 minutes.</h2>
+        <p class="setup-subtitle">No tech skills. No training. No waiting.</p>
+        <div class="setup-grid">
+            <div class="setup-card">
+                <div class="setup-number">1</div>
+                <h3>Tell Your Rules</h3>
+                <p>Type your schedule once. AI generates your availability. Update rules, not slots.</p>
+            </div>
+            <div class="setup-card">
+                <div class="setup-number">2</div>
+                <h3>Get Your Link</h3>
+                <p>Instantly receive your personalized booking page. Your name. Your brand.</p>
+            </div>
+            <div class="setup-card">
+                <div class="setup-number">3</div>
+                <h3>Share Everywhere</h3>
+                <p>WhatsApp, Instagram, email. Patients book directly. Done.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="social-proof-section">
+        <h2>Built for health professionals who value their time.</h2>
+        <p class="social-proof-subtitle">Trusted by professionals who want control over their practice.</p>
+        <div class="specialties-grid">
+            <span class="specialty-tag">Psychologists</span>
+            <span class="specialty-tag">Dentists</span>
+            <span class="specialty-tag">Nutritionists</span>
+            <span class="specialty-tag">Physical Therapists</span>
+            <span class="specialty-tag">Dermatologists</span>
+            <span class="specialty-tag">Speech Therapists</span>
+            <span class="specialty-tag">Cardiologists</span>
+            <span class="specialty-tag">Pediatricians</span>
+            <span class="specialty-tag">Psychiatrists</span>
+            <span class="specialty-tag">General Practitioners</span>
+        </div>
+        <p class="social-proof-note">Any health professional who books appointments. One tool. All specialties.</p>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="comparison-section">
+        <div class="comparison-header">
+            <h2>Different tools. Different jobs.</h2>
+            <p>Marketplaces excel at discovery. SlotlyCare excels at operations.</p>
+        </div>
+        <div class="comparison-grid">
+            <div class="comparison-card marketplace">
+                <h3>
+                    <div class="comparison-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
+                    </div>
+                    Marketplaces
+                </h3>
+                <ul class="comparison-list">
+                    <li>Great for patient discovery</li>
+                    <li>Visibility to new audiences</li>
+                    <li>Reviews and social proof</li>
+                    <li>Broad reach for acquisition</li>
+                    <li>Best for: getting found</li>
+                </ul>
+            </div>
+            <div class="comparison-card slotlycare">
+                <h3>
+                    <div class="comparison-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    SlotlyCare
+                </h3>
+                <ul class="comparison-list">
+                    <li>Full control over your schedule</li>
+                    <li>Your link, your brand, your rules</li>
+                    <li>Fixed price, predictable costs</li>
+                    <li>Direct patient relationship</li>
+                    <li>Best for: running your practice</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="demo-section" id="demo">
+        <h2>See it working. Right now.</h2>
+        <p>This is the exact experience your patients will have. Pick a time, confirm, done. <strong>Real bookings. Real schedules.</strong> No signup required to test.</p>
+        <a href="#" class="demo-btn">
+            Try Live Demo
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+            </svg>
+        </a>
+    </section>
+
+    <!-- Pain Section -->
+    <section class="pain-section">
+        <div class="container">
+            <div class="pain-header">
+                <h2>Your schedule shouldn't depend on people. It should depend on rules.</h2>
+                <p>Manual scheduling costs time, money, and patients.</p>
+            </div>
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <div class="pain-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3>Hours lost every week</h3>
+                    <p>Calls, messages, rescheduling. Time you could spend with patients — or off the clock.</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                        </svg>
+                    </div>
+                    <h3>WhatsApp chaos</h3>
+                    <p>Endless back-and-forth. Your personal number mixed with work.</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3>Revenue leaking</h3>
+                    <p>No-shows. Empty slots. Missed appointments cost more than you think.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <h2>Built for Health Professionals. Not for Complexity.</h2>
+        <p class="features-subtitle">Simple tools that solve real problems.</p>
         
-        <div class="login-link">
-            Already have an account? <a href="login.html">Sign in</a>
+        <div class="features-grid">
+            <div class="feature-item">
+                <h3>Your Link. Your Name.</h3>
+                <p>Share one link anywhere — Instagram bio, business card, email signature. Patients book directly with you. Clean, professional, yours.</p>
+            </div>
+            <div class="feature-item">
+                <h3>AI Scheduling</h3>
+                <p>Tell the system your preferences once. It generates your availability automatically. Change your rules, not each individual slot.</p>
+            </div>
+            <div class="feature-item">
+                <h3>Smart Reminders</h3>
+                <p>Patients get automatic confirmations and reminders. They show up. No more "I forgot" calls. No more empty chairs.</p>
+            </div>
+            <div class="feature-item">
+                <h3>WhatsApp Native</h3>
+                <p>Patient asks for an appointment? Send your link. Done. No back-and-forth. Your secretary closes bookings in seconds.</p>
+            </div>
+            <div class="feature-item">
+                <h3>Fixed, Predictable Pricing</h3>
+                <p>One payment. No surprises. No per-booking fees. The more patients you attract, the more you keep.</p>
+            </div>
+            <div class="feature-item">
+                <h3>6 Languages Built-In</h3>
+                <p>Your patients see the booking page in their language. English, Spanish, Portuguese, French, Italian, German.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Objections Section -->
+    <section class="objections-section">
+        <h2>Still thinking about it?</h2>
+        <div class="objections-grid">
+            <div class="objection-item">
+                <h3>"I'm not tech-savvy."</h3>
+                <p>If you can send a WhatsApp message, you can use SlotlyCare. Setup takes 2 minutes. No training required.</p>
+            </div>
+            <div class="objection-item">
+                <h3>"I already use a marketplace."</h3>
+                <p>Perfect. Marketplaces bring patients. SlotlyCare gives you control over scheduling. They work together.</p>
+            </div>
+            <div class="objection-item">
+                <h3>"What if patients don't adapt?"</h3>
+                <p>Patients love it. Pick a time, confirm, done. No calls, no waiting. They adapt in seconds.</p>
+            </div>
+            <div class="objection-item">
+                <h3>"Is my data safe?"</h3>
+                <p>Your data is yours. We don't sell, share, or use it. Ever. Full privacy.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <h2>Founders Access</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.1rem;">Pay for 1 year. Get 3 years. Price locked for 36 months.</p>
+        
+        <div class="pricing-badge">67% OFF — Early Adopters Only</div>
+        
+        <div class="pricing-card">
+            <h3>3-Year Access</h3>
+            <div class="price">$948</div>
+            <p class="price-description">One payment. <strong>3 years</strong> of access.</p>
+            <p style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">$26/month — less than one consultation.</p>
+            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem;">This is the only founders round. After that, standard pricing applies.</p>
+            
+            <ul class="pricing-features">
+                <li>Your personalized booking link — reserved now</li>
+                <li>Unlimited bookings — no per-booking fees, no commissions</li>
+                <li>Automatic patient reminders</li>
+                <li>AI-powered schedule generation</li>
+                <li>All new features released during the next 36 months included</li>
+                <li>No upgrade fees for founders during this period</li>
+                <li>Priority founder support</li>
+            </ul>
+            
+            <button class="pricing-cta" onclick="handleReserveLink()">Reserve Your Personal Link</button>
+            <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 1rem;">Takes less than 2 minutes to set up.</p>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <div class="faq-header">
+                <h2>Questions you might have</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3 class="faq-question">How is SlotlyCare different from medical marketplaces?</h3>
+                    <p class="faq-answer">Marketplaces are great for discovery — they help patients find you. SlotlyCare is great for operations — it gives you control over scheduling. They solve different problems and work well together. Use marketplaces for visibility, use SlotlyCare for running your practice.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">Does this replace WhatsApp or my secretary?</h3>
+                    <p class="faq-answer">It makes both more efficient. When patients message asking for appointments, you or your secretary just send your SlotlyCare link. They pick a time, confirm, done. No back-and-forth. Secretaries become faster closers instead of calendar managers.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">Why not just use a large scheduling platform?</h3>
+                    <p class="faq-answer">Large platforms are built for enterprises with complex needs and complex dashboards. SlotlyCare is built for health professionals who want something that works. One link, one panel, zero clutter. Simplicity is the feature.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">Is SlotlyCare just another booking tool?</h3>
+                    <p class="faq-answer">No. Booking tools help you manage appointments. SlotlyCare gives you infrastructure — your own digital presence for scheduling that you control completely. The booking page is yours. The patient relationship is yours. The data is yours.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">What happens after 3 years?</h3>
+                    <p class="faq-answer">You'll have the option to renew at the then-current price. Founders who stay active will always have priority access to renewal offers. Your link remains reserved as long as your account is active.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-text">© 2025 SlotlyCare. Your schedule, your rules, your patients.</p>
+        <p class="footer-links"><a href="#" onclick="openModal('privacyModal'); return false;">Privacy Policy</a> · <a href="#" onclick="openModal('termsModal'); return false;">Terms of Service</a> · <a href="#" onclick="openModal('contactModal'); return false;">Contact</a></p>
+        <p class="footer-early">Early-career professional? <a href="#" onclick="openModal('earlyModal'); return false;">Learn about our Early Practice Program.</a></p>
+    </footer>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('privacyModal')">&times;</span>
+            <h2>Privacy Policy</h2>
+            <p>SlotlyCare respects your privacy and is committed to protecting the personal data of professionals and patients who use the platform.</p>
+            <p>We collect only the information necessary to provide scheduling, communication, and operational features, such as account details, appointment data, and basic usage information. Patient data belongs to the professional and is never sold or shared with third parties for advertising purposes.</p>
+            <p>SlotlyCare uses industry-standard security measures to protect data and operates in line with GDPR and international data protection standards.</p>
+            <p>Healthcare professionals remain fully responsible for how they manage patient relationships, communications, and compliance with applicable professional regulations.</p>
+            <p>If you have any questions about this policy or how data is handled, please contact us.</p>
+            <p><strong>Contact:</strong> <a href="/cdn-cgi/l/email-protection#7a0916150e1603191b081f3a1d171b131654191517"><span class="__cf_email__" data-cfemail="82f1eeedf6eefbe1e3f0e7c2e5efe3ebeeace1edef">[email&#160;protected]</span></a></p>
         </div>
     </div>
+
+    <!-- Terms of Service Modal -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('termsModal')">&times;</span>
+            <h2>Terms of Service</h2>
+            <p>By using SlotlyCare, you agree to these Terms of Service.</p>
+            <p>SlotlyCare provides an online scheduling and appointment management platform for healthcare professionals. SlotlyCare does not operate as a marketplace, does not promote professionals, and does not interfere in patient–professional relationships.</p>
+            <p>Professionals are solely responsible for:</p>
+            <ul>
+                <li>Managing their availability and scheduling rules</li>
+                <li>Communicating with patients</li>
+                <li>Complying with local laws, regulations, and professional standards</li>
+            </ul>
+            <p>SlotlyCare provides the platform on an "as is" basis and continuously improves its features. Pricing, access plans, and availability may evolve over time, except where explicitly stated (such as founders pricing conditions).</p>
+            <p>SlotlyCare reserves the right to suspend or terminate accounts that violate these terms or misuse the platform.</p>
+            <p>If you have questions regarding these terms, please contact us.</p>
+            <p><strong>Contact:</strong> <a href="/cdn-cgi/l/email-protection#40332c2f342c392321322500272d21292c6e232f2d"><span class="__cf_email__" data-cfemail="b1c2dddec5ddc8d2d0c3d4f1d6dcd0d8dd9fd2dedc">[email&#160;protected]</span></a></p>
+        </div>
+    </div>
+
+    <!-- Early Practice Program Modal -->
+    <div id="earlyModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('earlyModal')">&times;</span>
+            <h2>Early Practice Program</h2>
+            <p>SlotlyCare supports healthcare professionals at the beginning of their independent practice.</p>
+            <p>The Early Practice Program is designed for professionals who are in the early years of their career and are building their patient flow, scheduling structure, and operational processes.</p>
+            <p>Eligible professionals may receive access to special conditions under this program. Eligibility criteria, availability, and conditions are evaluated individually and are not publicly advertised.</p>
+            <p>This program is separate from founders access and does not affect existing plans or pricing for other users.</p>
+            <p>If you believe you may be eligible, please contact us to learn more.</p>
+            <p><strong>Contact:</strong> <a href="/cdn-cgi/l/email-protection#780b14170c14011b190a1d381f15191114561b1715"><span class="__cf_email__" data-cfemail="4f3c23203b23362c2e3d2a0f28222e2623612c2022">[email&#160;protected]</span></a></p>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('contactModal')">&times;</span>
+            <h2>Contact</h2>
+            <p>Have questions about SlotlyCare? We'd love to hear from you.</p>
+            <p>Send us an email and we'll get back to you as soon as possible.</p>
+            <p style="font-size: 1.25rem; margin-top: 1.5rem;"><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#f3809f9c879f8a90928196b3949e929a9fdd909c9e"><span class="__cf_email__" data-cfemail="88fbe4e7fce4f1ebe9faedc8efe5e9e1e4a6ebe7e5">[email&#160;protected]</span></a></p>
+        </div>
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Supabase Configuration
+        const SUPABASE_URL = 'https://hyfqxuvzesbqndglzabi.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5ZnF4dXZ6ZXNicW5kZ2x6YWJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg0MTQ4NDEsImV4cCI6MjA4Mzk5MDg0MX0.Holl4gTk-2bNmHjN2nlIRHBr4-THkZVj0Ws481-PMn4';
+        
+        // Backend Configuration
+        const API_BASE = 'https://slotlycare-backend.vercel.app';
+
+        // Reserved slugs that cannot be used (system pages)
+        const reservedSlugs = ['admin', 'demo', 'login', 'painel', 'dashboard', 'subscribe', 'success', 'api', 'test', 'www', 'app', 'help', 'support', 'pricing', 'about', 'contact', 'terms', 'privacy'];
+
+        // Check if slug exists in Supabase
+        async function checkSlugInDatabase(slug) {
+            try {
+                const response = await fetch(
+                    `${SUPABASE_URL}/rest/v1/doctors?link=eq.${slug}&select=link`,
+                    {
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                        }
+                    }
+                );
+                
+                if (!response.ok) {
+                    throw new Error('Database error');
+                }
+                
+                const data = await response.json();
+                return data.length > 0; // true if slug exists (taken)
+            } catch (error) {
+                console.error('Error checking slug:', error);
+                return null; // null indicates error
+            }
+        }
+
+        // Convert name to slug
+        function nameToSlug(name) {
+            if (!name) return '';
+            return name
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '') // Remove accents
+                .replace(/[^a-z0-9\s-]/g, '') // Remove special chars
+                .trim()
+                .replace(/\s+/g, '-') // Spaces to hyphens
+                .replace(/-+/g, '-'); // Multiple hyphens to single
+        }
+
+        // Get initials for avatar
+        function getInitials(name) {
+            if (!name) return 'DR';
+            const words = name.trim().split(/\s+/);
+            if (words.length >= 2) {
+                return (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
+            }
+            return name.substring(0, 2).toUpperCase();
+        }
+
+        // Elements
+        const nameInput = document.getElementById('nameInput');
+        const slugInput = document.getElementById('slugInput');
+        const phoneName = document.getElementById('phoneName');
+        const phoneAvatar = document.getElementById('phoneAvatar');
+
+        let userEditedSlug = false;
+        let reservationTimerInterval = null;
+        let reservationSeconds = 900; // 15 minutes
+        let lastVerifiedSlug = null;
+        let lastSlugAvailable = false;
+
+        // Timer functions
+        function startReservationTimer() {
+            const timerElement = document.getElementById('reservationTimer');
+            const timerCount = document.getElementById('timerCount');
+            
+            // Reset timer
+            reservationSeconds = 900;
+            timerElement.style.display = 'flex';
+            
+            // Clear any existing interval
+            if (reservationTimerInterval) {
+                clearInterval(reservationTimerInterval);
+            }
+            
+            // Update display immediately
+            updateTimerDisplay();
+            
+            // Start countdown
+            reservationTimerInterval = setInterval(() => {
+                reservationSeconds--;
+                updateTimerDisplay();
+                
+                if (reservationSeconds <= 0) {
+                    stopReservationTimer();
+                    // Show expiration message
+                    lastSlugAvailable = false;
+                    const resultText = document.getElementById('resultText');
+                    resultText.innerHTML = `<strong>slotlycare.com/${lastVerifiedSlug}</strong> reservation expired. Click "Check" to verify availability again.`;
+                    document.getElementById('linkResult').className = 'link-result taken';
+                    document.getElementById('resultIcon').innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const timerCount = document.getElementById('timerCount');
+            const minutes = Math.floor(reservationSeconds / 60);
+            const seconds = reservationSeconds % 60;
+            timerCount.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function stopReservationTimer() {
+            const timerElement = document.getElementById('reservationTimer');
+            timerElement.style.display = 'none';
+            
+            if (reservationTimerInterval) {
+                clearInterval(reservationTimerInterval);
+                reservationTimerInterval = null;
+            }
+        }
+
+        // Update phone mockup and slug when name changes
+        nameInput.addEventListener('input', function() {
+            const name = this.value.trim();
+            
+            // Update phone mockup
+            phoneName.textContent = name || 'Dr. John';
+            phoneAvatar.textContent = getInitials(name || 'Dr. John');
+            
+            // Update slug only if user hasn't manually edited it
+            if (!userEditedSlug) {
+                slugInput.value = nameToSlug(name);
+            }
+        });
+
+        // Mark that user edited slug manually
+        slugInput.addEventListener('input', function() {
+            userEditedSlug = true;
+        });
+
+        // Reset flag when name field is focused (allows re-sync)
+        nameInput.addEventListener('focus', function() {
+            if (slugInput.value === nameToSlug(this.value)) {
+                userEditedSlug = false;
+            }
+        });
+
+        async function checkAvailability() {
+            const result = document.getElementById('linkResult');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultText = document.getElementById('resultText');
+            const btn = document.getElementById('checkBtn');
+            
+            const slug = slugInput.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
+            
+            if (!slug) {
+                result.className = 'link-result';
+                return;
+            }
+
+            // Check minimum length
+            if (slug.length < 3) {
+                result.className = 'link-result taken';
+                resultIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+                resultText.innerHTML = `Link must be at least 3 characters.`;
+                lastVerifiedSlug = slug;
+                lastSlugAvailable = false;
+                stopReservationTimer();
+                return;
+            }
+
+            // Show loading
+            btn.disabled = true;
+            btn.textContent = '...';
+
+            // Check reserved slugs first
+            if (reservedSlugs.includes(slug)) {
+                result.className = 'link-result taken';
+                resultIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+                resultText.innerHTML = `<strong>slotlycare.com/${slug}</strong> is reserved. Try another name.`;
+                lastVerifiedSlug = slug;
+                lastSlugAvailable = false;
+                stopReservationTimer();
+                btn.disabled = false;
+                btn.textContent = 'Check';
+                return;
+            }
+
+            // Check database
+            const isTaken = await checkSlugInDatabase(slug);
+
+            if (isTaken === null) {
+                // Error occurred
+                result.className = 'link-result taken';
+                resultIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+                resultText.innerHTML = `Error checking availability. Please try again.`;
+                lastVerifiedSlug = null;
+                lastSlugAvailable = false;
+                stopReservationTimer();
+            } else if (isTaken) {
+                result.className = 'link-result taken';
+                resultIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+                resultText.innerHTML = `<strong>slotlycare.com/${slug}</strong> is already taken. Try another name.`;
+                lastVerifiedSlug = slug;
+                lastSlugAvailable = false;
+                stopReservationTimer();
+            } else {
+                result.className = 'link-result available';
+                resultIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>';
+                resultText.innerHTML = `<strong>slotlycare.com/${slug}</strong> is available. Reserve it now before someone else does.`;
+                lastVerifiedSlug = slug;
+                lastSlugAvailable = true;
+                startReservationTimer();
+            }
+
+            btn.disabled = false;
+            btn.textContent = 'Check';
+        }
+
+        // Handle Reserve Link button click
+        async function handleReserveLink() {
+            const slug = slugInput.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
+            const name = nameInput.value.trim();
+            
+            // Check if slug is entered
+            if (!slug || slug.length < 3) {
+                alert('Please enter your professional name and check your link availability first.');
+                document.getElementById('nameInput').focus();
+                return;
+            }
+            
+            // Check if it's a reserved slug
+            if (reservedSlugs.includes(slug)) {
+                alert('This link is reserved. Please choose a different name.');
+                return;
+            }
+            
+            // Verify availability one more time before checkout
+            const isTaken = await checkSlugInDatabase(slug);
+            
+            if (isTaken === null) {
+                alert('Error checking availability. Please try again.');
+                return;
+            }
+            
+            if (isTaken) {
+                alert('Sorry, this link was just taken. Please choose a different name.');
+                return;
+            }
+            
+            // Save slug and name to localStorage for use in success.html
+            localStorage.setItem('slotlycare_pending_slug', slug);
+            localStorage.setItem('slotlycare_pending_name', name);
+            
+            // Redirect to checkout
+            try {
+                const btn = document.querySelector('.pricing-cta');
+                btn.disabled = true;
+                btn.textContent = 'Redirecting to checkout...';
+                
+                const response = await fetch(`${API_BASE}/api/create-checkout-session`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        success_url: window.location.origin + '/success.html',
+                        cancel_url: window.location.origin + '/'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.checkout_url) {
+                    window.location.href = data.checkout_url;
+                } else {
+                    throw new Error(data.error || 'Failed to create checkout session');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+                const btn = document.querySelector('.pricing-cta');
+                btn.disabled = false;
+                btn.textContent = 'Reserve Your Personal Link';
+            }
+        }
+
+        // Check on Enter key in either field
+        nameInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAvailability();
+            }
+        });
+
+        slugInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAvailability();
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Handle Reserve Link button click
+        function handleReserveLink() {
+            const slug = slugInput.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
+            
+            // If no slug entered, scroll to hero to fill it
+            if (!slug) {
+                document.querySelector('.hero').scrollIntoView({ behavior: 'smooth' });
+                slugInput.focus();
+                alert('Please enter your desired booking link first.');
+                return;
+            }
+
+            // If slug wasn't verified or is different from last verified
+            if (slug !== lastVerifiedSlug) {
+                document.querySelector('.hero').scrollIntoView({ behavior: 'smooth' });
+                alert('Please click "Check" to verify your link is available.');
+                return;
+            }
+
+            // If slug was verified but not available
+            if (!lastSlugAvailable) {
+                document.querySelector('.hero').scrollIntoView({ behavior: 'smooth' });
+                alert('This link is not available. Please choose a different one.');
+                return;
+            }
+
+            // Slug is verified and available - save to localStorage and redirect
+            localStorage.setItem('slotlycare_reserved_slug', slug);
+            localStorage.setItem('slotlycare_reserved_name', nameInput.value.trim());
+            
+            // Redirect to subscribe page
+            window.location.href = 'subscribe.html';
+        }
+    </script>
 </body>
 </html>
