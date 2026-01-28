@@ -1951,7 +1951,7 @@
             <p>SlotlyCare uses industry-standard security measures to protect data and operates in line with GDPR and international data protection standards.</p>
             <p>Healthcare professionals remain fully responsible for how they manage patient relationships, communications, and compliance with applicable professional regulations.</p>
             <p>If you have any questions about this policy or how data is handled, please contact us.</p>
-            <p><strong>Contact:</strong> <a href="mailto:slotlycare@gmail.com">slotlycare@gmail.com</a></p>
+            <p><strong>Contact:</strong> <a href="/cdn-cgi/l/email-protection#592a35362d35203a382b3c193e34383035773a3634"><span class="__cf_email__" data-cfemail="9eedf2f1eaf2e7fdffecfbdef9f3fff7f2b0fdf1f3">[email&#160;protected]</span></a></p>
         </div>
     </div>
 
@@ -1971,7 +1971,7 @@
             <p>SlotlyCare provides the platform on an "as is" basis and continuously improves its features. Pricing, access plans, and availability may evolve over time, except where explicitly stated (such as founders pricing conditions).</p>
             <p>SlotlyCare reserves the right to suspend or terminate accounts that violate these terms or misuse the platform.</p>
             <p>If you have questions regarding these terms, please contact us.</p>
-            <p><strong>Contact:</strong> <a href="mailto:slotlycare@gmail.com">slotlycare@gmail.com</a></p>
+            <p><strong>Contact:</strong> <a href="/cdn-cgi/l/email-protection#e99a85869d85908a889b8ca98e84888085c78a8684"><span class="__cf_email__" data-cfemail="d6a5bab9a2baafb5b7a4b396b1bbb7bfbaf8b5b9bb">[email&#160;protected]</span></a></p>
         </div>
     </div>
 
@@ -1985,7 +1985,7 @@
             <p>Eligible professionals may receive access to special conditions under this program. Eligibility criteria, availability, and conditions are evaluated individually and are not publicly advertised.</p>
             <p>This program is separate from founders access and does not affect existing plans or pricing for other users.</p>
             <p>If you believe you may be eligible, please contact us to learn more.</p>
-            <p><strong>Contact:</strong> <a href="mailto:slotlycare@gmail.com">slotlycare@gmail.com</a></p>
+            <p><strong>Contact:</strong> <a href="/cdn-cgi/l/email-protection#2d5e41425941544e4c5f486d4a404c4441034e4240"><span class="__cf_email__" data-cfemail="6b1807041f0712080a190e2b0c060a020745080406">[email&#160;protected]</span></a></p>
         </div>
     </div>
 
@@ -1996,11 +1996,11 @@
             <h2>Contact</h2>
             <p>Have questions about SlotlyCare? We'd love to hear from you.</p>
             <p>Send us an email and we'll get back to you as soon as possible.</p>
-            <p style="font-size: 1.25rem; margin-top: 1.5rem;"><strong>Email:</strong> <a href="mailto:slotlycare@gmail.com">slotlycare@gmail.com</a></p>
+            <p style="font-size: 1.25rem; margin-top: 1.5rem;"><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#5d2e31322931243e3c2f381d3a303c3431733e3230"><span class="__cf_email__" data-cfemail="f2819e9d869e8b91938097b2959f939b9edc919d9f">[email&#160;protected]</span></a></p>
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Supabase Configuration
         const SUPABASE_URL = 'https://hyfqxuvzesbqndglzabi.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5ZnF4dXZ6ZXNicW5kZ2x6YWJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg0MTQ4NDEsImV4cCI6MjA4Mzk5MDg0MX0.Holl4gTk-2bNmHjN2nlIRHBr4-THkZVj0Ws481-PMn4';
@@ -2339,36 +2339,6 @@
                 document.body.style.overflow = 'auto';
             }
         });
-
-        // Handle Reserve Link button click
-        function handleReserveLink() {
-            const slug = slugInput.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
-            
-            // If no slug entered, scroll to hero and highlight field
-            if (!slug) {
-                scrollToAndHighlight(nameInput, 'Enter your name to get started');
-                return;
-            }
-
-            // If slug wasn't verified or is different from last verified
-            if (slug !== lastVerifiedSlug) {
-                scrollToAndHighlight(document.getElementById('checkBtn'), 'Click to check availability');
-                return;
-            }
-
-            // If slug was verified but not available
-            if (!lastSlugAvailable) {
-                scrollToAndHighlight(slugInput, 'This link is taken — try another');
-                return;
-            }
-
-            // Slug is verified and available - save to localStorage and redirect
-            localStorage.setItem('slotlycare_reserved_slug', slug);
-            localStorage.setItem('slotlycare_reserved_name', nameInput.value.trim());
-            
-            // Redirect to subscribe page
-            window.location.href = 'subscribe.html';
-        }
 
         // Scroll to element, highlight it, and show hint
         function scrollToAndHighlight(element, hintText) {
