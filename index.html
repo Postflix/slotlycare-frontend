@@ -2339,6 +2339,85 @@
                 document.body.style.overflow = 'auto';
             }
         });
+
+        // Handle Reserve Link button click
+        function handleReserveLink() {
+            const slug = slugInput.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
+            
+            // If no slug entered, scroll to hero and highlight field
+            if (!slug) {
+                scrollToAndHighlight(nameInput, 'Enter your name to get started');
+                return;
+            }
+
+            // If slug wasn't verified or is different from last verified
+            if (slug !== lastVerifiedSlug) {
+                scrollToAndHighlight(document.getElementById('checkBtn'), 'Click to check availability');
+                return;
+            }
+
+            // If slug was verified but not available
+            if (!lastSlugAvailable) {
+                scrollToAndHighlight(slugInput, 'This link is taken — try another');
+                return;
+            }
+
+            // Slug is verified and available - save to localStorage and redirect
+            localStorage.setItem('slotlycare_reserved_slug', slug);
+            localStorage.setItem('slotlycare_reserved_name', nameInput.value.trim());
+            
+            // Redirect to subscribe page
+            window.location.href = 'subscribe.html';
+        }
+
+        // Scroll to element, highlight it, and show hint
+        function scrollToAndHighlight(element, hintText) {
+            // Scroll to hero
+            document.querySelector('.hero').scrollIntoView({ behavior: 'smooth' });
+            
+            // Wait for scroll to finish, then highlight
+            setTimeout(() => {
+                // Focus the element
+                if (element.tagName === 'INPUT') {
+                    element.focus();
+                }
+                
+                // Add highlight animation
+                element.classList.add('highlight-pulse');
+                
+                // Show hint below the link checker
+                showFieldHint(hintText);
+                
+                // Remove highlight after animation
+                setTimeout(() => {
+                    element.classList.remove('highlight-pulse');
+                }, 2000);
+            }, 500);
+        }
+
+        // Show hint message below the link checker
+        function showFieldHint(text) {
+            // Remove existing hint if any
+            const existingHint = document.querySelector('.field-hint');
+            if (existingHint) {
+                existingHint.remove();
+            }
+            
+            // Create hint element
+            const hint = document.createElement('div');
+            hint.className = 'field-hint';
+            hint.innerHTML = '👆 ' + text;
+            
+            // Insert after linkResult
+            const linkResult = document.getElementById('linkResult');
+            linkResult.parentNode.insertBefore(hint, linkResult.nextSibling);
+            
+            // Remove after 4 seconds
+            setTimeout(() => {
+                hint.classList.add('fade-out');
+                setTimeout(() => hint.remove(), 300);
+            }, 4000);
+        }
     </script>
 </body>
 </html>
