@@ -2341,7 +2341,7 @@
         });
 
         // Handle Reserve Link button click
-        function handleReserveLink() {
+        async function handleReserveLink() {
             const slug = slugInput.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
             
             // If no slug entered, scroll to hero and highlight field
@@ -2362,12 +2362,34 @@
                 return;
             }
 
-            // Slug is verified and available - save to localStorage and redirect
+            // Slug is verified and available - save to localStorage
             localStorage.setItem('slotlycare_reserved_slug', slug);
             localStorage.setItem('slotlycare_reserved_name', nameInput.value.trim());
             
-            // Redirect to subscribe page
-            window.location.href = 'subscribe.html';
+            // Redirect directly to Stripe checkout
+            try {
+                const response = await fetch(`${API_BASE}/api/create-checkout-session`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        success_url: window.location.origin + '/success.html',
+                        cancel_url: window.location.origin + '/'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.checkout_url) {
+                    window.location.href = data.checkout_url;
+                } else {
+                    throw new Error(data.error || 'Failed to create checkout session');
+                }
+            } catch (error) {
+                alert('Error connecting to payment. Please try again.');
+                console.error('Checkout error:', error);
+            }
         }
 
         // Scroll to element, highlight it, and show hint
