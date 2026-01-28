@@ -2353,15 +2353,15 @@
         // Show hint message below the link checker
         function showFieldHint(text) {
             // Remove existing hint if any
-            const existingHint = document.querySelector('.field-hint-message');
+            const existingHint = document.querySelector('.hint-message');
             if (existingHint) {
                 existingHint.remove();
             }
             
-            // Create hint element
+            // Create hint element (discrete style, not green banner)
             const hint = document.createElement('div');
-            hint.className = 'field-hint-message';
-            hint.style.cssText = 'background: var(--accent); color: white; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; margin-top: 0.75rem; animation: slide-in 0.3s ease-out;';
+            hint.className = 'hint-message';
+            hint.style.cssText = 'font-size: 0.875rem; color: #065F46; margin-top: 0.5rem; font-weight: 500;';
             hint.innerHTML = '👆 ' + text;
             
             // Insert after linkResult
