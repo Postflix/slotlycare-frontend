@@ -2220,73 +2220,6 @@
             btn.textContent = 'Check';
         }
 
-        // Handle Reserve Link button click
-        async function handleReserveLink() {
-            const slug = slugInput.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
-            const name = nameInput.value.trim();
-            
-            // Check if slug is entered
-            if (!slug || slug.length < 3) {
-                alert('Please enter your professional name and check your link availability first.');
-                document.getElementById('nameInput').focus();
-                return;
-            }
-            
-            // Check if it's a reserved slug
-            if (reservedSlugs.includes(slug)) {
-                alert('This link is reserved. Please choose a different name.');
-                return;
-            }
-            
-            // Verify availability one more time before checkout
-            const isTaken = await checkSlugInDatabase(slug);
-            
-            if (isTaken === null) {
-                alert('Error checking availability. Please try again.');
-                return;
-            }
-            
-            if (isTaken) {
-                alert('Sorry, this link was just taken. Please choose a different name.');
-                return;
-            }
-            
-            // Save slug and name to localStorage for use in success.html
-            localStorage.setItem('slotlycare_pending_slug', slug);
-            localStorage.setItem('slotlycare_pending_name', name);
-            
-            // Redirect to checkout
-            try {
-                const btn = document.querySelector('.pricing-cta');
-                btn.disabled = true;
-                btn.textContent = 'Redirecting to checkout...';
-                
-                const response = await fetch(`${API_BASE}/api/create-checkout-session`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        success_url: window.location.origin + '/success.html',
-                        cancel_url: window.location.origin + '/'
-                    })
-                });
-
-                const data = await response.json();
-
-                if (data.success && data.checkout_url) {
-                    window.location.href = data.checkout_url;
-                } else {
-                    throw new Error(data.error || 'Failed to create checkout session');
-                }
-            } catch (error) {
-                alert('Error: ' + error.message);
-                const btn = document.querySelector('.pricing-cta');
-                btn.disabled = false;
-                btn.textContent = 'Reserve Your Personal Link';
-            }
-        }
-
         // Check on Enter key in either field
         nameInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
@@ -2341,7 +2274,7 @@
         });
 
         // Handle Reserve Link button click
-        function handleReserveLink() {
+        async function handleReserveLink() {
             const slug = slugInput.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
             
             // If no slug entered, scroll to hero and highlight field
@@ -2362,12 +2295,34 @@
                 return;
             }
 
-            // Slug is verified and available - save to localStorage and redirect
+            // Slug is verified and available - save to localStorage
             localStorage.setItem('slotlycare_reserved_slug', slug);
             localStorage.setItem('slotlycare_reserved_name', nameInput.value.trim());
             
-            // Redirect to subscribe page
-            window.location.href = 'subscribe.html';
+            // Redirect directly to Stripe checkout
+            try {
+                const response = await fetch(`${API_BASE}/api/create-checkout-session`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        success_url: window.location.origin + '/success.html',
+                        cancel_url: window.location.origin + '/'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.checkout_url) {
+                    window.location.href = data.checkout_url;
+                } else {
+                    throw new Error(data.error || 'Failed to create checkout session');
+                }
+            } catch (error) {
+                alert('Error connecting to payment. Please try again.');
+                console.error('Checkout error:', error);
+            }
         }
 
         // Scroll to element, highlight it, and show hint
@@ -2398,14 +2353,15 @@
         // Show hint message below the link checker
         function showFieldHint(text) {
             // Remove existing hint if any
-            const existingHint = document.querySelector('.field-hint');
+            const existingHint = document.querySelector('.field-hint-message');
             if (existingHint) {
                 existingHint.remove();
             }
             
             // Create hint element
             const hint = document.createElement('div');
-            hint.className = 'field-hint';
+            hint.className = 'field-hint-message';
+            hint.style.cssText = 'background: var(--accent); color: white; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; margin-top: 0.75rem; animation: slide-in 0.3s ease-out;';
             hint.innerHTML = '👆 ' + text;
             
             // Insert after linkResult
@@ -2414,7 +2370,8 @@
             
             // Remove after 4 seconds
             setTimeout(() => {
-                hint.classList.add('fade-out');
+                hint.style.opacity = '0';
+                hint.style.transition = 'opacity 0.3s ease-out';
                 setTimeout(() => hint.remove(), 300);
             }, 4000);
         }
