@@ -116,6 +116,45 @@
             color: #78350F;
         }
 
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-wrapper input {
+            width: 100%;
+            padding: 14px 45px 14px 16px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .password-wrapper input:focus {
+            outline: none;
+            border-color: #10B981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            cursor: pointer;
+            color: #64748B;
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-password:hover {
+            color: #334155;
+        }
+
+        .eye-icon {
+            width: 20px;
+            height: 20px;
+        }
+
         .form-group {
             margin-bottom: 20px;
             text-align: left;
@@ -261,24 +300,40 @@
             <form onsubmit="handleSetPassword(event)">
                 <div class="form-group">
                     <label for="password">Create Password</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        placeholder="Enter a strong password"
-                        required
-                        minlength="6"
-                    >
+                    <div class="password-wrapper">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            placeholder="Enter a strong password"
+                            required
+                            minlength="6"
+                        >
+                        <span class="toggle-password" onclick="togglePassword('password', this)">
+                            <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </span>
+                    </div>
                     <p class="password-requirements">Minimum 6 characters</p>
                 </div>
 
                 <div class="form-group">
                     <label for="confirmPassword">Confirm Password</label>
-                    <input 
-                        type="password" 
-                        id="confirmPassword" 
-                        placeholder="Confirm your password"
-                        required
-                    >
+                    <div class="password-wrapper">
+                        <input 
+                            type="password" 
+                            id="confirmPassword" 
+                            placeholder="Confirm your password"
+                            required
+                        >
+                        <span class="toggle-password" onclick="togglePassword('confirmPassword', this)">
+                            <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </span>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn-primary" id="btnSetPassword">
@@ -334,6 +389,19 @@
         function showError() {
             document.getElementById('loadingState').style.display = 'none';
             document.getElementById('errorState').style.display = 'block';
+        }
+
+        function togglePassword(inputId, toggleElement) {
+            const input = document.getElementById(inputId);
+            const eyeIcon = toggleElement.querySelector('.eye-icon');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                eyeIcon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+            } else {
+                input.type = 'password';
+                eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+            }
         }
 
         async function handleSetPassword(event) {
