@@ -81,6 +81,24 @@
             color: white;
         }
 
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-login {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-login:hover {
+            color: var(--accent);
+        }
+
         .nav-cta {
             background: var(--text);
             color: var(--white);
@@ -1524,7 +1542,10 @@
             </div>
             SlotlyCare
         </a>
-        <a href="#" onclick="handleReserveLink(); return false;" class="nav-cta">Get Founders Access</a>
+        <div class="nav-links">
+            <a href="login.html" class="nav-login">Log in</a>
+            <a href="#" onclick="handleReserveLink(); return false;" class="nav-cta">Get Founders Access</a>
+        </div>
     </nav>
 
     <!-- Hero Section -->
