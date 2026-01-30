@@ -2000,7 +2000,7 @@
             <p>SlotlyCare uses industry-standard security measures to protect data and operates in line with GDPR and international data protection standards.</p>
             <p>Healthcare professionals remain fully responsible for how they manage patient relationships, communications, and compliance with applicable professional regulations.</p>
             <p>If you have any questions about this policy or how data is handled, please contact us.</p>
-            <p><strong>Contact:</strong> <a href="/cdn-cgi/l/email-protection#a1d2cdced5cdd8c2c0d3c4e1c6ccc0c8cd8fc2cecc"><span class="__cf_email__" data-cfemail="e99a85869d85908a889b8ca98e84888085c78a8684">[email&#160;protected]</span></a></p>
+            <p><strong>Contact:</strong> <a class="email-contact" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -2020,7 +2020,7 @@
             <p>SlotlyCare provides the platform on an "as is" basis and continuously improves its features. Pricing, access plans, and availability may evolve over time, except where explicitly stated (such as founders pricing conditions).</p>
             <p>SlotlyCare reserves the right to suspend or terminate accounts that violate these terms or misuse the platform.</p>
             <p>If you have questions regarding these terms, please contact us.</p>
-            <p><strong>Contact:</strong> <a href="/cdn-cgi/l/email-protection#96e5faf9e2faeff5f7e4f3d6f1fbf7fffab8f5f9fb"><span class="__cf_email__" data-cfemail="b8cbd4d7ccd4c1dbd9caddf8dfd5d9d1d496dbd7d5">[email&#160;protected]</span></a></p>
+            <p><strong>Contact:</strong> <a class="email-contact" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -2034,7 +2034,7 @@
             <p>Eligible professionals may receive access to special conditions under this program. Eligibility criteria, availability, and conditions are evaluated individually and are not publicly advertised.</p>
             <p>This program is separate from founders access and does not affect existing plans or pricing for other users.</p>
             <p>If you believe you may be eligible, please contact us to learn more.</p>
-            <p><strong>Contact:</strong> <a href="/cdn-cgi/l/email-protection#b3c0dfdcc7dfcad0d2c1d6f3d4ded2dadf9dd0dcde"><span class="__cf_email__" data-cfemail="295a45465d45504a485b4c694e44484045074a4644">[email&#160;protected]</span></a></p>
+            <p><strong>Contact:</strong> <a class="email-contact" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -2045,7 +2045,7 @@
             <h2>Contact</h2>
             <p>Have questions about SlotlyCare? We'd love to hear from you.</p>
             <p>Send us an email and we'll get back to you as soon as possible.</p>
-            <p style="font-size: 1.25rem; margin-top: 1.5rem;"><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#cbb8a7a4bfa7b2a8aab9ae8baca6aaa2a7e5a8a4a6"><span class="__cf_email__" data-cfemail="17647b78637b6e7476657257707a767e7b3974787a">[email&#160;protected]</span></a></p>
+            <p style="font-size: 1.25rem; margin-top: 1.5rem;"><strong>Email:</strong> <a class="email-contact" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -2441,6 +2441,19 @@
             // Atualiza título da página
             document.title = 'SlotlyCare — Exclusive for ' + EVENT_CONFIG.name;
         });
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const emailElements = document.querySelectorAll('.email-contact');
+        const user = 'slotlycare';
+        const domain = 'gmail.com';
+        const fullEmail = user + '@' + domain;
+
+        emailElements.forEach(function(element) {
+          element.innerHTML = fullEmail;
+          element.href = 'mailto:' + fullEmail;
+        });
+      });
     </script>
 </body>
 </html>
