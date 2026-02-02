@@ -955,6 +955,15 @@ async function loadFromBackend() {
                 currentDate = new Date(DEMO_ANO, DEMO_MES - 1, 1);
             }
             
+            // DEMO: Se tiver nome na URL, usar esse nome
+            if (realDoctorId === 'demo') {
+                const previewName = urlParams.get('preview_name');
+                if (previewName) {
+                    doctorData.name = decodeURIComponent(previewName);
+                    console.log('👤 Demo: usando nome da landing:', doctorData.name);
+                }
+            }
+            
             console.log('✅ Doctor loaded from backend');
             return true;
         } catch (error) {
