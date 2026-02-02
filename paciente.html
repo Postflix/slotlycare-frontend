@@ -685,18 +685,39 @@ const DEMO_MES = 2;    // 1=Janeiro, 2=Fevereiro, 3=Março, etc.
 const DEMO_ANO = 2026;
 // ================================================
 
-// Função para gerar slots fixos do demo
+// Função para gerar slots fixos do demo (6 meses a partir do mês configurado)
 function gerarSlotsDemoFixos() {
     const slots = {};
-    const diasDisponiveis = [2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 16, 17, 18, 19, 20, 23, 24, 25, 26, 27]; // Seg-Sex
     const horarios = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30'];
     
-    diasDisponiveis.forEach(dia => {
-        const mes = String(DEMO_MES).padStart(2, '0');
-        const diaStr = String(dia).padStart(2, '0');
-        const dateKey = `${DEMO_ANO}-${mes}-${diaStr}`;
-        slots[dateKey] = [...horarios];
-    });
+    // Gerar para 6 meses
+    for (let m = 0; m < 6; m++) {
+        let mes = DEMO_MES + m;
+        let ano = DEMO_ANO;
+        
+        // Se passar de dezembro, vai pro próximo ano
+        if (mes > 12) {
+            mes = mes - 12;
+            ano = ano + 1;
+        }
+        
+        // Quantos dias tem esse mês
+        const diasNoMes = new Date(ano, mes, 0).getDate();
+        
+        // Gerar slots para cada dia útil (seg-sex)
+        for (let dia = 1; dia <= diasNoMes; dia++) {
+            const data = new Date(ano, mes - 1, dia);
+            const diaSemana = data.getDay(); // 0=Dom, 1=Seg, ..., 6=Sab
+            
+            // Só dias úteis (segunda a sexta)
+            if (diaSemana >= 1 && diaSemana <= 5) {
+                const mesStr = String(mes).padStart(2, '0');
+                const diaStr = String(dia).padStart(2, '0');
+                const dateKey = `${ano}-${mesStr}-${diaStr}`;
+                slots[dateKey] = [...horarios];
+            }
+        }
+    }
     
     return slots;
 }
