@@ -680,6 +680,27 @@ body {
 const API_BASE_URL = 'https://slotlycare-backend.vercel.app/api';
 let realDoctorId = null;
 
+// ===== DEMO: PARA ALTERAR O MÊS, MUDE AQUI =====
+const DEMO_MES = 2;    // 1=Janeiro, 2=Fevereiro, 3=Março, etc.
+const DEMO_ANO = 2026;
+// ================================================
+
+// Função para gerar slots fixos do demo
+function gerarSlotsDemoFixos() {
+    const slots = {};
+    const diasDisponiveis = [2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 16, 17, 18, 19, 20, 23, 24, 25, 26, 27]; // Seg-Sex
+    const horarios = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30'];
+    
+    diasDisponiveis.forEach(dia => {
+        const mes = String(DEMO_MES).padStart(2, '0');
+        const diaStr = String(dia).padStart(2, '0');
+        const dateKey = `${DEMO_ANO}-${mes}-${diaStr}`;
+        slots[dateKey] = [...horarios];
+    });
+    
+    return slots;
+}
+
 // TRANSLATIONS
 const translations = {
     en: {
@@ -899,12 +920,18 @@ async function loadFromBackend() {
             const slotsResponse = await fetch(`${API_BASE_URL}/get-slots?doctor_id=${realDoctorId}`);
             const slotsResult = await slotsResponse.json();
             
-            if (slotsResult.success && slotsResult.slots) {
+            if (slotsResult.success && slotsResult.slots && slotsResult.slots.length > 0) {
                 availableSlots = {};
                 slotsResult.slots.forEach(slot => {
                     if (!availableSlots[slot.date]) availableSlots[slot.date] = [];
                     availableSlots[slot.date].push(slot.time);
                 });
+            } else if (realDoctorId === 'demo') {
+                // DEMO: Se não tiver slots no banco, usar slots fixos
+                console.log('📅 Demo: usando slots fixos');
+                availableSlots = gerarSlotsDemoFixos();
+                // Ajustar o calendário para mostrar o mês do demo
+                currentDate = new Date(DEMO_ANO, DEMO_MES - 1, 1);
             }
             
             console.log('✅ Doctor loaded from backend');
