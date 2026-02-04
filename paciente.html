@@ -540,6 +540,18 @@ body {
 </head>
 <body>
 
+<!-- Error page (hidden by default) -->
+<div id="notFoundPage" style="display: none; min-height: 100vh; background: #FAFAF9; font-family: 'Inter', sans-serif;">
+    <div style="max-width: 480px; margin: 0 auto; padding: 120px 24px 60px; text-align: center;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+        <h1 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Link not found</h1>
+        <p style="color: #6B6B6B; font-size: 1rem; line-height: 1.6; margin-bottom: 2rem;">
+            This booking link doesn't exist. Please check the spelling and try again.
+        </p>
+        <a href="https://slotlycare.com" style="display: inline-block; background: #0D9488; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.95rem;">Go to SlotlyCare</a>
+    </div>
+</div>
+
 <!-- Language is set by doctor's preference -->
 
 <div class="container">
@@ -923,7 +935,9 @@ async function loadFromBackend() {
             
             if (!doctorResult.success) {
                 console.error('❌ Doctor not found');
-                return false;
+                document.getElementById('notFoundPage').style.display = 'block';
+                document.querySelector('.container').style.display = 'none';
+                return 'not_found';
             }
             
             const realData = doctorResult.doctor;
@@ -1021,6 +1035,9 @@ async function loadFromBackend() {
 // INITIALIZE
 window.onload = async function() {
     const loadedFromBackend = await loadFromBackend();
+    
+    // If slug was not found, error page is already showing — stop here
+    if (loadedFromBackend === 'not_found') return;
     
     if (!loadedFromBackend) {
         console.log('📋 Using DEMO data');
