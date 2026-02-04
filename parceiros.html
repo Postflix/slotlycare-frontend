@@ -2053,6 +2053,7 @@
 
     <!-- Footer -->
     <footer>
+        <p class="footer-partner" style="color: var(--accent); font-size: 0.85rem; margin-bottom: 0.75rem; opacity: 0.85;">This page is available exclusively through <strong id="footerPartnerName"></strong>.</p>
         <p class="footer-text">© 2026 SlotlyCare. Your schedule, your rules, your patients.</p>
         <p class="footer-links"><a href="#" onclick="openModal('privacyModal'); return false;">Privacy Policy</a> · <a href="#" onclick="openModal('termsModal'); return false;">Terms of Service</a> · <a href="#" onclick="openModal('contactModal'); return false;">Contact</a></p>
         <p class="footer-early">Early-career professional? <a href="#" onclick="openModal('earlyModal'); return false;">Learn about our Early Practice Program.</a></p>
@@ -2520,6 +2521,9 @@
             document.getElementById('priceDescYears').textContent = p.accessYears;
             document.getElementById('priceMonthly').textContent = p.monthlyEquiv;
             document.getElementById('pricingPartnerName').textContent = p.name;
+            
+            // Footer
+            document.getElementById('footerPartnerName').textContent = p.name;
         })();
     </script>
 </body>
