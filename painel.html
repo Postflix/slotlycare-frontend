@@ -1122,7 +1122,7 @@ textarea {
             <h3 class="modal-title" data-i18n="referral_title">Refer a Colleague</h3>
         </div>
         <div class="modal-body">
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;" data-i18n="referral_subtitle">Know a healthcare professional who could benefit from SlotlyCare? Let us know!</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;" data-i18n="referral_subtitle">Refer colleagues who could benefit from SlotlyCare!</p>
             <div style="margin-bottom: 16px;">
                 <label style="display: block; font-weight: 600; margin-bottom: 6px; color: var(--text-main);" data-i18n="referral_name">Name</label>
                 <input type="text" id="referralName" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.95rem;">
@@ -1189,7 +1189,7 @@ const translations = {
         copied: "Copied!",
         referral_button: "👥 Refer a Colleague",
         referral_title: "Refer a Colleague",
-        referral_subtitle: "Know a healthcare professional who could benefit from SlotlyCare? Let us know!",
+        referral_subtitle: "Refer colleagues who could benefit from SlotlyCare!",
         referral_name: "Name",
         referral_email: "Email",
         referral_specialty: "Specialty (optional)",
@@ -1249,7 +1249,7 @@ const translations = {
         copied: "Copiado!",
         referral_button: "👥 Indique um Colega",
         referral_title: "Indique um Colega",
-        referral_subtitle: "Conhece um profissional de saúde que poderia se beneficiar do SlotlyCare? Nos avise!",
+        referral_subtitle: "Indique colegas que poderiam se beneficiar do SlotlyCare!",
         referral_name: "Nome",
         referral_email: "Email",
         referral_specialty: "Especialidade (opcional)",
@@ -1309,7 +1309,7 @@ const translations = {
         copied: "¡Copiado!",
         referral_button: "👥 Recomienda a un Colega",
         referral_title: "Recomienda a un Colega",
-        referral_subtitle: "¿Conoces a un profesional de salud que podría beneficiarse de SlotlyCare? ¡Cuéntanos!",
+        referral_subtitle: "¡Recomienda colegas que podrían beneficiarse de SlotlyCare!",
         referral_name: "Nombre",
         referral_email: "Email",
         referral_specialty: "Especialidad (opcional)",
@@ -1369,7 +1369,7 @@ const translations = {
         copied: "Copié!",
         referral_button: "👥 Recommander un Collègue",
         referral_title: "Recommander un Collègue",
-        referral_subtitle: "Vous connaissez un professionnel de santé qui pourrait bénéficier de SlotlyCare ? Faites-le nous savoir !",
+        referral_subtitle: "Recommandez des collègues qui pourraient bénéficier de SlotlyCare !",
         referral_name: "Nom",
         referral_email: "Email",
         referral_specialty: "Spécialité (optionnel)",
@@ -1429,7 +1429,7 @@ const translations = {
         copied: "Kopiert!",
         referral_button: "👥 Kollegen Empfehlen",
         referral_title: "Kollegen Empfehlen",
-        referral_subtitle: "Kennen Sie einen Gesundheitsfachmann, der von SlotlyCare profitieren könnte? Lassen Sie es uns wissen!",
+        referral_subtitle: "Empfehlen Sie Kollegen, die von SlotlyCare profitieren könnten!",
         referral_name: "Name",
         referral_email: "Email",
         referral_specialty: "Fachgebiet (optional)",
@@ -1489,7 +1489,7 @@ const translations = {
         copied: "Copiato!",
         referral_button: "👥 Consiglia un Collega",
         referral_title: "Consiglia un Collega",
-        referral_subtitle: "Conosci un professionista sanitario che potrebbe beneficiare di SlotlyCare? Faccelo sapere!",
+        referral_subtitle: "Consiglia colleghi che potrebbero beneficiare di SlotlyCare!",
         referral_name: "Nome",
         referral_email: "Email",
         referral_specialty: "Specialità (opzionale)",
@@ -2586,7 +2586,7 @@ async function sendReferral() {
             document.getElementById('referralEmail').value = '';
             document.getElementById('referralSpecialty').value = '';
             document.getElementById('referralMessage').value = '';
-            setTimeout(() => closeReferralModal(), 2000);
+
         } else {
             showReferralMessage(data.error || lang.referral_error, 'error');
         }
