@@ -284,7 +284,7 @@
         </div>
 
         <div class="forgot-password">
-            <p>Forgot your password? Send an email to <a href="mailto:slotlycare@gmail.com">slotlycare@gmail.com</a> <strong>from your registered email</strong> requesting a password reset.</p>
+            <p>Forgot your password? Send an email to <a class="email-support" href="#">[carregando email...]</a> <strong>from your registered email</strong> requesting a password reset.</p>
         </div>
     </div>
 
@@ -292,13 +292,7 @@
         const API_BASE = 'https://slotlycare-backend.vercel.app';
 
         function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const eyeIcon = document.getElementById('eyeIcon');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                // Eye with slash (hidden)
-                eyeIcon.innerHTML = `
+            const passwordInput = document.getElementById('paseIcon.innerHTML = `
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
                 `;
             } else {
@@ -382,6 +376,18 @@
                 window.location.href = 'painel.html';
             }
         };
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const supportUser = 'support';
+        const domain = 'slotlycare.com';
+
+        document.querySelectorAll('.email-support').forEach(function(element) {
+          const email = supportUser + '@' + domain;
+          element.innerHTML = email;
+          element.href = 'mailto:' + email;
+        });
+      });
     </script>
 </body>
 </html>
