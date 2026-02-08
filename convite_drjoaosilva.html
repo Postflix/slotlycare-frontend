@@ -1646,69 +1646,6 @@
             }
         }
 
-        /* Invite-specific styles */
-        .invite-link-box {
-            background: var(--white);
-            border: 3px solid var(--accent);
-            border-radius: 14px;
-            padding: 1.5rem 1.75rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .invite-link-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.5rem;
-        }
-
-        .invite-link-url {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-        }
-
-        .invite-link-url .link-slug {
-            color: var(--accent);
-        }
-
-        .invite-link-status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-            color: var(--accent);
-            font-weight: 500;
-        }
-
-        .invite-link-status svg {
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-        }
-
-        .trial-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #FEF3C7;
-            color: #92400E;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-top: 0.75rem;
-        }
-
-        .trial-badge svg {
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-        }
-
         .pricing-trial-note {
             background: #F0FDF4;
             border: 2px solid #10B981;
@@ -1767,30 +1704,46 @@
             <p class="hero-tagline">Your scheduling. Your rules. Your patients.</p>
             <p class="hero-sub">Your personalized booking page is ready to claim.<br>One link. Your name. Full control.<br><strong>Professional scheduling infrastructure.</strong></p>
             
-            <!-- Link Preview Box (not editable) -->
-            <div class="invite-link-box">
-                <div class="invite-link-label">Your booking link</div>
-                <div class="invite-link-url">
-                    slotlycare.com/<span class="link-slug" id="heroSlug"></span>
+            <div class="link-checker">
+                <!-- Campo 1: Nome profissional -->
+                <div class="field-group">
+                    <label class="field-label">Your professional name</label>
+                    <div class="name-input-wrapper">
+                        <input type="text" class="name-input" id="nameInput" placeholder="Dr. John" autocomplete="off">
+                    </div>
                 </div>
-                <div class="invite-link-status">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                <!-- Campo 2: Slug editável -->
+                <div class="field-group">
+                    <label class="field-label">Your booking link</label>
+                    <div class="slug-field-wrapper">
+                        <div class="slug-input-wrapper">
+                            <span class="slug-prefix">slotlycare.com/</span>
+                            <input type="text" class="slug-input" id="slugInput" placeholder="dr-john" autocomplete="off">
+                        </div>
+                        <button class="check-btn" id="checkBtn" onclick="checkAvailability()">Check</button>
+                    </div>
+                    <p class="field-hint">This link is available now. Once taken, it's gone.</p>
+                </div>
+
+                <div class="link-result" id="linkResult">
+                    <svg id="resultIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                     </svg>
-                    Available now — yours to test, permanently yours when you subscribe
+                    <span id="resultText"></span>
                 </div>
-                <div class="trial-badge">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="reservation-timer" id="reservationTimer" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="16" height="16">
                         <circle cx="12" cy="12" r="10" stroke-width="2"/>
                         <path stroke-linecap="round" stroke-width="2" d="M12 6v6l4 2"/>
                     </svg>
-                    <span id="trialBadgeText"></span>
+                    <span>Reserved for <strong id="timerCount">15:00</strong> — complete your signup to secure it.</span>
                 </div>
             </div>
 
-            <a href="#" onclick="handleStartTrial(); return false;" class="reserve-btn">Start Free Trial — <span id="heroTrialDays"></span> Days Free</a>
+            <a href="#" onclick="handleStartTrial(); return false;" class="reserve-btn">Start Free Trial — No Credit Card Required</a>
 
-            <p class="hero-footer">No credit card required. Want to see how patients book? <a href="#demo">Try the live demo</a></p>
+            <p class="hero-footer">Want to see how patients book? <a href="#demo">Try the live demo</a></p>
         </div>
 
         <div class="hero-visual">
@@ -2082,7 +2035,7 @@
                 <li>All new features released during the next 36 months included</li>
                 <li>No upgrade fees for founders during this period</li>
                 <li>Priority founder support</li>
-                <li>7-day money-back guarantee</li>
+
             </ul>
             
             <button class="pricing-cta" onclick="handleStartTrial()">Start Free Trial — No Credit Card Required</button>
@@ -2133,16 +2086,331 @@
     <footer>
         <p class="footer-partner" style="color: var(--accent); font-size: 0.85rem; margin-bottom: 0.75rem; opacity: 0.85;">This page was created exclusively for <strong id="footerName"></strong>.</p>
         <p class="footer-text">© 2026 SlotlyCare. Your schedule, your rules, your patients.</p>
-        <p class="footer-links"><a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a> · <a href="#">Contact</a></p>
+        <p class="footer-links"><a href="#" onclick="openModal('privacyModal'); return false;">Privacy Policy</a> · <a href="#" onclick="openModal('termsModal'); return false;">Terms of Service</a> · <a href="#" onclick="openModal('contactModal'); return false;">Contact</a></p>
+        <p class="footer-early">Early-career professional? <a href="#" onclick="openModal('earlyModal'); return false;">Learn about our Early Practice Program.</a></p>
     </footer>
 
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('privacyModal')">&times;</span>
+            <h2>Privacy Policy</h2>
+            <p>SlotlyCare respects your privacy and is committed to protecting the personal data of professionals and patients who use the platform.</p>
+            <p>We collect only the information necessary to provide scheduling, communication, and operational features, such as account details, appointment data, and basic usage information. Patient data belongs to the professional and is never sold or shared with third parties for advertising purposes.</p>
+            <p>SlotlyCare uses industry-standard security measures to protect data and operates in line with GDPR and international data protection standards.</p>
+            <p>Healthcare professionals remain fully responsible for how they manage patient relationships, communications, and compliance with applicable professional regulations.</p>
+            <p>If you have any questions about this policy or how data is handled, please contact us.</p>
+            <p><strong>Contact:</strong> <a class="email-support" href="#">[loading...]</a></p>
+        </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('termsModal')">&times;</span>
+            <h2>Terms of Service</h2>
+            <p>By using SlotlyCare, you agree to these Terms of Service.</p>
+            <p>SlotlyCare provides an online scheduling and appointment management platform for healthcare professionals. SlotlyCare does not operate as a marketplace, does not promote professionals, and does not interfere in patient–professional relationships.</p>
+            <p>Professionals are solely responsible for:</p>
+            <ul>
+                <li>Managing their availability and scheduling rules</li>
+                <li>Communicating with patients</li>
+                <li>Complying with local laws, regulations, and professional standards</li>
+            </ul>
+            <p>SlotlyCare provides the platform on an "as is" basis and continuously improves its features. Pricing, access plans, and availability may evolve over time, except where explicitly stated (such as founders pricing conditions).</p>
+            <p>SlotlyCare reserves the right to suspend or terminate accounts that violate these terms or misuse the platform.</p>
+            <p>If you have questions regarding these terms, please contact us.</p>
+            <p><strong>Contact:</strong> <a class="email-support" href="#">[loading...]</a></p>
+        </div>
+    </div>
+
+    <!-- Early Practice Program Modal -->
+    <div id="earlyModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('earlyModal')">&times;</span>
+            <h2>Early Practice Program</h2>
+            <p>SlotlyCare supports healthcare professionals at the beginning of their independent practice.</p>
+            <p>The Early Practice Program is designed for professionals who are in the early years of their career and are building their patient flow, scheduling structure, and operational processes.</p>
+            <p>Eligible professionals may receive access to special conditions under this program. Eligibility criteria, availability, and conditions are evaluated individually and are not publicly advertised.</p>
+            <p>This program is separate from founders access and does not affect existing plans or pricing for other users.</p>
+            <p>If you believe you may be eligible, please contact us to learn more.</p>
+            <p><strong>Contact:</strong> <a class="email-programs" href="#">[loading...]</a></p>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('contactModal')">&times;</span>
+            <h2>Contact</h2>
+            <p>Have questions about SlotlyCare? We'd love to hear from you.</p>
+            <p>Send us an email and we'll get back to you as soon as possible.</p>
+            <p style="font-size: 1.25rem; margin-top: 1.5rem;"><strong>Email:</strong> <a class="email-support" href="#">[loading...]</a></p>
+        </div>
+    </div>
+
     <script>
-        // Handle Start Trial button
-        function handleStartTrial() {
-            alert('This would redirect to the signup page with slug "' + INVITE.slug + '" pre-assigned to the account.');
+        // Supabase Configuration
+        const SUPABASE_URL = 'https://hyfqxuvzesbqndglzabi.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5ZnF4dXZ6ZXNicW5kZ2x6YWJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg0MTQ4NDEsImV4cCI6MjA4Mzk5MDg0MX0.Holl4gTk-2bNmHjN2nlIRHBr4-THkZVj0Ws481-PMn4';
+        
+        // Reserved slugs that cannot be used (system pages)
+        const reservedSlugs = ['admin', 'demo', 'login', 'painel', 'dashboard', 'subscribe', 'success', 'api', 'test', 'www', 'app', 'help', 'support', 'pricing', 'about', 'contact', 'terms', 'privacy', 'convite'];
+
+        // Check if slug exists in Supabase
+        async function checkSlugInDatabase(slug) {
+            try {
+                const response = await fetch(
+                    `${SUPABASE_URL}/rest/v1/doctors?link=eq.${slug}&select=link`,
+                    {
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                        }
+                    }
+                );
+                if (!response.ok) throw new Error('Database error');
+                const data = await response.json();
+                return data.length > 0;
+            } catch (error) {
+                console.error('Error checking slug:', error);
+                return null;
+            }
         }
 
-        // Initialize invite-specific content
+        // Convert name to slug
+        function nameToSlug(name) {
+            if (!name) return '';
+            return name
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z0-9\s-]/g, '')
+                .trim()
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
+        }
+
+        // Get initials for avatar
+        function getInitials(name) {
+            if (!name) return 'DR';
+            const words = name.trim().split(/\s+/);
+            if (words.length >= 2) {
+                return (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
+            }
+            return name.substring(0, 2).toUpperCase();
+        }
+
+        // Elements
+        const nameInput = document.getElementById('nameInput');
+        const slugInput = document.getElementById('slugInput');
+        const phoneName = document.getElementById('phoneName');
+        const phoneAvatar = document.getElementById('phoneAvatar');
+
+        let userEditedSlug = true; // Start true since slug is pre-filled from invite
+        let reservationTimerInterval = null;
+        let reservationSeconds = 900;
+        let lastVerifiedSlug = null;
+        let lastSlugAvailable = false;
+
+        // Timer functions
+        function startReservationTimer() {
+            const timerElement = document.getElementById('reservationTimer');
+            const timerCount = document.getElementById('timerCount');
+            reservationSeconds = 900;
+            timerElement.style.display = 'flex';
+            if (reservationTimerInterval) clearInterval(reservationTimerInterval);
+            updateTimerDisplay();
+            reservationTimerInterval = setInterval(() => {
+                reservationSeconds--;
+                updateTimerDisplay();
+                if (reservationSeconds <= 0) {
+                    stopReservationTimer();
+                    lastSlugAvailable = false;
+                    const resultText = document.getElementById('resultText');
+                    resultText.innerHTML = `<strong>slotlycare.com/${lastVerifiedSlug}</strong> reservation expired. Click "Check" to verify availability again.`;
+                    document.getElementById('linkResult').className = 'link-result taken';
+                    document.getElementById('resultIcon').innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const timerCount = document.getElementById('timerCount');
+            const minutes = Math.floor(reservationSeconds / 60);
+            const seconds = reservationSeconds % 60;
+            timerCount.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function stopReservationTimer() {
+            document.getElementById('reservationTimer').style.display = 'none';
+            if (reservationTimerInterval) {
+                clearInterval(reservationTimerInterval);
+                reservationTimerInterval = null;
+            }
+        }
+
+        // Update phone mockup and slug when name changes
+        nameInput.addEventListener('input', function() {
+            const name = this.value.trim();
+            phoneName.textContent = name || INVITE.doctorName;
+            phoneAvatar.textContent = getInitials(name || INVITE.doctorName);
+            if (!userEditedSlug) {
+                slugInput.value = nameToSlug(name);
+            }
+        });
+
+        slugInput.addEventListener('input', function() {
+            userEditedSlug = true;
+        });
+
+        nameInput.addEventListener('focus', function() {
+            if (slugInput.value === nameToSlug(this.value)) {
+                userEditedSlug = false;
+            }
+        });
+
+        async function checkAvailability() {
+            const result = document.getElementById('linkResult');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultText = document.getElementById('resultText');
+            const btn = document.getElementById('checkBtn');
+            
+            const slug = slugInput.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
+            
+            if (!slug) { result.className = 'link-result'; return; }
+            if (slug.length < 3) {
+                result.className = 'link-result taken';
+                resultIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+                resultText.innerHTML = `Link must be at least 3 characters.`;
+                lastVerifiedSlug = slug; lastSlugAvailable = false; stopReservationTimer(); return;
+            }
+
+            btn.disabled = true; btn.textContent = '...';
+
+            if (reservedSlugs.includes(slug)) {
+                result.className = 'link-result taken';
+                resultIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+                resultText.innerHTML = `<strong>slotlycare.com/${slug}</strong> is reserved. Try another name.`;
+                lastVerifiedSlug = slug; lastSlugAvailable = false; stopReservationTimer();
+                btn.disabled = false; btn.textContent = 'Check'; return;
+            }
+
+            const isTaken = await checkSlugInDatabase(slug);
+
+            if (isTaken === null) {
+                result.className = 'link-result taken';
+                resultIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+                resultText.innerHTML = `Error checking availability. Please try again.`;
+                lastVerifiedSlug = null; lastSlugAvailable = false; stopReservationTimer();
+            } else if (isTaken) {
+                result.className = 'link-result taken';
+                resultIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+                resultText.innerHTML = `<strong>slotlycare.com/${slug}</strong> is already taken. Try another name.`;
+                lastVerifiedSlug = slug; lastSlugAvailable = false; stopReservationTimer();
+            } else {
+                result.className = 'link-result available';
+                resultIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>';
+                resultText.innerHTML = `<strong>slotlycare.com/${slug}</strong> is available. Reserve it now before someone else does.`;
+                lastVerifiedSlug = slug; lastSlugAvailable = true; startReservationTimer();
+            }
+
+            btn.disabled = false; btn.textContent = 'Check';
+        }
+
+        nameInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') checkAvailability(); });
+        slugInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') checkAvailability(); });
+
+        // Handle Start Trial button
+        function handleStartTrial() {
+            const slug = slugInput.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
+            
+            if (!slug) {
+                scrollToAndHighlight(nameInput, 'Enter your name to get started');
+                return;
+            }
+            if (slug !== lastVerifiedSlug) {
+                scrollToAndHighlight(document.getElementById('checkBtn'), 'Click to check availability');
+                return;
+            }
+            if (!lastSlugAvailable) {
+                scrollToAndHighlight(slugInput, 'This link is taken — try another');
+                return;
+            }
+
+            localStorage.setItem('slotlycare_reserved_slug', slug);
+            localStorage.setItem('slotlycare_reserved_name', nameInput.value.trim());
+            
+            // Redirect to signup page (trial, no payment)
+            alert('This would redirect to the signup page with slug "' + slug + '" pre-assigned.');
+        }
+
+        function scrollToAndHighlight(element, hintText) {
+            document.querySelector('.hero').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                if (element.tagName === 'INPUT') element.focus();
+                element.classList.add('highlight-pulse');
+                showFieldHint(hintText);
+                setTimeout(() => element.classList.remove('highlight-pulse'), 2000);
+            }, 500);
+        }
+
+        function showFieldHint(text) {
+            const existingHint = document.querySelector('.field-hint-dynamic');
+            if (existingHint) existingHint.remove();
+            const hint = document.createElement('div');
+            hint.className = 'field-hint-dynamic';
+            hint.style.cssText = 'font-size:0.8rem;color:#D97706;font-weight:600;margin-top:0.5rem;transition:opacity 0.3s;';
+            hint.innerHTML = '👆 ' + text;
+            const linkResult = document.getElementById('linkResult');
+            linkResult.parentNode.insertBefore(hint, linkResult.nextSibling);
+            setTimeout(() => { hint.style.opacity = '0'; setTimeout(() => hint.remove(), 300); }, 4000);
+        }
+
+        // Open demo with name parameter
+        function openDemoWithName(event) {
+            event.preventDefault();
+            const name = nameInput.value.trim();
+            let url = '/demo';
+            if (name) url = '/demo?preview_name=' + encodeURIComponent(name);
+            window.open(url, '_blank');
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => { modal.style.display = 'none'; });
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Initialize invite content
         (function initInvite() {
             const i = INVITE;
             
@@ -2150,16 +2418,14 @@
             document.getElementById('inviteBarName').textContent = i.doctorName;
             document.getElementById('inviteBarDiscount').textContent = i.discount;
             
-            // Hero
+            // Hero — pre-fill fields
             document.getElementById('heroName').textContent = i.doctorName;
-            document.getElementById('heroSlug').textContent = i.slug;
-            document.getElementById('heroTrialDays').textContent = i.trialDays;
-            document.getElementById('trialBadgeText').textContent = 'Free trial for ' + i.trialDays + ' days — no credit card required';
+            nameInput.value = i.doctorName;
+            slugInput.value = i.slug;
             
             // Phone mockup
-            document.getElementById('phoneName').textContent = i.doctorName;
-            const initials = i.doctorName.replace('Dr. ', '').split(' ').map(n => n[0]).join('');
-            document.getElementById('phoneAvatar').textContent = initials;
+            phoneName.textContent = i.doctorName;
+            phoneAvatar.textContent = getInitials(i.doctorName.replace('Dr. ', ''));
             
             // Pricing
             document.getElementById('pricingYears').textContent = i.accessYears;
@@ -2177,14 +2443,22 @@
             document.getElementById('footerName').textContent = i.doctorName;
         })();
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
+        // Email obfuscation
+        document.addEventListener('DOMContentLoaded', function() {
+            const supportUser = 'support';
+            const programsUser = 'programs';
+            const domain = 'slotlycare.com';
+
+            document.querySelectorAll('.email-support').forEach(function(element) {
+                const email = supportUser + '@' + domain;
+                element.innerHTML = email;
+                element.href = 'mailto:' + email;
+            });
+
+            document.querySelectorAll('.email-programs').forEach(function(element) {
+                const email = programsUser + '@' + domain;
+                element.innerHTML = email;
+                element.href = 'mailto:' + email;
             });
         });
     </script>
