@@ -9,6 +9,10 @@
       "destination": "/painel.html"
     },
     {
+      "source": "/convite/:slug",
+      "destination": "/convite.html"
+    },
+    {
       "source": "/:doctor",
       "destination": "/paciente.html"
     }
