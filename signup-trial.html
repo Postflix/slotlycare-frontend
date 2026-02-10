@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Start Free Trial - SlotlyCare</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #CCFBF1 0%, #99F6E4 50%, #CCFBF1 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .signup-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            color: #0F172A;
+        }
+
+        .logo h1 span {
+            color: #0D9488;
+        }
+
+        .logo p {
+            color: #64748B;
+            margin-top: 8px;
+        }
+
+        .trial-badge {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .trial-badge span {
+            background: #CCFBF1;
+            color: #0F766E;
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.8125rem;
+            font-weight: 600;
+        }
+
+        .welcome-name {
+            text-align: center;
+            font-size: 1.125rem;
+            color: #334155;
+            margin-bottom: 24px;
+        }
+
+        .welcome-name strong {
+            color: #0D9488;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #0D9488;
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #94A3B8;
+        }
+
+        .form-group input:read-only {
+            background: #F8FAFC;
+            color: #64748B;
+        }
+
+        .slug-preview {
+            font-size: 0.8rem;
+            color: #64748B;
+            margin-top: 6px;
+        }
+
+        .slug-preview strong {
+            color: #0D9488;
+        }
+
+        .btn-signup {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .btn-signup:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(13, 148, 136, 0.3);
+        }
+
+        .btn-signup:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        .message.error {
+            background: #FEE2E2;
+            color: #DC2626;
+            display: block;
+        }
+
+        .message.success {
+            background: #D1FAE5;
+            color: #059669;
+            display: block;
+        }
+
+        .terms {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #94A3B8;
+            margin-top: 16px;
+            line-height: 1.5;
+        }
+
+        .terms a {
+            color: #0D9488;
+            text-decoration: none;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #E2E8F0;
+            font-size: 0.9rem;
+            color: #64748B;
+        }
+
+        .login-link a {
+            color: #0D9488;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-container input {
+            padding-right: 50px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #64748B;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toggle-password:hover {
+            color: #0D9488;
+        }
+
+        .toggle-password svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .no-invite {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .no-invite p {
+            color: #64748B;
+            margin-bottom: 20px;
+        }
+
+        .no-invite a {
+            color: #0D9488;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="logo">
+            <h1>Slotly<span>Care</span></h1>
+            <p>Create your free trial account</p>
+        </div>
+
+        <!-- No invite data screen -->
+        <div id="noInviteScreen" class="no-invite" style="display:none">
+            <p>No invite data found. Please use your personalized invite link to sign up.</p>
+            <a href="/">← Back to SlotlyCare</a>
+        </div>
+
+        <!-- Signup form -->
+        <div id="signupForm">
+            <div class="trial-badge">
+                <span>✦ 7-Day Free Trial — No credit card required</span>
+            </div>
+
+            <div class="welcome-name" id="welcomeMessage"></div>
+
+            <div id="messageBox" class="message"></div>
+
+            <form onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="name">Your professional name</label>
+                    <input type="text" id="name" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="slug">Your link</label>
+                    <input type="text" id="slug" readonly>
+                    <div class="slug-preview">Your page: <strong>slotlycare.com/<span id="slugDisplay"></span></strong></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="your@email.com"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-container">
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Create a password (min. 6 characters)"
+                            required
+                            minlength="6"
+                        >
+                        <button type="button" class="toggle-password" onclick="togglePassword('password')" aria-label="Toggle password">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm password</label>
+                    <div class="password-container">
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            placeholder="Confirm your password"
+                            required
+                            minlength="6"
+                        >
+                        <button type="button" class="toggle-password" onclick="togglePassword('confirmPassword')" aria-label="Toggle password">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-signup" id="btnSignup">
+                    Start Free Trial →
+                </button>
+            </form>
+
+            <div class="terms">
+                By signing up you agree to our
+                <a href="/#" onclick="return false;">Terms of Service</a> and
+                <a href="/#" onclick="return false;">Privacy Policy</a>.
+            </div>
+
+            <div class="login-link">
+                Already have an account? <a href="/login.html">Log in</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://slotlycare-backend.vercel.app';
+
+        // Load invite data from localStorage
+        const trialName = localStorage.getItem('slotlycare_trial_name');
+        const trialSlug = localStorage.getItem('slotlycare_trial_slug');
+
+        if (!trialName || !trialSlug) {
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('noInviteScreen').style.display = 'block';
+        } else {
+            document.getElementById('name').value = trialName;
+            document.getElementById('slug').value = trialSlug;
+            document.getElementById('slugDisplay').textContent = trialSlug;
+            document.getElementById('welcomeMessage').innerHTML = 'Welcome, <strong>' + trialName + '</strong>';
+        }
+
+        function togglePassword(fieldId) {
+            const input = document.getElementById(fieldId);
+            const btn = input.parentElement.querySelector('.toggle-password svg');
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>';
+            } else {
+                input.type = 'password';
+                btn.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>';
+            }
+        }
+
+        async function handleSignup(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const btn = document.getElementById('btnSignup');
+            const messageBox = document.getElementById('messageBox');
+
+            // Reset message
+            messageBox.className = 'message';
+            messageBox.style.display = 'none';
+
+            // Validate
+            if (!email || !password || !confirmPassword) {
+                showMessage('Please fill in all fields.', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showMessage('Password must be at least 6 characters.', 'error');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showMessage('Passwords do not match.', 'error');
+                return;
+            }
+
+            // Show loading
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Creating account...';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/trial-signup`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password,
+                        name: trialName,
+                        slug: trialSlug
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Save login data
+                    localStorage.setItem('slotlycare_customer_id', data.customer_id);
+                    localStorage.setItem('slotlycare_logged_in', 'true');
+
+                    // Clean up trial data
+                    localStorage.removeItem('slotlycare_trial_name');
+                    localStorage.removeItem('slotlycare_trial_slug');
+
+                    showMessage('Account created! Redirecting to your panel...', 'success');
+
+                    setTimeout(() => {
+                        window.location.href = '/painel';
+                    }, 1500);
+                } else {
+                    showMessage(data.error || 'Something went wrong. Please try again.', 'error');
+                }
+            } catch (error) {
+                showMessage('Connection error. Please try again.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Start Free Trial →';
+            }
+        }
+
+        function showMessage(text, type) {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = text;
+            messageBox.className = `message ${type}`;
+        }
+    </script>
+</body>
+</html>
