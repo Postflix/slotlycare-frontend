@@ -2473,11 +2473,11 @@
                 return;
             }
 
-            localStorage.setItem('slotlycare_reserved_slug', slug);
-            localStorage.setItem('slotlycare_reserved_name', nameInput.value.trim());
+            localStorage.setItem('slotlycare_trial_slug', slug);
+            localStorage.setItem('slotlycare_trial_name', nameInput.value.trim());
             
-            // Redirect to signup page (trial, no payment)
-            alert('This would redirect to the signup page with slug "' + slug + '" pre-assigned.');
+            // Redirect to trial signup page
+            window.location.href = '/signup-trial.html';
         }
 
         function scrollToAndHighlight(element, hintText) {
