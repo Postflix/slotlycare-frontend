@@ -1877,8 +1877,6 @@
             </div>
 
             <a href="#" onclick="handleStartTrial(); return false;" class="reserve-btn">Start Free Trial — No Credit Card Required</a>
-
-            <p class="hero-footer">Want to see how patients book? <a href="#demo">Try the live demo</a></p>
         </div>
 
         <div class="hero-visual">
@@ -2464,13 +2462,17 @@
                 scrollToAndHighlight(nameInput, 'Enter your name to get started');
                 return;
             }
-            if (slug !== lastVerifiedSlug) {
-                scrollToAndHighlight(document.getElementById('checkBtn'), 'Click to check availability');
-                return;
-            }
-            if (!lastSlugAvailable) {
-                scrollToAndHighlight(slugInput, 'This link is taken — try another');
-                return;
+            
+            // If user changed slug from the original invite, require check
+            if (slug !== INVITE.slug) {
+                if (slug !== lastVerifiedSlug) {
+                    scrollToAndHighlight(document.getElementById('checkBtn'), 'Click to check availability');
+                    return;
+                }
+                if (!lastSlugAvailable) {
+                    scrollToAndHighlight(slugInput, 'This link is taken — try another');
+                    return;
+                }
             }
 
             localStorage.setItem('slotlycare_trial_slug', slug);
