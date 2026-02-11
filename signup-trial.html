@@ -264,6 +264,78 @@
             text-decoration: none;
             font-weight: 600;
         }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-content h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: #0F172A;
+        }
+
+        .modal-content p {
+            color: #64748B;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content ul {
+            color: #64748B;
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .modal-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .modal-content a {
+            color: #0D9488;
+            text-decoration: none;
+        }
+
+        .modal-content a:hover {
+            text-decoration: underline;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: #94A3B8;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: #0F172A;
+        }
     </style>
 </head>
 <body>
@@ -356,13 +428,47 @@
 
             <div class="terms">
                 By signing up you agree to our
-                <a href="/#" onclick="return false;">Terms of Service</a> and
-                <a href="/#" onclick="return false;">Privacy Policy</a>.
+                <a href="#" onclick="openModal('termsModal'); return false;">Terms of Service</a> and
+                <a href="#" onclick="openModal('privacyModal'); return false;">Privacy Policy</a>.
             </div>
 
             <div class="login-link">
                 Already have an account? <a href="/login.html">Log in</a>
             </div>
+        </div>
+    </div>
+
+    <!-- Privacy Modal -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('privacyModal')">&times;</span>
+            <h2>Privacy Policy</h2>
+            <p>SlotlyCare respects your privacy and is committed to protecting the personal data of professionals and patients who use the platform.</p>
+            <p>We collect only the information necessary to provide scheduling, communication, and operational features, such as account details, appointment data, and basic usage information. Patient data belongs to the professional and is never sold or shared with third parties for advertising purposes.</p>
+            <p>SlotlyCare uses industry-standard security measures to protect data and operates in line with GDPR and international data protection standards.</p>
+            <p>Healthcare professionals remain fully responsible for how they manage patient relationships, communications, and compliance with applicable professional regulations.</p>
+            <p>If you have any questions about this policy or how data is handled, please contact us.</p>
+            <p><strong>Contact:</strong> <a class="email-support" href="#">[loading...]</a></p>
+        </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('termsModal')">&times;</span>
+            <h2>Terms of Service</h2>
+            <p>By using SlotlyCare, you agree to these Terms of Service.</p>
+            <p>SlotlyCare provides an online scheduling and appointment management platform for healthcare professionals. SlotlyCare does not operate as a marketplace, does not promote professionals, and does not interfere in patient–professional relationships.</p>
+            <p>Professionals are solely responsible for:</p>
+            <ul>
+                <li>Managing their availability and scheduling rules</li>
+                <li>Communicating with patients</li>
+                <li>Complying with local laws, regulations, and professional standards</li>
+            </ul>
+            <p>SlotlyCare provides the platform on an "as is" basis and continuously improves its features. Pricing, access plans, and availability may evolve over time, except where explicitly stated (such as founders pricing conditions).</p>
+            <p>SlotlyCare reserves the right to suspend or terminate accounts that violate these terms or misuse the platform.</p>
+            <p>If you have questions regarding these terms, please contact us.</p>
+            <p><strong>Contact:</strong> <a class="email-support" href="#">[loading...]</a></p>
         </div>
     </div>
 
@@ -472,6 +578,42 @@
             messageBox.textContent = text;
             messageBox.className = `message ${type}`;
         }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => { modal.style.display = 'none'; });
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Email obfuscation
+        (function() {
+            const user = 'support';
+            const domain = 'slotlycare.com';
+            document.querySelectorAll('.email-support').forEach(function(el) {
+                const email = user + '@' + domain;
+                el.innerHTML = email;
+                el.href = 'mailto:' + email;
+            });
+        })();
     </script>
 </body>
 </html>
