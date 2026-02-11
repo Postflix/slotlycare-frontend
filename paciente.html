@@ -1043,6 +1043,12 @@ window.onload = async function() {
         console.log('📋 Using DEMO data');
     }
     
+    // Always check for preview_name in URL (demo links from convite.html)
+    const urlPreviewName = new URLSearchParams(window.location.search).get('preview_name');
+    if (urlPreviewName) {
+        doctorData.name = decodeURIComponent(urlPreviewName);
+    }
+    
     currentLanguage = doctorData.language || 'en';
     loadDoctorData();
     
