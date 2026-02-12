@@ -1324,6 +1324,24 @@ textarea {
     </div>
 </div>
 
+<!-- Referral List Modal -->
+<div id="referralListModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 480px;">
+        <div class="modal-header">
+            <span class="modal-icon">👥</span>
+            <h3 class="modal-title" data-i18n="referral_list_title">Your Referrals</h3>
+        </div>
+        <div class="modal-body">
+            <div id="referralListContent" style="max-height: 400px; overflow-y: auto;">
+                <div style="text-align: center; padding: 20px; color: var(--text-muted);">...</div>
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button class="modal-btn modal-btn-confirm" onclick="closeReferralListModal()" style="background: #10B981;" data-i18n="referral_close">Close</button>
+        </div>
+    </div>
+</div>
+
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const translations = {
     en: {
@@ -1382,6 +1400,12 @@ const translations = {
         referral_we_send_toggle: "Want SlotlyCare to send the invitation for you?",
         referral_we_send: "SlotlyCare will send",
         referral_you_send: "Copy and share",
+        referral_list_title: "Your Referrals",
+        referral_list_view: "View all",
+        referral_status_pending: "Pending",
+        referral_status_clicked: "Opened link",
+        referral_status_trial: "Started trial",
+        referral_status_converted: "Subscribed",
         referral_another: "Refer More",
         referral_close: "Close",
         referral_links_title_single: "Invitation created!",
@@ -1458,6 +1482,12 @@ const translations = {
         referral_we_send_toggle: "Quer que a SlotlyCare envie o convite por você?",
         referral_we_send: "SlotlyCare enviará",
         referral_you_send: "Copie e compartilhe",
+        referral_list_title: "Suas Indicações",
+        referral_list_view: "Ver todas",
+        referral_status_pending: "Pendente",
+        referral_status_clicked: "Abriu o link",
+        referral_status_trial: "Iniciou trial",
+        referral_status_converted: "Assinou",
         referral_another: "Indicar Mais",
         referral_close: "Fechar",
         referral_links_title_single: "Convite criado!",
@@ -1534,6 +1564,12 @@ const translations = {
         referral_we_send_toggle: "¿Quieres que SlotlyCare envíe la invitación por ti?",
         referral_we_send: "SlotlyCare enviará",
         referral_you_send: "Copia y comparte",
+        referral_list_title: "Tus Recomendaciones",
+        referral_list_view: "Ver todas",
+        referral_status_pending: "Pendiente",
+        referral_status_clicked: "Abrió el enlace",
+        referral_status_trial: "Inició prueba",
+        referral_status_converted: "Se suscribió",
         referral_another: "Recomendar Más",
         referral_close: "Cerrar",
         referral_links_title_single: "¡Invitación creada!",
@@ -1610,6 +1646,12 @@ const translations = {
         referral_we_send_toggle: "Vous voulez que SlotlyCare envoie l'invitation pour vous ?",
         referral_we_send: "SlotlyCare enverra",
         referral_you_send: "Copiez et partagez",
+        referral_list_title: "Vos Recommandations",
+        referral_list_view: "Voir toutes",
+        referral_status_pending: "En attente",
+        referral_status_clicked: "Lien ouvert",
+        referral_status_trial: "Essai démarré",
+        referral_status_converted: "Abonné",
         referral_another: "Recommander Plus",
         referral_close: "Fermer",
         referral_links_title_single: "Invitation créée !",
@@ -1686,6 +1728,12 @@ const translations = {
         referral_we_send_toggle: "Möchten Sie, dass SlotlyCare die Einladung für Sie sendet?",
         referral_we_send: "SlotlyCare wird senden",
         referral_you_send: "Kopieren und teilen",
+        referral_list_title: "Ihre Empfehlungen",
+        referral_list_view: "Alle anzeigen",
+        referral_status_pending: "Ausstehend",
+        referral_status_clicked: "Link geöffnet",
+        referral_status_trial: "Testversion gestartet",
+        referral_status_converted: "Abonniert",
         referral_another: "Weitere Empfehlen",
         referral_close: "Schließen",
         referral_links_title_single: "Einladung erstellt!",
@@ -1762,6 +1810,12 @@ const translations = {
         referral_we_send_toggle: "Vuoi che SlotlyCare invii l'invito per te?",
         referral_we_send: "SlotlyCare invierà",
         referral_you_send: "Copia e condividi",
+        referral_list_title: "I Tuoi Referral",
+        referral_list_view: "Vedi tutti",
+        referral_status_pending: "In attesa",
+        referral_status_clicked: "Link aperto",
+        referral_status_trial: "Prova iniziata",
+        referral_status_converted: "Abbonato",
         referral_another: "Consiglia Altri",
         referral_close: "Chiudi",
         referral_links_title_single: "Invito creato!",
@@ -3103,7 +3157,7 @@ async function loadReferralStats() {
             const panel = document.getElementById('referralStatsPanel');
             const content = document.getElementById('referralStatsContent');
             
-            let html = `<div>👥 <strong>${stats.total}</strong> ${lang.referral_stats_invited}</div>`;
+            let html = `<div style="cursor: pointer;" onclick="openReferralDetails()">👥 <strong>${stats.total}</strong> ${lang.referral_stats_invited} <span style="font-size: 0.75rem; color: #059669;">▸</span></div>`;
             
             const opened = stats.clicked + stats.trial_started + stats.converted;
             if (opened > 0) {
@@ -3119,6 +3173,70 @@ async function loadReferralStats() {
     } catch (error) {
         console.log('Could not load referral stats:', error);
     }
+}
+
+// ==================== REFERRAL DETAILS ====================
+
+const SUPABASE_URL = 'https://hyfqxuvzesbqndglzabi.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5ZnF4dXZ6ZXNicW5kZ2x6YWJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg0MTQ4NDEsImV4cCI6MjA4Mzk5MDg0MX0.Holl4gTk-2bNmHjN2nlIRHBr4-THkZVj0Ws481-PMn4';
+
+async function openReferralDetails() {
+    const doctorName = document.getElementById('doctorName').value.trim();
+    if (!doctorName) return;
+    
+    const lang = translations[currentLanguage] || translations['en'];
+    const contentEl = document.getElementById('referralListContent');
+    contentEl.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-muted);">...</div>';
+    
+    document.getElementById('referralListModal').classList.add('active');
+    
+    try {
+        const response = await fetch(
+            `${SUPABASE_URL}/rest/v1/invites?referrer_name=eq.${encodeURIComponent(doctorName)}&select=invited_name,slug,status,created_at&order=created_at.desc`,
+            { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
+        );
+        const invites = await response.json();
+        
+        if (!invites || invites.length === 0) {
+            contentEl.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-muted);">—</div>';
+            return;
+        }
+        
+        const doctorSlug = savedDoctorLink || '';
+        const statusConfig = {
+            'pending':       { icon: '🔗', color: '#6B7280', key: 'referral_status_pending' },
+            'clicked':       { icon: '👀', color: '#D97706', key: 'referral_status_clicked' },
+            'trial_started': { icon: '🎉', color: '#7C3AED', key: 'referral_status_trial' },
+            'converted':     { icon: '✅', color: '#059669', key: 'referral_status_converted' }
+        };
+        
+        contentEl.innerHTML = invites.map(inv => {
+            const sc = statusConfig[inv.status] || statusConfig['pending'];
+            const statusText = lang[sc.key] || inv.status;
+            const linkUrl = `slotlycare.com/convite/${doctorSlug}/${inv.slug}`;
+            return `
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #E2E8F0;">
+                <div style="min-width: 0; flex: 1;">
+                    <div style="font-weight: 600; font-size: 0.88rem; color: var(--text-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${inv.invited_name}</div>
+                    <div style="font-size: 0.75rem; color: #10B981; font-family: monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${linkUrl}</div>
+                    <div style="font-size: 0.75rem; color: ${sc.color}; margin-top: 2px;">${sc.icon} ${statusText}</div>
+                </div>
+                <button onclick="copySingleLink('${doctorSlug}', '${inv.slug}', this)" style="background: none; border: 1px solid #D1D5DB; color: var(--text-muted); padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; white-space: nowrap; margin-left: 8px;">📋</button>
+            </div>`;
+        }).join('');
+        
+        // Remove last border
+        const lastItem = contentEl.querySelector('div:last-child');
+        if (lastItem) lastItem.style.borderBottom = 'none';
+        
+    } catch (error) {
+        console.log('Error loading referral details:', error);
+        contentEl.innerHTML = '<div style="text-align: center; padding: 20px; color: #EF4444;">Error loading details</div>';
+    }
+}
+
+function closeReferralListModal() {
+    document.getElementById('referralListModal').classList.remove('active');
 }
 </script>
 </body>
