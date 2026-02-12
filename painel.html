@@ -1398,7 +1398,8 @@ const translations = {
         referral_your_link: "🔗 Your personal referral link:",
         referral_link_explain: "Refer colleagues and they'll receive a personalized page with your recommendation.",
         referral_we_send_toggle: "Want SlotlyCare to send the invitation for you?",
-        referral_we_send: "SlotlyCare will send",
+        referral_we_send_whatsapp: "SlotlyCare will send via WhatsApp",
+        referral_we_send_email: "SlotlyCare will send via email",
         referral_you_send: "Copy and share",
         referral_list_title: "Your Referrals",
         referral_list_view: "View all",
@@ -1481,7 +1482,8 @@ const translations = {
         referral_your_link: "🔗 Seu link pessoal de indicação:",
         referral_link_explain: "Indique colegas e eles receberão uma página personalizada com sua recomendação.",
         referral_we_send_toggle: "Quer que a SlotlyCare envie o convite por você?",
-        referral_we_send: "SlotlyCare enviará",
+        referral_we_send_whatsapp: "SlotlyCare enviará via WhatsApp",
+        referral_we_send_email: "SlotlyCare enviará via email",
         referral_you_send: "Copie e compartilhe",
         referral_list_title: "Suas Indicações",
         referral_list_view: "Ver todas",
@@ -1564,7 +1566,8 @@ const translations = {
         referral_your_link: "🔗 Tu enlace personal de referencia:",
         referral_link_explain: "Recomienda colegas y recibirán una página personalizada con tu recomendación.",
         referral_we_send_toggle: "¿Quieres que SlotlyCare envíe la invitación por ti?",
-        referral_we_send: "SlotlyCare enviará",
+        referral_we_send_whatsapp: "SlotlyCare enviará por WhatsApp",
+        referral_we_send_email: "SlotlyCare enviará por email",
         referral_you_send: "Copia y comparte",
         referral_list_title: "Tus Recomendaciones",
         referral_list_view: "Ver todas",
@@ -1647,7 +1650,8 @@ const translations = {
         referral_your_link: "🔗 Votre lien personnel de parrainage :",
         referral_link_explain: "Recommandez des collègues et ils recevront une page personnalisée avec votre recommandation.",
         referral_we_send_toggle: "Vous voulez que SlotlyCare envoie l'invitation pour vous ?",
-        referral_we_send: "SlotlyCare enverra",
+        referral_we_send_whatsapp: "SlotlyCare enverra par WhatsApp",
+        referral_we_send_email: "SlotlyCare enverra par email",
         referral_you_send: "Copiez et partagez",
         referral_list_title: "Vos Recommandations",
         referral_list_view: "Voir toutes",
@@ -1730,7 +1734,8 @@ const translations = {
         referral_your_link: "🔗 Ihr persönlicher Empfehlungslink:",
         referral_link_explain: "Empfehlen Sie Kollegen und sie erhalten eine personalisierte Seite mit Ihrer Empfehlung.",
         referral_we_send_toggle: "Möchten Sie, dass SlotlyCare die Einladung für Sie sendet?",
-        referral_we_send: "SlotlyCare wird senden",
+        referral_we_send_whatsapp: "SlotlyCare sendet per WhatsApp",
+        referral_we_send_email: "SlotlyCare sendet per E-Mail",
         referral_you_send: "Kopieren und teilen",
         referral_list_title: "Ihre Empfehlungen",
         referral_list_view: "Alle anzeigen",
@@ -1813,7 +1818,8 @@ const translations = {
         referral_your_link: "🔗 Il tuo link personale di referral:",
         referral_link_explain: "Consiglia colleghi e riceveranno una pagina personalizzata con la tua raccomandazione.",
         referral_we_send_toggle: "Vuoi che SlotlyCare invii l'invito per te?",
-        referral_we_send: "SlotlyCare invierà",
+        referral_we_send_whatsapp: "SlotlyCare invierà tramite WhatsApp",
+        referral_we_send_email: "SlotlyCare invierà tramite email",
         referral_you_send: "Copia e condividi",
         referral_list_title: "I Tuoi Referral",
         referral_list_view: "Vedi tutti",
@@ -2901,13 +2907,32 @@ let referralRowCounter = 0;
 
 function createReferralRowHTML(index) {
     const lang = translations[currentLanguage] || translations['en'];
-    const showEmail = document.getElementById('referralEmailToggle') && document.getElementById('referralEmailToggle').checked;
+    const showContact = document.getElementById('referralEmailToggle') && document.getElementById('referralEmailToggle').checked;
     return `
-    <div class="referral-row" id="referralRow${index}" style="display: flex; gap: 8px; margin-bottom: 10px; align-items: center;">
-        <input type="text" placeholder="${lang.referral_name}" class="referral-name-input" oninput="onReferralNameInput(this, ${index})" style="flex: 1; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem;">
-        <input type="email" placeholder="${lang.referral_email}" class="referral-email-input" style="flex: 1; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem; display: ${showEmail ? 'block' : 'none'};">
-        ${index > 0 ? `<button onclick="removeReferralRow(${index})" style="background: none; border: none; color: #EF4444; cursor: pointer; font-size: 0.8rem; padding: 4px 8px; white-space: nowrap;" title="${lang.referral_remove_row}">✕</button>` : '<div style="width: 30px;"></div>'}
+    <div class="referral-row" id="referralRow${index}" style="margin-bottom: 10px;">
+        <div style="display: flex; gap: 8px; align-items: center;">
+            <input type="text" placeholder="${lang.referral_name}" class="referral-name-input" oninput="onReferralNameInput(this, ${index})" style="flex: 1; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem;">
+            ${index > 0 ? `<button onclick="removeReferralRow(${index})" style="background: none; border: none; color: #EF4444; cursor: pointer; font-size: 0.8rem; padding: 4px 8px; white-space: nowrap;" title="${lang.referral_remove_row}">✕</button>` : '<div style="width: 30px;"></div>'}
+        </div>
+        <div class="referral-contact-row" style="display: ${showContact ? 'flex' : 'none'}; gap: 6px; align-items: center; margin-top: 6px; padding-left: 0;">
+            <select class="referral-contact-type" onchange="updateContactPlaceholder(this)" style="padding: 8px 6px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.8rem; color: #5B21B6; background: #F5F3FF; cursor: pointer; min-width: 95px;">
+                <option value="whatsapp">WhatsApp</option>
+                <option value="email">Email</option>
+            </select>
+            <input type="text" placeholder="+55 11 99999-9999" class="referral-contact-input" style="flex: 1; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem;">
+        </div>
     </div>`;
+}
+
+function updateContactPlaceholder(select) {
+    const input = select.parentElement.querySelector('.referral-contact-input');
+    if (select.value === 'whatsapp') {
+        input.placeholder = '+55 11 99999-9999';
+        input.type = 'tel';
+    } else {
+        input.placeholder = 'email@example.com';
+        input.type = 'email';
+    }
 }
 
 function onReferralNameInput(input, index) {
@@ -2922,9 +2947,12 @@ function onReferralNameInput(input, index) {
 
 function toggleEmailFields() {
     const show = document.getElementById('referralEmailToggle').checked;
-    document.querySelectorAll('.referral-email-input').forEach(el => {
-        el.style.display = show ? 'block' : 'none';
-        if (!show) el.value = '';
+    document.querySelectorAll('.referral-contact-row').forEach(el => {
+        el.style.display = show ? 'flex' : 'none';
+        if (!show) {
+            el.querySelector('.referral-contact-input').value = '';
+            el.querySelector('.referral-contact-type').value = 'whatsapp';
+        }
     });
 }
 
@@ -3011,7 +3039,7 @@ function showReferralMessage(text, type) {
 async function sendBatchReferrals() {
     const lang = translations[currentLanguage] || translations['en'];
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const emailToggleOn = document.getElementById('referralEmailToggle').checked;
+    const contactToggleOn = document.getElementById('referralEmailToggle').checked;
     
     // Collect all rows
     const rows = document.querySelectorAll('.referral-row');
@@ -3019,22 +3047,29 @@ async function sendBatchReferrals() {
     
     for (const row of rows) {
         const name = row.querySelector('.referral-name-input').value.trim();
-        const email = row.querySelector('.referral-email-input').value.trim();
+        const contactInput = row.querySelector('.referral-contact-input');
+        const contactType = row.querySelector('.referral-contact-type');
+        const contact = contactInput ? contactInput.value.trim() : '';
+        const type = contactType ? contactType.value : 'email';
         
         // Skip completely empty rows
-        if (!name && !email) continue;
+        if (!name && !contact) continue;
         
         if (!name) {
             showReferralMessage(lang.referral_error_name, 'error');
             return;
         }
-        // Only validate email if toggle is on and email is filled
-        if (emailToggleOn && email && !emailRegex.test(email)) {
-            showReferralMessage(lang.referral_error_email, 'error');
-            return;
+        // Validate contact if toggle is on and contact is filled
+        if (contactToggleOn && contact) {
+            if (type === 'email' && !emailRegex.test(contact)) {
+                showReferralMessage(lang.referral_error_email, 'error');
+                return;
+            }
         }
         
-        referrals.push({ name, email: email || '' });
+        // Map to email field for backend compatibility
+        const email = contactToggleOn && contact ? (type === 'whatsapp' ? 'whatsapp:' + contact : contact) : '';
+        referrals.push({ name, email });
     }
     
     if (referrals.length === 0) {
@@ -3091,19 +3126,24 @@ function showInviteLinks(invites, lang, sentReferrals) {
     
     const doctorSlug = savedDoctorLink || '';
     
-    // Build email lookup from sentReferrals
-    const emailMap = {};
+    // Build contact lookup from sentReferrals
+    const contactMap = {};
     if (sentReferrals) {
-        sentReferrals.forEach(r => { if (r.email) emailMap[r.name.toLowerCase()] = r.email; });
+        sentReferrals.forEach(r => { if (r.email) contactMap[r.name.toLowerCase()] = r.email; });
     }
     
     // Build links list
     const listEl = document.getElementById('referralLinksList');
     listEl.innerHTML = invites.map(inv => {
-        const hasEmail = emailMap[inv.name.toLowerCase()];
-        const badge = hasEmail 
-            ? `<div style="font-size: 0.72rem; color: #7C3AED; margin-top: 2px;">📧 ${lang.referral_we_send || 'SlotlyCare will send'}</div>`
-            : `<div style="font-size: 0.72rem; color: #6B7280; margin-top: 2px;">📋 ${lang.referral_you_send || 'Copy and share'}</div>`;
+        const contact = contactMap[inv.name.toLowerCase()];
+        let badge;
+        if (contact && contact.startsWith('whatsapp:')) {
+            badge = `<div style="font-size: 0.72rem; color: #16A34A; margin-top: 2px;">💬 ${lang.referral_we_send_whatsapp || 'SlotlyCare will send via WhatsApp'}</div>`;
+        } else if (contact) {
+            badge = `<div style="font-size: 0.72rem; color: #7C3AED; margin-top: 2px;">📧 ${lang.referral_we_send_email || 'SlotlyCare will send via email'}</div>`;
+        } else {
+            badge = `<div style="font-size: 0.72rem; color: #6B7280; margin-top: 2px;">📋 ${lang.referral_you_send || 'Copy and share'}</div>`;
+        }
         return `
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #E2E8F0;">
             <div style="min-width: 0; flex: 1;">
