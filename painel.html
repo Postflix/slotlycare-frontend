@@ -1086,6 +1086,15 @@ textarea {
                 <div style="margin-top: 10px; font-size: 0.8rem; color: #16A34A; font-style: italic;" data-i18n="referral_stats_thanks">SlotlyCare thanks you for your trust. 💚</div>
             </div>
 
+            <!-- Personal Referral Link Preview -->
+            <div id="referralLinkPreview" style="display: none; background: linear-gradient(135deg, #EFF6FF, #DBEAFE); border: 1px solid #93C5FD; border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; text-align: center;">
+                <div style="font-size: 0.85rem; color: #1E40AF; margin-bottom: 8px; font-weight: 600;" data-i18n="referral_your_link">🔗 Your personal referral link:</div>
+                <div style="background: white; border: 1px solid #BFDBFE; border-radius: 8px; padding: 10px 14px; font-family: monospace; font-size: 0.82rem; color: #2563EB; word-break: break-all;">
+                    slotlycare.com/convite/<span id="referralLinkPreviewSlug" style="font-weight: 700;"></span>/<span style="color: #93C5FD;">___</span>
+                </div>
+                <div style="font-size: 0.78rem; color: #3B82F6; margin-top: 8px;" data-i18n="referral_link_explain">Refer colleagues and they'll receive a personalized page with your recommendation.</div>
+            </div>
+
             <div style="text-align: center;">
                 <button onclick="openReferralModal()" id="btnReferral" style="
                     background: linear-gradient(135deg, #10B981, #059669);
@@ -1099,7 +1108,7 @@ textarea {
                     transition: all 0.2s ease;
                     box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
                 " onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 12px rgba(16, 185, 129, 0.4)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(16, 185, 129, 0.3)'"
-                data-i18n="referral_button">👥 Refer a Colleague</button>
+                data-i18n="referral_button">👥 Refer Colleagues</button>
             </div>
         </div>
     </div>
@@ -1250,6 +1259,13 @@ textarea {
             <div id="referralFormView">
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;" data-i18n="referral_subtitle">Add colleagues who could benefit from SlotlyCare. Each one gets a personalized invite link.</p>
                 
+                <!-- Live Link Preview -->
+                <div id="modalLinkPreview" style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; text-align: center;">
+                    <div style="font-family: monospace; font-size: 0.82rem; color: #059669; word-break: break-all;">
+                        slotlycare.com/convite/<span id="modalLinkDoctorSlug" style="font-weight: 700;"></span>/<span id="modalLinkInviteeSlug" style="font-weight: 700; color: #10B981;">___</span>
+                    </div>
+                </div>
+                
                 <div id="referralRows">
                     <!-- Dynamic rows inserted by JS -->
                 </div>
@@ -1355,6 +1371,8 @@ const translations = {
         referral_copy_all: "📋 Copy All Links",
         referral_copied_all: "✅ All links copied!",
         referral_personalized_note: "Each colleague will see a personalized page with your recommendation.",
+        referral_your_link: "🔗 Your personal referral link:",
+        referral_link_explain: "Refer colleagues and they'll receive a personalized page with your recommendation.",
         referral_another: "Refer More",
         referral_close: "Close",
         referral_links_title_single: "Invitation created!",
@@ -1426,6 +1444,8 @@ const translations = {
         referral_copy_all: "📋 Copiar Todos os Links",
         referral_copied_all: "✅ Todos os links copiados!",
         referral_personalized_note: "Cada colega verá uma página personalizada com sua recomendação.",
+        referral_your_link: "🔗 Seu link pessoal de indicação:",
+        referral_link_explain: "Indique colegas e eles receberão uma página personalizada com sua recomendação.",
         referral_another: "Indicar Mais",
         referral_close: "Fechar",
         referral_links_title_single: "Convite criado!",
@@ -1497,6 +1517,8 @@ const translations = {
         referral_copy_all: "📋 Copiar Todos los Enlaces",
         referral_copied_all: "✅ ¡Todos los enlaces copiados!",
         referral_personalized_note: "Cada colega verá una página personalizada con tu recomendación.",
+        referral_your_link: "🔗 Tu enlace personal de referencia:",
+        referral_link_explain: "Recomienda colegas y recibirán una página personalizada con tu recomendación.",
         referral_another: "Recomendar Más",
         referral_close: "Cerrar",
         referral_links_title_single: "¡Invitación creada!",
@@ -1568,6 +1590,8 @@ const translations = {
         referral_copy_all: "📋 Copier Tous les Liens",
         referral_copied_all: "✅ Tous les liens copiés !",
         referral_personalized_note: "Chaque collègue verra une page personnalisée avec votre recommandation.",
+        referral_your_link: "🔗 Votre lien personnel de parrainage :",
+        referral_link_explain: "Recommandez des collègues et ils recevront une page personnalisée avec votre recommandation.",
         referral_another: "Recommander Plus",
         referral_close: "Fermer",
         referral_links_title_single: "Invitation créée !",
@@ -1639,6 +1663,8 @@ const translations = {
         referral_copy_all: "📋 Alle Links Kopieren",
         referral_copied_all: "✅ Alle Links kopiert!",
         referral_personalized_note: "Jeder Kollege sieht eine personalisierte Seite mit Ihrer Empfehlung.",
+        referral_your_link: "🔗 Ihr persönlicher Empfehlungslink:",
+        referral_link_explain: "Empfehlen Sie Kollegen und sie erhalten eine personalisierte Seite mit Ihrer Empfehlung.",
         referral_another: "Weitere Empfehlen",
         referral_close: "Schließen",
         referral_links_title_single: "Einladung erstellt!",
@@ -1710,6 +1736,8 @@ const translations = {
         referral_copy_all: "📋 Copia Tutti i Link",
         referral_copied_all: "✅ Tutti i link copiati!",
         referral_personalized_note: "Ogni collega vedrà una pagina personalizzata con la tua raccomandazione.",
+        referral_your_link: "🔗 Il tuo link personale di referral:",
+        referral_link_explain: "Consiglia colleghi e riceveranno una pagina personalizzata con la tua raccomandazione.",
         referral_another: "Consiglia Altri",
         referral_close: "Chiudi",
         referral_links_title_single: "Invito creato!",
@@ -2658,6 +2686,12 @@ async function loadExistingDoctorData() {
             // Load referral stats
             loadReferralStats();
             
+            // Populate referral link preview
+            if (doctor.link) {
+                document.getElementById('referralLinkPreviewSlug').textContent = doctor.link;
+                document.getElementById('referralLinkPreview').style.display = 'block';
+            }
+            
             // Show the booking link if exists
             if (doctor.link) {
                 const fullLink = `https://slotlycare.com/${doctor.link}`;
@@ -2814,9 +2848,16 @@ function openReferralModal() {
     const lang = translations[currentLanguage] || translations['en'];
     document.getElementById('btnSendReferral').textContent = lang.referral_send;
 
+    // Populate doctor slug in modal preview
+    document.getElementById('modalLinkDoctorSlug').textContent = savedDoctorLink || '';
+    document.getElementById('modalLinkInviteeSlug').textContent = '___';
+
     // Start with one empty row
     referralRowCounter = 0;
     document.getElementById('referralRows').innerHTML = createReferralRowHTML(0);
+
+    // Add live preview listener to first row name input
+    setupLivePreviewListener();
 
     document.getElementById('referralModal').classList.add('active');
 }
@@ -2839,8 +2880,32 @@ function resetReferralModal() {
     const lang = translations[currentLanguage] || translations['en'];
     document.getElementById('btnSendReferral').textContent = lang.referral_send;
 
+    // Reset modal link preview
+    document.getElementById('modalLinkInviteeSlug').textContent = '___';
+
     referralRowCounter = 0;
     document.getElementById('referralRows').innerHTML = createReferralRowHTML(0);
+    setupLivePreviewListener();
+}
+
+function nameToSlug(name) {
+    return name.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '')
+        .substring(0, 40);
+}
+
+function setupLivePreviewListener() {
+    const firstRow = document.getElementById('referralRow0');
+    if (!firstRow) return;
+    const nameInput = firstRow.querySelector('.referral-name-input');
+    if (!nameInput) return;
+    nameInput.addEventListener('input', function() {
+        const slug = nameToSlug(this.value);
+        const previewEl = document.getElementById('modalLinkInviteeSlug');
+        previewEl.textContent = slug || '___';
+        previewEl.style.color = slug ? '#059669' : '#10B981';
+    });
 }
 
 function showReferralMessage(text, type) {
@@ -2930,15 +2995,17 @@ function showInviteLinks(invites, lang) {
         titleEl.textContent = invites.length + ' ' + lang.referral_links_title_plural;
     }
     
+    const doctorSlug = savedDoctorLink || '';
+    
     // Build links list
     const listEl = document.getElementById('referralLinksList');
     listEl.innerHTML = invites.map(inv => `
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #E2E8F0;">
             <div style="min-width: 0; flex: 1;">
                 <div style="font-weight: 600; font-size: 0.88rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${inv.name}</div>
-                <div style="font-size: 0.8rem; color: #10B981; font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">slotlycare.com/convite/${inv.slug}</div>
+                <div style="font-size: 0.8rem; color: #10B981; font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">slotlycare.com/convite/${doctorSlug}/${inv.slug}</div>
             </div>
-            <button onclick="copySingleLink('${inv.slug}', this)" style="background: none; border: 1px solid #D1D5DB; color: var(--text-muted); padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; white-space: nowrap; margin-left: 8px;">📋</button>
+            <button onclick="copySingleLink('${doctorSlug}', '${inv.slug}', this)" style="background: none; border: 1px solid #D1D5DB; color: var(--text-muted); padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; white-space: nowrap; margin-left: 8px;">📋</button>
         </div>
     `).join('');
     
@@ -2947,8 +3014,8 @@ function showInviteLinks(invites, lang) {
     if (lastItem) lastItem.style.borderBottom = 'none';
 }
 
-function copySingleLink(slug, btn) {
-    const link = 'https://slotlycare.com/convite/' + slug;
+function copySingleLink(doctorSlug, inviteSlug, btn) {
+    const link = 'https://slotlycare.com/convite/' + doctorSlug + '/' + inviteSlug;
     navigator.clipboard.writeText(link).then(() => {
         const original = btn.textContent;
         btn.textContent = '✓';
