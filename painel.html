@@ -1072,20 +1072,35 @@ textarea {
         </div>
 
         <!-- Referral Section -->
-        <div style="text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color);">
-            <button onclick="openReferralModal()" id="btnReferral" style="
-                background: linear-gradient(135deg, #10B981, #059669);
-                color: white;
-                border: none;
-                padding: 12px 28px;
-                border-radius: 10px;
-                font-size: 0.95rem;
-                font-weight: 600;
-                cursor: pointer;
-                transition: all 0.2s ease;
-                box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
-            " onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 12px rgba(16, 185, 129, 0.4)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(16, 185, 129, 0.3)'"
-            data-i18n="referral_button">👥 Refer a Colleague</button>
+        <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+            
+            <!-- Referral Stats Panel -->
+            <div id="referralStatsPanel" style="display: none; background: linear-gradient(135deg, #F0FDF4, #DCFCE7); border: 1px solid #BBF7D0; border-radius: 12px; padding: 16px 20px; margin-bottom: 16px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                    <span style="font-size: 1.1rem;">📊</span>
+                    <span style="font-weight: 600; color: #166534; font-size: 0.95rem;" data-i18n="referral_stats_title">Your Referrals</span>
+                </div>
+                <div id="referralStatsContent" style="font-size: 0.88rem; color: #15803D; line-height: 1.6;">
+                    <!-- Filled by JS -->
+                </div>
+                <div style="margin-top: 10px; font-size: 0.8rem; color: #16A34A; font-style: italic;" data-i18n="referral_stats_thanks">SlotlyCare thanks you for your trust. 💚</div>
+            </div>
+
+            <div style="text-align: center;">
+                <button onclick="openReferralModal()" id="btnReferral" style="
+                    background: linear-gradient(135deg, #10B981, #059669);
+                    color: white;
+                    border: none;
+                    padding: 12px 28px;
+                    border-radius: 10px;
+                    font-size: 0.95rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+                " onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 12px rgba(16, 185, 129, 0.4)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(16, 185, 129, 0.3)'"
+                data-i18n="referral_button">👥 Refer a Colleague</button>
+            </div>
         </div>
     </div>
 
@@ -1225,34 +1240,64 @@ textarea {
 
 <!-- Modal de Indicação -->
 <div id="referralModal" class="modal-overlay">
-    <div class="modal-content" style="max-width: 480px;">
+    <div class="modal-content" style="max-width: 520px;">
         <div class="modal-header">
             <span class="modal-icon">👥</span>
-            <h3 class="modal-title" data-i18n="referral_title">Refer a Colleague</h3>
+            <h3 class="modal-title" data-i18n="referral_title">Refer Colleagues</h3>
         </div>
         <div class="modal-body">
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;" data-i18n="referral_subtitle">Refer colleagues who could benefit from SlotlyCare!</p>
-            <div style="margin-bottom: 16px;">
-                <label style="display: block; font-weight: 600; margin-bottom: 6px; color: var(--text-main);" data-i18n="referral_name">Name</label>
-                <input type="text" id="referralName" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.95rem;">
+            <!-- FORM VIEW -->
+            <div id="referralFormView">
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;" data-i18n="referral_subtitle">Add colleagues who could benefit from SlotlyCare. Each one gets a personalized invite link.</p>
+                
+                <div id="referralRows">
+                    <!-- Dynamic rows inserted by JS -->
+                </div>
+                
+                <button onclick="addReferralRow()" id="btnAddRow" style="
+                    background: none; border: 1px dashed #BBF7D0; color: #10B981; padding: 8px 16px;
+                    border-radius: 8px; font-size: 0.85rem; cursor: pointer; width: 100%; margin-bottom: 12px;
+                    transition: all 0.2s ease;
+                " onmouseover="this.style.borderColor='#10B981';this.style.background='#F0FDF4'" onmouseout="this.style.borderColor='#BBF7D0';this.style.background='none'"
+                data-i18n="referral_add_another">+ Add another colleague</button>
+
+                <div id="referralStatusMessage" style="display: none; padding: 10px; border-radius: 6px; margin-bottom: 12px; font-size: 0.9rem;"></div>
             </div>
-            <div style="margin-bottom: 16px;">
-                <label style="display: block; font-weight: 600; margin-bottom: 6px; color: var(--text-main);" data-i18n="referral_email">Email</label>
-                <input type="email" id="referralEmail" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.95rem;">
+
+            <!-- LINKS RESULT VIEW -->
+            <div id="referralLinksView" style="display: none;">
+                <div style="text-align: center; margin-bottom: 16px;">
+                    <div style="font-size: 2rem; margin-bottom: 8px;">✅</div>
+                    <div id="referralLinksTitle" style="font-weight: 600; font-size: 1.05rem; color: var(--text-main);">Invitations created!</div>
+                </div>
+                
+                <div id="referralLinksList" style="
+                    background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 10px;
+                    padding: 12px; margin-bottom: 16px; max-height: 300px; overflow-y: auto;
+                ">
+                    <!-- Links filled by JS -->
+                </div>
+
+                <button onclick="copyAllInviteLinks()" id="btnCopyAll" style="
+                    background: linear-gradient(135deg, #10B981, #059669); color: white; border: none;
+                    padding: 10px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 600;
+                    cursor: pointer; width: 100%; margin-bottom: 8px; transition: all 0.2s ease;
+                " data-i18n="referral_copy_all">📋 Copy All Links</button>
+
+                <p style="color: var(--text-muted); font-size: 0.8rem; text-align: center; margin-bottom: 0;" data-i18n="referral_personalized_note">Each colleague will see a personalized page with your recommendation.</p>
             </div>
-            <div style="margin-bottom: 16px;">
-                <label style="display: block; font-weight: 600; margin-bottom: 6px; color: var(--text-main);" data-i18n="referral_specialty">Specialty (optional)</label>
-                <input type="text" id="referralSpecialty" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.95rem;">
-            </div>
-            <div style="margin-bottom: 16px;">
-                <label style="display: block; font-weight: 600; margin-bottom: 6px; color: var(--text-main);" data-i18n="referral_message">Message (optional)</label>
-                <textarea id="referralMessage" rows="3" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.95rem; resize: vertical;"></textarea>
-            </div>
-            <div id="referralStatusMessage" style="display: none; padding: 10px; border-radius: 6px; margin-bottom: 12px; font-size: 0.9rem;"></div>
         </div>
         <div class="modal-actions">
-            <button class="modal-btn modal-btn-cancel" onclick="closeReferralModal()" data-i18n="referral_cancel">Cancel</button>
-            <button class="modal-btn modal-btn-confirm" id="btnSendReferral" onclick="sendReferral()" style="background: #10B981;" data-i18n="referral_send">Send Referral</button>
+            <!-- FORM BUTTONS -->
+            <div id="referralFormButtons">
+                <button class="modal-btn modal-btn-cancel" onclick="closeReferralModal()" data-i18n="referral_cancel">Cancel</button>
+                <button class="modal-btn modal-btn-confirm" id="btnSendReferral" onclick="sendBatchReferrals()" style="background: #10B981;" data-i18n="referral_send">Send Invitations</button>
+            </div>
+            <!-- LINKS BUTTONS -->
+            <div id="referralLinksButtons" style="display: none;">
+                <button class="modal-btn modal-btn-cancel" onclick="resetReferralModal()" data-i18n="referral_another">Refer More</button>
+                <button class="modal-btn modal-btn-confirm" onclick="closeReferralModal()" style="background: #10B981;" data-i18n="referral_close">Close</button>
+            </div>
         </div>
     </div>
 </div>
@@ -1296,19 +1341,30 @@ const translations = {
         success_message: "✅ Configuration saved successfully!",
         schedule_processed: "✅ Schedule processed!",
         copied: "Copied!",
-        referral_button: "👥 Refer a Colleague",
-        referral_title: "Refer a Colleague",
-        referral_subtitle: "Refer colleagues who could benefit from SlotlyCare!",
+        referral_button: "👥 Refer Colleagues",
+        referral_title: "Refer Colleagues",
+        referral_subtitle: "Add colleagues who could benefit from SlotlyCare. Each one gets a personalized invite link.",
         referral_name: "Name",
         referral_email: "Email",
-        referral_specialty: "Specialty (optional)",
-        referral_message: "Message (optional)",
-        referral_send: "Send Referral",
-        referral_success: "✅ Referral sent successfully! Thank you!",
-        referral_error: "❌ Error sending referral. Please try again.",
-        referral_error_name: "Please enter your colleague's name",
-        referral_error_email: "Please enter a valid email",
+        referral_add_another: "+ Add another colleague",
+        referral_send: "Send Invitations",
+        referral_error: "❌ Error sending invitations. Please try again.",
+        referral_error_name: "Please enter a name for each colleague",
+        referral_error_email: "Please enter a valid email for each colleague",
         referral_cancel: "Cancel",
+        referral_copy_all: "📋 Copy All Links",
+        referral_copied_all: "✅ All links copied!",
+        referral_personalized_note: "Each colleague will see a personalized page with your recommendation.",
+        referral_another: "Refer More",
+        referral_close: "Close",
+        referral_links_title_single: "Invitation created!",
+        referral_links_title_plural: "invitations created!",
+        referral_remove_row: "Remove",
+        referral_stats_title: "Your Referrals",
+        referral_stats_invited: "colleagues invited",
+        referral_stats_opened: "opened your link",
+        referral_stats_trial: "started a free trial",
+        referral_stats_thanks: "SlotlyCare thanks you for your trust. 💚",
         placeholders: {
             doctorName: "Dr. John",
             specialty: "",
@@ -1356,19 +1412,30 @@ const translations = {
         success_message: "✅ Configuração salva com sucesso!",
         schedule_processed: "✅ Agenda processada!",
         copied: "Copiado!",
-        referral_button: "👥 Indique um Colega",
-        referral_title: "Indique um Colega",
-        referral_subtitle: "Indique colegas que poderiam se beneficiar do SlotlyCare!",
+        referral_button: "👥 Indicar Colegas",
+        referral_title: "Indicar Colegas",
+        referral_subtitle: "Adicione colegas que poderiam se beneficiar do SlotlyCare. Cada um recebe um link de convite personalizado.",
         referral_name: "Nome",
         referral_email: "Email",
-        referral_specialty: "Especialidade (opcional)",
-        referral_message: "Mensagem (opcional)",
-        referral_send: "Enviar Indicação",
-        referral_success: "✅ Indicação enviada com sucesso! Obrigado!",
-        referral_error: "❌ Erro ao enviar indicação. Tente novamente.",
-        referral_error_name: "Por favor, insira o nome do colega",
-        referral_error_email: "Por favor, insira um email válido",
+        referral_add_another: "+ Adicionar outro colega",
+        referral_send: "Enviar Convites",
+        referral_error: "❌ Erro ao enviar convites. Tente novamente.",
+        referral_error_name: "Por favor, insira o nome de cada colega",
+        referral_error_email: "Por favor, insira um email válido para cada colega",
         referral_cancel: "Cancelar",
+        referral_copy_all: "📋 Copiar Todos os Links",
+        referral_copied_all: "✅ Todos os links copiados!",
+        referral_personalized_note: "Cada colega verá uma página personalizada com sua recomendação.",
+        referral_another: "Indicar Mais",
+        referral_close: "Fechar",
+        referral_links_title_single: "Convite criado!",
+        referral_links_title_plural: "convites criados!",
+        referral_remove_row: "Remover",
+        referral_stats_title: "Suas Indicações",
+        referral_stats_invited: "colegas convidados",
+        referral_stats_opened: "abriram seu link",
+        referral_stats_trial: "iniciaram o teste gratuito",
+        referral_stats_thanks: "A SlotlyCare agradece sua confiança. 💚",
         placeholders: {
             doctorName: "Dr. João",
             specialty: "",
@@ -1416,19 +1483,30 @@ const translations = {
         success_message: "✅ ¡Configuración guardada!",
         schedule_processed: "✅ ¡Agenda procesada!",
         copied: "¡Copiado!",
-        referral_button: "👥 Recomienda a un Colega",
-        referral_title: "Recomienda a un Colega",
-        referral_subtitle: "¡Recomienda colegas que podrían beneficiarse de SlotlyCare!",
+        referral_button: "👥 Recomendar Colegas",
+        referral_title: "Recomendar Colegas",
+        referral_subtitle: "Agrega colegas que podrían beneficiarse de SlotlyCare. Cada uno recibe un enlace de invitación personalizado.",
         referral_name: "Nombre",
         referral_email: "Email",
-        referral_specialty: "Especialidad (opcional)",
-        referral_message: "Mensaje (opcional)",
-        referral_send: "Enviar Recomendación",
-        referral_success: "✅ ¡Recomendación enviada con éxito! ¡Gracias!",
+        referral_add_another: "+ Agregar otro colega",
+        referral_send: "Enviar Invitaciones",
         referral_error: "❌ Error al enviar. Inténtalo de nuevo.",
-        referral_error_name: "Por favor, ingresa el nombre del colega",
-        referral_error_email: "Por favor, ingresa un email válido",
+        referral_error_name: "Por favor, ingresa el nombre de cada colega",
+        referral_error_email: "Por favor, ingresa un email válido para cada colega",
         referral_cancel: "Cancelar",
+        referral_copy_all: "📋 Copiar Todos los Enlaces",
+        referral_copied_all: "✅ ¡Todos los enlaces copiados!",
+        referral_personalized_note: "Cada colega verá una página personalizada con tu recomendación.",
+        referral_another: "Recomendar Más",
+        referral_close: "Cerrar",
+        referral_links_title_single: "¡Invitación creada!",
+        referral_links_title_plural: "invitaciones creadas!",
+        referral_remove_row: "Eliminar",
+        referral_stats_title: "Tus Recomendaciones",
+        referral_stats_invited: "colegas invitados",
+        referral_stats_opened: "abrieron tu enlace",
+        referral_stats_trial: "iniciaron la prueba gratuita",
+        referral_stats_thanks: "SlotlyCare agradece tu confianza. 💚",
         placeholders: {
             doctorName: "Dr. Juan",
             specialty: "",
@@ -1476,19 +1554,30 @@ const translations = {
         success_message: "✅ Configuration enregistrée!",
         schedule_processed: "✅ Agenda traité!",
         copied: "Copié!",
-        referral_button: "👥 Recommander un Collègue",
-        referral_title: "Recommander un Collègue",
-        referral_subtitle: "Recommandez des collègues qui pourraient bénéficier de SlotlyCare !",
+        referral_button: "👥 Recommander des Collègues",
+        referral_title: "Recommander des Collègues",
+        referral_subtitle: "Ajoutez des collègues qui pourraient bénéficier de SlotlyCare. Chacun reçoit un lien d'invitation personnalisé.",
         referral_name: "Nom",
         referral_email: "Email",
-        referral_specialty: "Spécialité (optionnel)",
-        referral_message: "Message (optionnel)",
-        referral_send: "Envoyer la Recommandation",
-        referral_success: "✅ Recommandation envoyée avec succès ! Merci !",
+        referral_add_another: "+ Ajouter un autre collègue",
+        referral_send: "Envoyer les Invitations",
         referral_error: "❌ Erreur lors de l'envoi. Veuillez réessayer.",
-        referral_error_name: "Veuillez entrer le nom du collègue",
-        referral_error_email: "Veuillez entrer un email valide",
+        referral_error_name: "Veuillez entrer le nom de chaque collègue",
+        referral_error_email: "Veuillez entrer un email valide pour chaque collègue",
         referral_cancel: "Annuler",
+        referral_copy_all: "📋 Copier Tous les Liens",
+        referral_copied_all: "✅ Tous les liens copiés !",
+        referral_personalized_note: "Chaque collègue verra une page personnalisée avec votre recommandation.",
+        referral_another: "Recommander Plus",
+        referral_close: "Fermer",
+        referral_links_title_single: "Invitation créée !",
+        referral_links_title_plural: "invitations créées !",
+        referral_remove_row: "Supprimer",
+        referral_stats_title: "Vos Recommandations",
+        referral_stats_invited: "collègues invités",
+        referral_stats_opened: "ont ouvert votre lien",
+        referral_stats_trial: "ont commencé l'essai gratuit",
+        referral_stats_thanks: "SlotlyCare vous remercie pour votre confiance. 💚",
         placeholders: {
             doctorName: "Dr. Jean",
             specialty: "",
@@ -1538,17 +1627,28 @@ const translations = {
         copied: "Kopiert!",
         referral_button: "👥 Kollegen Empfehlen",
         referral_title: "Kollegen Empfehlen",
-        referral_subtitle: "Empfehlen Sie Kollegen, die von SlotlyCare profitieren könnten!",
+        referral_subtitle: "Fügen Sie Kollegen hinzu, die von SlotlyCare profitieren könnten. Jeder erhält einen personalisierten Einladungslink.",
         referral_name: "Name",
         referral_email: "Email",
-        referral_specialty: "Fachgebiet (optional)",
-        referral_message: "Nachricht (optional)",
-        referral_send: "Empfehlung Senden",
-        referral_success: "✅ Empfehlung erfolgreich gesendet! Danke!",
+        referral_add_another: "+ Weiteren Kollegen hinzufügen",
+        referral_send: "Einladungen Senden",
         referral_error: "❌ Fehler beim Senden. Bitte versuchen Sie es erneut.",
-        referral_error_name: "Bitte geben Sie den Namen des Kollegen ein",
-        referral_error_email: "Bitte geben Sie eine gültige Email ein",
+        referral_error_name: "Bitte geben Sie den Namen jedes Kollegen ein",
+        referral_error_email: "Bitte geben Sie eine gültige Email für jeden Kollegen ein",
         referral_cancel: "Abbrechen",
+        referral_copy_all: "📋 Alle Links Kopieren",
+        referral_copied_all: "✅ Alle Links kopiert!",
+        referral_personalized_note: "Jeder Kollege sieht eine personalisierte Seite mit Ihrer Empfehlung.",
+        referral_another: "Weitere Empfehlen",
+        referral_close: "Schließen",
+        referral_links_title_single: "Einladung erstellt!",
+        referral_links_title_plural: "Einladungen erstellt!",
+        referral_remove_row: "Entfernen",
+        referral_stats_title: "Ihre Empfehlungen",
+        referral_stats_invited: "Kollegen eingeladen",
+        referral_stats_opened: "haben Ihren Link geöffnet",
+        referral_stats_trial: "haben die Testversion gestartet",
+        referral_stats_thanks: "SlotlyCare dankt Ihnen für Ihr Vertrauen. 💚",
         placeholders: {
             doctorName: "Dr. Hans",
             specialty: "",
@@ -1596,19 +1696,30 @@ const translations = {
         success_message: "✅ Configurazione salvata!",
         schedule_processed: "✅ Agenda elaborata!",
         copied: "Copiato!",
-        referral_button: "👥 Consiglia un Collega",
-        referral_title: "Consiglia un Collega",
-        referral_subtitle: "Consiglia colleghi che potrebbero beneficiare di SlotlyCare!",
+        referral_button: "👥 Consiglia Colleghi",
+        referral_title: "Consiglia Colleghi",
+        referral_subtitle: "Aggiungi colleghi che potrebbero beneficiare di SlotlyCare. Ognuno riceve un link di invito personalizzato.",
         referral_name: "Nome",
         referral_email: "Email",
-        referral_specialty: "Specialità (opzionale)",
-        referral_message: "Messaggio (opzionale)",
-        referral_send: "Invia Raccomandazione",
-        referral_success: "✅ Raccomandazione inviata con successo! Grazie!",
+        referral_add_another: "+ Aggiungi un altro collega",
+        referral_send: "Invia Inviti",
         referral_error: "❌ Errore nell'invio. Riprova.",
-        referral_error_name: "Inserisci il nome del collega",
-        referral_error_email: "Inserisci un email valido",
+        referral_error_name: "Inserisci il nome di ogni collega",
+        referral_error_email: "Inserisci un email valido per ogni collega",
         referral_cancel: "Annulla",
+        referral_copy_all: "📋 Copia Tutti i Link",
+        referral_copied_all: "✅ Tutti i link copiati!",
+        referral_personalized_note: "Ogni collega vedrà una pagina personalizzata con la tua raccomandazione.",
+        referral_another: "Consiglia Altri",
+        referral_close: "Chiudi",
+        referral_links_title_single: "Invito creato!",
+        referral_links_title_plural: "inviti creati!",
+        referral_remove_row: "Rimuovi",
+        referral_stats_title: "Le Tue Raccomandazioni",
+        referral_stats_invited: "colleghi invitati",
+        referral_stats_opened: "hanno aperto il tuo link",
+        referral_stats_trial: "hanno iniziato la prova gratuita",
+        referral_stats_thanks: "SlotlyCare ti ringrazia per la tua fiducia. 💚",
         placeholders: {
             doctorName: "Dr. Giovanni",
             specialty: "",
@@ -2544,6 +2655,9 @@ async function loadExistingDoctorData() {
             // Update preview
             updatePreview();
             
+            // Load referral stats
+            loadReferralStats();
+            
             // Show the booking link if exists
             if (doctor.link) {
                 const fullLink = `https://slotlycare.com/${doctor.link}`;
@@ -2663,22 +2777,70 @@ function showPasswordMessage(text, type) {
 }
 
 // === REFERRAL FUNCTIONS ===
+// ==================== REFERRAL FUNCTIONS ====================
+
+let referralRowCounter = 0;
+
+function createReferralRowHTML(index) {
+    const lang = translations[currentLanguage] || translations['en'];
+    return `
+    <div class="referral-row" id="referralRow${index}" style="display: flex; gap: 8px; margin-bottom: 10px; align-items: center;">
+        <input type="text" placeholder="${lang.referral_name}" class="referral-name-input" style="flex: 1; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem;">
+        <input type="email" placeholder="${lang.referral_email}" class="referral-email-input" style="flex: 1; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem;">
+        ${index > 0 ? `<button onclick="removeReferralRow(${index})" style="background: none; border: none; color: #EF4444; cursor: pointer; font-size: 0.8rem; padding: 4px 8px; white-space: nowrap;" title="${lang.referral_remove_row}">✕</button>` : '<div style="width: 30px;"></div>'}
+    </div>`;
+}
+
+function addReferralRow() {
+    referralRowCounter++;
+    const container = document.getElementById('referralRows');
+    container.insertAdjacentHTML('beforeend', createReferralRowHTML(referralRowCounter));
+}
+
+function removeReferralRow(index) {
+    const row = document.getElementById('referralRow' + index);
+    if (row) row.remove();
+}
+
 function openReferralModal() {
-    document.getElementById('referralName').value = '';
-    document.getElementById('referralEmail').value = '';
-    document.getElementById('referralSpecialty').value = '';
-    document.getElementById('referralMessage').value = '';
+    // Reset to form view
+    document.getElementById('referralFormView').style.display = 'block';
+    document.getElementById('referralLinksView').style.display = 'none';
+    document.getElementById('referralFormButtons').style.display = 'flex';
+    document.getElementById('referralLinksButtons').style.display = 'none';
     document.getElementById('referralStatusMessage').style.display = 'none';
     document.getElementById('btnSendReferral').disabled = false;
 
     const lang = translations[currentLanguage] || translations['en'];
     document.getElementById('btnSendReferral').textContent = lang.referral_send;
 
+    // Start with one empty row
+    referralRowCounter = 0;
+    document.getElementById('referralRows').innerHTML = createReferralRowHTML(0);
+
     document.getElementById('referralModal').classList.add('active');
 }
 
 function closeReferralModal() {
     document.getElementById('referralModal').classList.remove('active');
+    // Refresh stats after closing (in case new invites were created)
+    loadReferralStats();
+}
+
+function resetReferralModal() {
+    // Go back to form view with clean rows
+    document.getElementById('referralFormView').style.display = 'block';
+    document.getElementById('referralLinksView').style.display = 'none';
+    document.getElementById('referralFormButtons').style.display = 'flex';
+    document.getElementById('referralLinksButtons').style.display = 'none';
+    document.getElementById('referralStatusMessage').style.display = 'none';
+    document.getElementById('btnSendReferral').disabled = false;
+
+    const lang = translations[currentLanguage] || translations['en'];
+    document.getElementById('btnSendReferral').textContent = lang.referral_send;
+
+    referralRowCounter = 0;
+    document.getElementById('referralRows').innerHTML = createReferralRowHTML(0);
 }
 
 function showReferralMessage(text, type) {
@@ -2689,37 +2851,48 @@ function showReferralMessage(text, type) {
     messageEl.style.color = type === 'error' ? '#DC2626' : '#059669';
 }
 
-async function sendReferral() {
+async function sendBatchReferrals() {
     const lang = translations[currentLanguage] || translations['en'];
-    const name = document.getElementById('referralName').value.trim();
-    const email = document.getElementById('referralEmail').value.trim();
-    const specialty = document.getElementById('referralSpecialty').value.trim();
-    const message = document.getElementById('referralMessage').value.trim();
-
-    if (!name) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    // Collect all rows
+    const rows = document.querySelectorAll('.referral-row');
+    const referrals = [];
+    
+    for (const row of rows) {
+        const name = row.querySelector('.referral-name-input').value.trim();
+        const email = row.querySelector('.referral-email-input').value.trim();
+        
+        // Skip completely empty rows (but not partially filled)
+        if (!name && !email) continue;
+        
+        if (!name) {
+            showReferralMessage(lang.referral_error_name, 'error');
+            return;
+        }
+        if (!email || !emailRegex.test(email)) {
+            showReferralMessage(lang.referral_error_email, 'error');
+            return;
+        }
+        
+        referrals.push({ name, email });
+    }
+    
+    if (referrals.length === 0) {
         showReferralMessage(lang.referral_error_name, 'error');
         return;
     }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailRegex.test(email)) {
-        showReferralMessage(lang.referral_error_email, 'error');
-        return;
-    }
-
+    
     const btn = document.getElementById('btnSendReferral');
     btn.disabled = true;
     btn.textContent = '...';
 
     try {
-        const response = await fetch('https://slotlycare-backend.vercel.app/api/save-referral', {
+        const response = await fetch('https://slotlycare-backend.vercel.app/api/batch-referrals', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                referred_name: name,
-                referred_email: email,
-                referred_specialty: specialty,
-                message: message,
+                referrals: referrals,
                 referrer_customer_id: localStorage.getItem('slotlycare_customer_id') || '',
                 referrer_doctor_link: savedDoctorLink || '',
                 language: currentLanguage
@@ -2728,21 +2901,110 @@ async function sendReferral() {
 
         const data = await response.json();
 
-        if (response.ok) {
-            showReferralMessage(lang.referral_success, 'success');
-            document.getElementById('referralName').value = '';
-            document.getElementById('referralEmail').value = '';
-            document.getElementById('referralSpecialty').value = '';
-            document.getElementById('referralMessage').value = '';
-
+        if (response.ok && data.success && data.invites && data.invites.length > 0) {
+            showInviteLinks(data.invites, lang);
         } else {
             showReferralMessage(data.error || lang.referral_error, 'error');
+            btn.disabled = false;
+            btn.textContent = lang.referral_send;
         }
     } catch (error) {
         showReferralMessage(lang.referral_error, 'error');
-    } finally {
         btn.disabled = false;
         btn.textContent = lang.referral_send;
+    }
+}
+
+function showInviteLinks(invites, lang) {
+    // Switch to links view
+    document.getElementById('referralFormView').style.display = 'none';
+    document.getElementById('referralLinksView').style.display = 'block';
+    document.getElementById('referralFormButtons').style.display = 'none';
+    document.getElementById('referralLinksButtons').style.display = 'flex';
+    
+    // Title
+    const titleEl = document.getElementById('referralLinksTitle');
+    if (invites.length === 1) {
+        titleEl.textContent = lang.referral_links_title_single;
+    } else {
+        titleEl.textContent = invites.length + ' ' + lang.referral_links_title_plural;
+    }
+    
+    // Build links list
+    const listEl = document.getElementById('referralLinksList');
+    listEl.innerHTML = invites.map(inv => `
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #E2E8F0;">
+            <div style="min-width: 0; flex: 1;">
+                <div style="font-weight: 600; font-size: 0.88rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${inv.name}</div>
+                <div style="font-size: 0.8rem; color: #10B981; font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">slotlycare.com/convite/${inv.slug}</div>
+            </div>
+            <button onclick="copySingleLink('${inv.slug}', this)" style="background: none; border: 1px solid #D1D5DB; color: var(--text-muted); padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; white-space: nowrap; margin-left: 8px;">📋</button>
+        </div>
+    `).join('');
+    
+    // Remove last border
+    const lastItem = listEl.querySelector('div:last-child');
+    if (lastItem) lastItem.style.borderBottom = 'none';
+}
+
+function copySingleLink(slug, btn) {
+    const link = 'https://slotlycare.com/convite/' + slug;
+    navigator.clipboard.writeText(link).then(() => {
+        const original = btn.textContent;
+        btn.textContent = '✓';
+        btn.style.color = '#10B981';
+        btn.style.borderColor = '#10B981';
+        setTimeout(() => { btn.textContent = original; btn.style.color = ''; btn.style.borderColor = ''; }, 2000);
+    });
+}
+
+function copyAllInviteLinks() {
+    const lang = translations[currentLanguage] || translations['en'];
+    const linkEls = document.querySelectorAll('#referralLinksList div > div > div:nth-child(2)');
+    const links = [];
+    linkEls.forEach(el => {
+        links.push('https://' + el.textContent.trim());
+    });
+    
+    navigator.clipboard.writeText(links.join('\n')).then(() => {
+        const btn = document.getElementById('btnCopyAll');
+        const original = btn.textContent;
+        btn.textContent = lang.referral_copied_all;
+        setTimeout(() => { btn.textContent = original; }, 2500);
+    });
+}
+
+// ==================== REFERRAL STATS ====================
+
+async function loadReferralStats() {
+    const customerId = localStorage.getItem('slotlycare_customer_id');
+    if (!customerId) return;
+    
+    try {
+        const response = await fetch(`https://slotlycare-backend.vercel.app/api/referral-stats?customer_id=${customerId}`);
+        const data = await response.json();
+        
+        if (data.success && data.stats && data.stats.total > 0) {
+            const stats = data.stats;
+            const lang = translations[currentLanguage] || translations['en'];
+            const panel = document.getElementById('referralStatsPanel');
+            const content = document.getElementById('referralStatsContent');
+            
+            let html = `<div>👥 <strong>${stats.total}</strong> ${lang.referral_stats_invited}</div>`;
+            
+            const opened = stats.clicked + stats.trial_started + stats.converted;
+            if (opened > 0) {
+                html += `<div>🔗 <strong>${opened}</strong> ${lang.referral_stats_opened}</div>`;
+            }
+            if (stats.trial_started + stats.converted > 0) {
+                html += `<div>🎉 <strong>${stats.trial_started + stats.converted}</strong> ${lang.referral_stats_trial}</div>`;
+            }
+            
+            content.innerHTML = html;
+            panel.style.display = 'block';
+        }
+    } catch (error) {
+        console.log('Could not load referral stats:', error);
     }
 }
 </script>
