@@ -1416,6 +1416,7 @@ const translations = {
         referral_stats_opened: "opened your link",
         referral_stats_trial: "started a free trial",
         referral_stats_thanks: "SlotlyCare thanks you for your trust. 💚",
+        referral_see_details: "See details",
         placeholders: {
             doctorName: "Dr. John",
             specialty: "",
@@ -1498,6 +1499,7 @@ const translations = {
         referral_stats_opened: "abriram seu link",
         referral_stats_trial: "iniciaram o teste gratuito",
         referral_stats_thanks: "A SlotlyCare agradece sua confiança. 💚",
+        referral_see_details: "Ver detalhes",
         placeholders: {
             doctorName: "Dr. João",
             specialty: "",
@@ -1580,6 +1582,7 @@ const translations = {
         referral_stats_opened: "abrieron tu enlace",
         referral_stats_trial: "iniciaron la prueba gratuita",
         referral_stats_thanks: "SlotlyCare agradece tu confianza. 💚",
+        referral_see_details: "Ver detalles",
         placeholders: {
             doctorName: "Dr. Juan",
             specialty: "",
@@ -1662,6 +1665,7 @@ const translations = {
         referral_stats_opened: "ont ouvert votre lien",
         referral_stats_trial: "ont commencé l'essai gratuit",
         referral_stats_thanks: "SlotlyCare vous remercie pour votre confiance. 💚",
+        referral_see_details: "Voir les détails",
         placeholders: {
             doctorName: "Dr. Jean",
             specialty: "",
@@ -1744,6 +1748,7 @@ const translations = {
         referral_stats_opened: "haben Ihren Link geöffnet",
         referral_stats_trial: "haben die Testversion gestartet",
         referral_stats_thanks: "SlotlyCare dankt Ihnen für Ihr Vertrauen. 💚",
+        referral_see_details: "Details ansehen",
         placeholders: {
             doctorName: "Dr. Hans",
             specialty: "",
@@ -1826,6 +1831,7 @@ const translations = {
         referral_stats_opened: "hanno aperto il tuo link",
         referral_stats_trial: "hanno iniziato la prova gratuita",
         referral_stats_thanks: "SlotlyCare ti ringrazia per la tua fiducia. 💚",
+        referral_see_details: "Vedi dettagli",
         placeholders: {
             doctorName: "Dr. Giovanni",
             specialty: "",
@@ -3157,7 +3163,8 @@ async function loadReferralStats() {
             const panel = document.getElementById('referralStatsPanel');
             const content = document.getElementById('referralStatsContent');
             
-            let html = `<div style="cursor: pointer;" onclick="openReferralDetails()">👥 <strong>${stats.total}</strong> ${lang.referral_stats_invited} <span style="font-size: 0.75rem; color: #059669;">▸</span></div>`;
+            let html = `<div>👥 <strong>${stats.total}</strong> ${lang.referral_stats_invited}</div>`;
+            html += `<div style="margin-top: 4px;"><a onclick="openReferralDetails()" style="cursor: pointer; font-size: 0.78rem; color: #059669; text-decoration: underline; font-weight: 500;">${lang.referral_see_details || 'See details'} ▸</a></div>`;
             
             const opened = stats.clicked + stats.trial_started + stats.converted;
             if (opened > 0) {
