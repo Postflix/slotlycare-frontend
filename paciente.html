@@ -553,6 +553,17 @@ body {
     </div>
 </div>
 
+<div id="trialExpiredPage" style="display: none; min-height: 100vh; background: #FAFAF9; font-family: 'Inter', sans-serif;">
+    <div style="max-width: 480px; margin: 0 auto; padding: 120px 24px 60px; text-align: center;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">⏸️</div>
+        <h1 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">This page is currently inactive</h1>
+        <p style="color: #6B6B6B; font-size: 1rem; line-height: 1.6; margin-bottom: 2rem;">
+            The trial period for this booking page has ended. If you are the doctor, subscribe to reactivate your link.
+        </p>
+        <a href="https://slotlycare.com" style="display: inline-block; background: #0D9488; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.95rem;">Go to SlotlyCare</a>
+    </div>
+</div>
+
 <!-- Language is set by doctor's preference -->
 
 <div class="container">
@@ -937,6 +948,14 @@ async function loadFromBackend() {
             if (!doctorResult.success) {
                 console.error('❌ Doctor not found');
                 document.getElementById('notFoundPage').style.display = 'block';
+                document.querySelector('.container').style.display = 'none';
+                return 'not_found';
+            }
+            
+            // Check if trial has expired
+            if (doctorResult.trial_expired) {
+                console.log('⏸️ Trial expired');
+                document.getElementById('trialExpiredPage').style.display = 'block';
                 document.querySelector('.container').style.display = 'none';
                 return 'not_found';
             }
