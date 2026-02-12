@@ -9,6 +9,10 @@
       "destination": "/painel.html"
     },
     {
+      "source": "/convite/:doctorSlug/:inviteSlug",
+      "destination": "/convite.html"
+    },
+    {
       "source": "/convite/:slug",
       "destination": "/convite.html"
     },
