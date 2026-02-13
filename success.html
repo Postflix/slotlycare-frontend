@@ -348,6 +348,32 @@
             <p class="subtitle">We couldn't confirm your payment. Please contact support.</p>
             <a href="subscribe.html" class="btn-primary" style="display: inline-block; margin-top: 20px; text-decoration: none;">Try Again</a>
         </div>
+
+        <!-- Upgrade state (trial → paid) -->
+        <div id="upgradeState" style="display: none;">
+            <div class="success-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+
+            <h1>Upgrade Successful!</h1>
+            <p class="subtitle">Your trial has been upgraded to a full account. All your data has been preserved.</p>
+
+            <div class="info-box">
+                <p><strong>✅ What was kept:</strong> Your profile, booking link, appointments, slots, and referrals — everything is intact.</p>
+            </div>
+
+            <div class="info-box">
+                <p><strong>🔑 Your login:</strong> Use the same email and password you created during the trial.</p>
+            </div>
+
+            <div id="upgradeMessageBox" class="message"></div>
+
+            <button class="btn-primary" id="btnGoToPanel" onclick="window.location.href='painel.html'">
+                Go to Your Panel →
+            </button>
+        </div>
     </div>
 
     <script>
@@ -366,22 +392,66 @@
             }
 
             try {
-                // Get checkout session details
+                // Get checkout session details from Stripe
                 const response = await fetch(`${API_BASE}/api/checkout-session/${sessionId}`);
                 const data = await response.json();
 
-                if (data.success && data.customer_id) {
-                    customerId = data.customer_id;
-                    customerEmail = data.customer_email;
+                if (!data.success || !data.customer_id) {
+                    showError();
+                    return;
+                }
+
+                customerId = data.customer_id;
+                customerEmail = data.customer_email;
+
+                // Check if this is a trial upgrade
+                const trialId = localStorage.getItem('slotlycare_upgrading_trial');
+                
+                if (trialId && trialId.startsWith('trial_')) {
+                    // UPGRADE FLOW: trial → paid
+                    await handleUpgrade(trialId, customerId);
+                } else {
+                    // NEW CUSTOMER FLOW: show password form
                     document.getElementById('emailDisplay').textContent = customerEmail;
-                    
                     document.getElementById('loadingState').style.display = 'none';
                     document.getElementById('successState').style.display = 'block';
-                } else {
-                    showError();
                 }
             } catch (error) {
                 console.error('Error:', error);
+                showError();
+            }
+        }
+
+        async function handleUpgrade(trialId, stripeCustomerId) {
+            try {
+                const response = await fetch(`${API_BASE}/api/upgrade-trial`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        trial_customer_id: trialId,
+                        stripe_customer_id: stripeCustomerId
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Update localStorage with new customer_id
+                    localStorage.setItem('slotlycare_customer_id', stripeCustomerId);
+                    localStorage.removeItem('slotlycare_upgrading_trial');
+
+                    // Show upgrade success state
+                    document.getElementById('loadingState').style.display = 'none';
+                    document.getElementById('upgradeState').style.display = 'block';
+                } else {
+                    // Upgrade failed — clean flag and show error
+                    console.error('Upgrade failed:', data.error || data.detail);
+                    localStorage.removeItem('slotlycare_upgrading_trial');
+                    showError();
+                }
+            } catch (error) {
+                console.error('Upgrade error:', error);
+                localStorage.removeItem('slotlycare_upgrading_trial');
                 showError();
             }
         }
