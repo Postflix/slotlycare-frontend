@@ -329,7 +329,8 @@
                     },
                     body: JSON.stringify({
                         success_url: window.location.origin + '/success.html',
-                        cancel_url: window.location.origin + '/subscribe.html'
+                        cancel_url: window.location.origin + '/subscribe.html',
+                        is_trial: currentCustomerId.startsWith('trial_')
                     })
                 });
 
