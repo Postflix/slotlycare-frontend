@@ -315,6 +315,12 @@
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner"></span> Redirecting to checkout...';
 
+            // Detect trial upgrade: save trial_customer_id for success.html
+            const currentCustomerId = localStorage.getItem('slotlycare_customer_id') || '';
+            if (currentCustomerId.startsWith('trial_')) {
+                localStorage.setItem('slotlycare_upgrading_trial', currentCustomerId);
+            }
+
             try {
                 const response = await fetch(`${API_BASE}/api/create-checkout-session`, {
                     method: 'POST',
