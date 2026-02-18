@@ -1090,7 +1090,7 @@ textarea {
             <div id="referralLinkPreview" style="display: none; background: linear-gradient(135deg, #EFF6FF, #DBEAFE); border: 1px solid #93C5FD; border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; text-align: center;">
                 <div style="font-size: 0.85rem; color: #1E40AF; margin-bottom: 8px; font-weight: 600;" data-i18n="referral_your_link">🔗 Your personal referral link:</div>
                 <div style="background: white; border: 1px solid #BFDBFE; border-radius: 8px; padding: 10px 14px; font-family: monospace; font-size: 0.82rem; color: #2563EB; word-break: break-all;">
-                    slotlycare.com/convite/<span id="referralLinkPreviewSlug" style="font-weight: 700;"></span>/<span style="color: #93C5FD;">___</span>
+                    slotlycare.com/invite/<span id="referralLinkPreviewSlug" style="font-weight: 700;"></span>/<span style="color: #93C5FD;">___</span>
                 </div>
                 <div style="font-size: 0.78rem; color: #3B82F6; margin-top: 8px;" data-i18n="referral_link_explain">Refer colleagues and they'll receive a personalized page with your recommendation.</div>
             </div>
@@ -1262,7 +1262,7 @@ textarea {
                 <!-- Live Link Preview -->
                 <div id="modalLinkPreview" style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; text-align: center;">
                     <div style="font-family: monospace; font-size: 0.82rem; color: #059669; word-break: break-all;">
-                        slotlycare.com/convite/<span id="modalLinkDoctorSlug" style="font-weight: 700;"></span>/<span id="modalLinkInviteeSlug" style="font-weight: 700; color: #10B981;">___</span>
+                        slotlycare.com/invite/<span id="modalLinkDoctorSlug" style="font-weight: 700;"></span>/<span id="modalLinkInviteeSlug" style="font-weight: 700; color: #10B981;">___</span>
                     </div>
                 </div>
                 
@@ -3148,7 +3148,7 @@ function showInviteLinks(invites, lang, sentReferrals) {
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #E2E8F0;">
             <div style="min-width: 0; flex: 1;">
                 <div style="font-weight: 600; font-size: 0.88rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${inv.name}</div>
-                <div style="font-size: 0.8rem; color: #10B981; font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">slotlycare.com/convite/${doctorSlug}/${inv.slug}</div>
+                <div style="font-size: 0.8rem; color: #10B981; font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">slotlycare.com/invite/${doctorSlug}/${inv.slug}</div>
                 ${badge}
             </div>
             <button onclick="copySingleLink('${doctorSlug}', '${inv.slug}', this)" style="background: none; border: 1px solid #D1D5DB; color: var(--text-muted); padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; white-space: nowrap; margin-left: 8px;">📋</button>
@@ -3161,7 +3161,7 @@ function showInviteLinks(invites, lang, sentReferrals) {
 }
 
 function copySingleLink(doctorSlug, inviteSlug, btn) {
-    const link = 'https://slotlycare.com/convite/' + doctorSlug + '/' + inviteSlug;
+    const link = 'https://slotlycare.com/invite/' + doctorSlug + '/' + inviteSlug;
     navigator.clipboard.writeText(link).then(() => {
         const original = btn.textContent;
         btn.textContent = '✓';
@@ -3260,7 +3260,7 @@ async function openReferralDetails() {
         contentEl.innerHTML = invites.map(inv => {
             const sc = statusConfig[inv.status] || statusConfig['pending'];
             const statusText = lang[sc.key] || inv.status;
-            const linkUrl = `slotlycare.com/convite/${doctorSlug}/${inv.slug}`;
+            const linkUrl = `slotlycare.com/invite/${doctorSlug}/${inv.slug}`;
             return `
             <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #E2E8F0;">
                 <div style="min-width: 0; flex: 1;">
