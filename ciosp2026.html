@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
     <title>SlotlyCare — Your Own Booking Infrastructure</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,12 +14,12 @@
     ============================================= -->
     <script>
         const EVENT_CONFIG = {
-            name: "CIOSP 2026",                              // Nome do evento
-            slug: "ciosp2026",                               // Slug reservado desta página (nome do arquivo sem .html)
-            discount: 30,                                    // Percentual de desconto
-            originalPrice: 948,                              // Preço original em USD
-            checkoutUrl: "https://buy.stripe.com/eVq9AT4odd1Tg2l5Zldwc04?prefilled_promo_code=CIOSP2026",    // Link do Stripe COM cupom aplicado
-            expiresDate: "February 28, 2026"                 // Data limite da oferta
+            name: "CIOSP 2026",                // Nome do evento
+            discount: 30,                       // Percentual de desconto (só visual na tarja)
+            originalPrice: 948,                 // Preço original em USD
+            couponCode: "CIOSP2026",            // Código do cupom criado no Stripe
+            expiresDate: "February 28, 2026",   // Data limite da oferta
+            testMode: true                      // TRUE = usa preço de teste (R$1). Mude para FALSE antes de ativar com parceiros reais.
         };
     </script>
     
@@ -1659,7 +1658,7 @@
 
             <a href="#" onclick="handleReserveLink(); return false;" class="reserve-btn">Reserve Your Link Now</a>
 
-
+            <p class="hero-footer">Want to see how patients book? <a href="#demo">Try the live demo</a></p>
         </div>
 
         <div class="hero-visual">
@@ -1740,7 +1739,7 @@
             <div class="setup-card">
                 <div class="setup-number">3</div>
                 <h3>Share Everywhere</h3>
-                <p>Google Business Profile, Google Maps, Instagram, WhatsApp, email, your website. Patients book directly. Done.</p>
+                <p>WhatsApp, Instagram, email. Patients book directly. Done.</p>
             </div>
         </div>
     </section>
@@ -1819,7 +1818,7 @@
     <section class="demo-section" id="demo">
         <h2>See it working. Right now.</h2>
         <p>This is the exact experience your patients will have. Pick a time, confirm, done. <strong>Real bookings. Real schedules.</strong> No signup required to test.</p>
-        <a href="#" onclick="openLiveDemo(); return false;" class="demo-btn">
+        <a href="/demo" target="_blank" class="demo-btn">
             Try Live Demo
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
@@ -1978,10 +1977,6 @@
                     <p class="faq-answer">No. Booking tools help you manage appointments. SlotlyCare gives you infrastructure — your own digital presence for scheduling that you control completely. The booking page is yours. The patient relationship is yours. The data is yours.</p>
                 </div>
                 <div class="faq-item">
-                    <h3 class="faq-question">I already have a website. Can I add SlotlyCare to it?</h3>
-                    <p class="faq-answer">Yes! When you subscribe, you get a personalized booking link and a simple embed code. Just share it with your webdesigner or whoever manages your site — they can add it in under 2 minutes, no technical skills needed. And if you don't have a website, no worries — your SlotlyCare link works perfectly on its own. Share it on social media, WhatsApp, email signature, or anywhere you connect with patients.</p>
-                </div>
-                <div class="faq-item">
                     <h3 class="faq-question">What happens after 3 years?</h3>
                     <p class="faq-answer">You'll have the option to renew at the then-current price. Founders who stay active will always have priority access to renewal offers. Your link remains reserved as long as your account is active.</p>
                 </div>
@@ -1991,7 +1986,7 @@
 
     <!-- Footer -->
     <footer>
-        <p class="footer-text">© 2026 SlotlyCare. Your schedule, your rules, your patients.</p>
+        <p class="footer-text">© 2025 SlotlyCare. Your schedule, your rules, your patients.</p>
         <p class="footer-links"><a href="#" onclick="openModal('privacyModal'); return false;">Privacy Policy</a> · <a href="#" onclick="openModal('termsModal'); return false;">Terms of Service</a> · <a href="#" onclick="openModal('contactModal'); return false;">Contact</a></p>
         <p class="footer-early">Early-career professional? <a href="#" onclick="openModal('earlyModal'); return false;">Learn about our Early Practice Program.</a></p>
     </footer>
@@ -2006,7 +2001,7 @@
             <p>SlotlyCare uses industry-standard security measures to protect data and operates in line with GDPR and international data protection standards.</p>
             <p>Healthcare professionals remain fully responsible for how they manage patient relationships, communications, and compliance with applicable professional regulations.</p>
             <p>If you have any questions about this policy or how data is handled, please contact us.</p>
-            <p><strong>Contact:</strong> <a class="email-support" href="#">[carregando email...]</a></p>
+            <p><strong>Contact:</strong> <a class="email-contact" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -2026,7 +2021,7 @@
             <p>SlotlyCare provides the platform on an "as is" basis and continuously improves its features. Pricing, access plans, and availability may evolve over time, except where explicitly stated (such as founders pricing conditions).</p>
             <p>SlotlyCare reserves the right to suspend or terminate accounts that violate these terms or misuse the platform.</p>
             <p>If you have questions regarding these terms, please contact us.</p>
-            <p><strong>Contact:</strong> <a class="email-support" href="#">[carregando email...]</a></p>
+            <p><strong>Contact:</strong> <a class="email-contact" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -2040,7 +2035,7 @@
             <p>Eligible professionals may receive access to special conditions under this program. Eligibility criteria, availability, and conditions are evaluated individually and are not publicly advertised.</p>
             <p>This program is separate from founders access and does not affect existing plans or pricing for other users.</p>
             <p>If you believe you may be eligible, please contact us to learn more.</p>
-            <p><strong>Contact:</strong> <a class="email-programs" href="#">[carregando email...]</a></p>
+            <p><strong>Contact:</strong> <a class="email-contact" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -2051,7 +2046,7 @@
             <h2>Contact</h2>
             <p>Have questions about SlotlyCare? We'd love to hear from you.</p>
             <p>Send us an email and we'll get back to you as soon as possible.</p>
-            <p style="font-size: 1.25rem; margin-top: 1.5rem;"><strong>Email:</strong> <a class="email-support" href="#">[carregando email...]</a></p>
+            <p style="font-size: 1.25rem; margin-top: 1.5rem;"><strong>Email:</strong> <a class="email-contact" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -2064,9 +2059,7 @@
         const API_BASE = 'https://slotlycare-backend.vercel.app';
 
         // Reserved slugs that cannot be used (system pages)
-        const reservedSlugs = ['admin', 'demo', 'login', 'painel', 'dashboard', 'subscribe', 'success', 'api', 'test', 'www', 'app', 'help', 'support', 'pricing', 'about', 'contact', 'terms', 'privacy', 'invite'];
-        // Add this partner's own slug dynamically
-        if (typeof EVENT_CONFIG !== 'undefined' && EVENT_CONFIG.slug) reservedSlugs.push(EVENT_CONFIG.slug);
+        const reservedSlugs = ['admin', 'demo', 'login', 'painel', 'dashboard', 'subscribe', 'success', 'api', 'test', 'www', 'app', 'help', 'support', 'pricing', 'about', 'contact', 'terms', 'privacy'];
 
         // Check if slug exists in Supabase
         async function checkSlugInDatabase(slug) {
@@ -2303,13 +2296,6 @@
         });
 
         // Modal functions
-        function openLiveDemo() {
-            const nameInput = document.getElementById('nameInput');
-            const name = nameInput && nameInput.value.trim();
-            const url = name ? '/demo?preview_name=' + encodeURIComponent(name) : '/demo';
-            window.open(url, '_blank');
-        }
-
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'block';
             document.body.style.overflow = 'hidden';
@@ -2364,13 +2350,7 @@
             localStorage.setItem('slotlycare_reserved_slug', slug);
             localStorage.setItem('slotlycare_reserved_name', nameInput.value.trim());
             
-            // Se tem checkout URL do evento (com cupom), usa direto
-            if (typeof EVENT_CONFIG !== 'undefined' && EVENT_CONFIG.checkoutUrl && EVENT_CONFIG.checkoutUrl !== 'https://buy.stripe.com/XXXXXX') {
-                window.location.href = EVENT_CONFIG.checkoutUrl;
-                return;
-            }
-            
-            // Senão, usa o checkout padrão via API
+            // Sempre usa a API — cupom e modo de teste vêm do EVENT_CONFIG
             try {
                 const response = await fetch(`${API_BASE}/api/create-checkout-session`, {
                     method: 'POST',
@@ -2379,7 +2359,9 @@
                     },
                     body: JSON.stringify({
                         success_url: window.location.origin + '/success.html',
-                        cancel_url: window.location.origin + '/'
+                        cancel_url: window.location.href,
+                        coupon_code: EVENT_CONFIG.couponCode || null,
+                        test_mode: EVENT_CONFIG.testMode || false
                     })
                 });
 
@@ -2459,18 +2441,14 @@
     </script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        const supportUser = 'support';
-        const programsUser = 'programs';
-        const domain = 'slotlycare.com';
-        document.querySelectorAll('.email-support').forEach(function(element) {
-          const email = supportUser + '@' + domain;
-          element.innerHTML = email;
-          element.href = 'mailto:' + email;
-        });
-        document.querySelectorAll('.email-programs').forEach(function(element) {
-          const email = programsUser + '@' + domain;
-          element.innerHTML = email;
-          element.href = 'mailto:' + email;
+        const emailElements = document.querySelectorAll('.email-contact');
+        const user = 'slotlycare';
+        const domain = 'gmail.com';
+        const fullEmail = user + '@' + domain;
+
+        emailElements.forEach(function(element) {
+          element.innerHTML = fullEmail;
+          element.href = 'mailto:' + fullEmail;
         });
       });
     </script>
