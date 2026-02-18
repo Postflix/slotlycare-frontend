@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>SlotlyCare — Your Own Booking Infrastructure</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,6 +16,7 @@
     <script>
         const EVENT_CONFIG = {
             name: "CIOSP 2026",                              // Nome do evento
+            slug: "ciosp2026",                               // Slug reservado desta página (nome do arquivo sem .html)
             discount: 30,                                    // Percentual de desconto
             originalPrice: 948,                              // Preço original em USD
             checkoutUrl: "https://buy.stripe.com/00w00j7Ap5zr7vP4Vhdwc02?prefilled_promo_code=CIOSP2026",    // Link do Stripe COM cupom aplicado
@@ -2058,7 +2060,9 @@
         const API_BASE = 'https://slotlycare-backend.vercel.app';
 
         // Reserved slugs that cannot be used (system pages)
-        const reservedSlugs = ['admin', 'demo', 'login', 'painel', 'dashboard', 'subscribe', 'success', 'api', 'test', 'www', 'app', 'help', 'support', 'pricing', 'about', 'contact', 'terms', 'privacy'];
+        const reservedSlugs = ['admin', 'demo', 'login', 'painel', 'dashboard', 'subscribe', 'success', 'api', 'test', 'www', 'app', 'help', 'support', 'pricing', 'about', 'contact', 'terms', 'privacy', 'invite'];
+        // Add this partner's own slug dynamically
+        if (typeof EVENT_CONFIG !== 'undefined' && EVENT_CONFIG.slug) reservedSlugs.push(EVENT_CONFIG.slug);
 
         // Check if slug exists in Supabase
         async function checkSlugInDatabase(slug) {
