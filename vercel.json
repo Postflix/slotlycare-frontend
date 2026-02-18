@@ -9,12 +9,12 @@
       "destination": "/painel.html"
     },
     {
-      "source": "/convite/:doctorSlug/:inviteSlug",
-      "destination": "/convite.html"
+      "source": "/invite/:doctorSlug/:inviteSlug",
+      "destination": "/invite.html"
     },
     {
-      "source": "/convite/:slug",
-      "destination": "/convite.html"
+      "source": "/invite/:slug",
+      "destination": "/invite.html"
     },
     {
       "source": "/:doctor",
