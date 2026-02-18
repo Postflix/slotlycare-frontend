@@ -917,7 +917,6 @@ textarea {
 <div class="top-bar">
     <div class="top-bar-logo">Slotly<span>Care</span></div>
     <div class="top-bar-actions">
-        <div id="topBarReferralBadge" style="display: none; font-size: 0.78rem; color: #059669; font-weight: 500; opacity: 0.85;"></div>
         <a href="dashboard.html" class="btn-dashboard">📊 Dashboard</a>
         <button class="btn-change-password" onclick="openChangePasswordModal()">🔑 Password</button>
         <button class="btn-logout" onclick="logout()">Logout</button>
@@ -3217,12 +3216,6 @@ async function loadReferralStats() {
             
             content.innerHTML = html;
             panel.style.display = 'block';
-            
-            const badge = document.getElementById('topBarReferralBadge');
-            if (badge) {
-                badge.textContent = `👥 ${stats.total}`;
-                badge.style.display = 'block';
-            }
         }
     } catch (error) {
         console.log('Could not load referral stats:', error);
