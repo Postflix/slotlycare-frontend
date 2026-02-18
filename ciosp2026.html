@@ -1819,7 +1819,7 @@
     <section class="demo-section" id="demo">
         <h2>See it working. Right now.</h2>
         <p>This is the exact experience your patients will have. Pick a time, confirm, done. <strong>Real bookings. Real schedules.</strong> No signup required to test.</p>
-        <a href="/demo" target="_blank" class="demo-btn">
+        <a href="#" onclick="openLiveDemo(); return false;" class="demo-btn">
             Try Live Demo
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
@@ -1997,7 +1997,7 @@
     </footer>
 
     <!-- Privacy Policy Modal -->
-    <div id="privacyModal" class="modal">
+    <div 
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal('privacyModal')">&times;</span>
             <h2>Privacy Policy</h2>
@@ -2006,7 +2006,7 @@
             <p>SlotlyCare uses industry-standard security measures to protect data and operates in line with GDPR and international data protection standards.</p>
             <p>Healthcare professionals remain fully responsible for how they manage patient relationships, communications, and compliance with applicable professional regulations.</p>
             <p>If you have any questions about this policy or how data is handled, please contact us.</p>
-            <p><strong>Contact:</strong> <a class="email-contact" href="#">[carregando email...]</a></p>
+            <p><strong>Contact:</strong> <a class="email-support" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -2026,7 +2026,7 @@
             <p>SlotlyCare provides the platform on an "as is" basis and continuously improves its features. Pricing, access plans, and availability may evolve over time, except where explicitly stated (such as founders pricing conditions).</p>
             <p>SlotlyCare reserves the right to suspend or terminate accounts that violate these terms or misuse the platform.</p>
             <p>If you have questions regarding these terms, please contact us.</p>
-            <p><strong>Contact:</strong> <a class="email-contact" href="#">[carregando email...]</a></p>
+            <p><strong>Contact:</strong> <a class="email-support" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -2040,7 +2040,7 @@
             <p>Eligible professionals may receive access to special conditions under this program. Eligibility criteria, availability, and conditions are evaluated individually and are not publicly advertised.</p>
             <p>This program is separate from founders access and does not affect existing plans or pricing for other users.</p>
             <p>If you believe you may be eligible, please contact us to learn more.</p>
-            <p><strong>Contact:</strong> <a class="email-contact" href="#">[carregando email...]</a></p>
+            <p><strong>Contact:</strong> <a class="email-programs" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -2051,7 +2051,7 @@
             <h2>Contact</h2>
             <p>Have questions about SlotlyCare? We'd love to hear from you.</p>
             <p>Send us an email and we'll get back to you as soon as possible.</p>
-            <p style="font-size: 1.25rem; margin-top: 1.5rem;"><strong>Email:</strong> <a class="email-contact" href="#">[carregando email...]</a></p>
+            <p style="font-size: 1.25rem; margin-top: 1.5rem;"><strong>Email:</strong> <a class="email-support" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -2303,6 +2303,13 @@
         });
 
         // Modal functions
+        function openLiveDemo() {
+            const nameInput = document.getElementById('nameInput');
+            const name = nameInput && nameInput.value.trim();
+            const url = name ? '/demo?preview_name=' + encodeURIComponent(name) : '/demo';
+            window.open(url, '_blank');
+        }
+
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'block';
             document.body.style.overflow = 'hidden';
@@ -2452,14 +2459,18 @@
     </script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        const emailElements = document.querySelectorAll('.email-contact');
-        const user = 'slotlycare';
-        const domain = 'gmail.com';
-        const fullEmail = user + '@' + domain;
-
-        emailElements.forEach(function(element) {
-          element.innerHTML = fullEmail;
-          element.href = 'mailto:' + fullEmail;
+        const supportUser = 'support';
+        const programsUser = 'programs';
+        const domain = 'slotlycare.com';
+        document.querySelectorAll('.email-support').forEach(function(element) {
+          const email = supportUser + '@' + domain;
+          element.innerHTML = email;
+          element.href = 'mailto:' + email;
+        });
+        document.querySelectorAll('.email-programs').forEach(function(element) {
+          const email = programsUser + '@' + domain;
+          element.innerHTML = email;
+          element.href = 'mailto:' + email;
         });
       });
     </script>
