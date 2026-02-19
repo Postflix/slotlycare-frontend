@@ -3,86 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title>SlotlyCare — Exclusive Invite</title>
-
-    <script>
-        // INVITE CONFIGURATION — loaded dynamically from URL + Supabase
-        const SUPABASE_URL_CONFIG = 'https://hyfqxuvzesbqndglzabi.supabase.co';
-        const SUPABASE_KEY_CONFIG = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5ZnF4dXZ6ZXNicW5kZ2x6YWJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg0MTQ4NDEsImV4cCI6MjA4Mzk5MDg0MX0.Holl4gTk-2bNmHjN2nlIRHBr4-THkZVj0Ws481-PMn4';
-
-        // Extract slug from URL: /invite/drjoaosilva → drjoaosilva
-        const pathParts = window.location.pathname.split('/').filter(Boolean);
-        const URL_SLUG = pathParts.length >= 2 ? pathParts[pathParts.length - 1] : '';
-
-        // Default INVITE object (will be populated from Supabase)
-        const INVITE = {
-            doctorName: "",
-            slug: URL_SLUG,
-            referrerName: "",
-            discount: 30,
-            originalPrice: 948,
-            accessYears: 3,
-            trialDays: 7
-        };
-        INVITE.finalPrice = Math.round(INVITE.originalPrice * (1 - INVITE.discount / 100));
-        INVITE.savings = INVITE.originalPrice - INVITE.finalPrice;
-        INVITE.monthlyEquiv = (INVITE.finalPrice / (INVITE.accessYears * 12)).toFixed(2);
-
-        // Fetch invite data from Supabase
-        let inviteFound = false;
-
-        async function loadInviteData() {
-            if (!URL_SLUG) { showInviteError(); return; }
-            try {
-                const response = await fetch(
-                    `${SUPABASE_URL_CONFIG}/rest/v1/invites?slug=eq.${URL_SLUG}&select=*`,
-                    { headers: { 'apikey': SUPABASE_KEY_CONFIG, 'Authorization': `Bearer ${SUPABASE_KEY_CONFIG}` } }
-                );
-                if (!response.ok) throw new Error('Database error');
-                const data = await response.json();
-                if (data.length === 0) { showInviteError(); return; }
-
-                const invite = data[0];
-                INVITE.doctorName = invite.invited_name;
-                INVITE.slug = invite.slug;
-                INVITE.referrerName = invite.referrer_name || '';
-                inviteFound = true;
-
-                // Show the page content
-                document.getElementById('pageContent').style.display = 'block';
-                document.getElementById('loadingScreen').style.display = 'none';
-
-                // Initialize all page elements with invite data
-                initInvite();
-
-                // Update referrer bar if applicable
-                if (INVITE.referrerName) {
-                    document.getElementById('inviteBarName').textContent = INVITE.doctorName;
-                    document.getElementById('inviteBarDiscount').textContent = INVITE.discount;
-                    const referrerEl = document.getElementById('referrerMessage');
-                    if (referrerEl) referrerEl.style.display = 'block';
-                    const referrerNameEl = document.getElementById('referrerNameDisplay');
-                    if (referrerNameEl) referrerNameEl.textContent = INVITE.referrerName;
-                }
-            } catch (error) {
-                console.error('Error loading invite:', error);
-                showInviteError();
-            }
-        }
-
-        function showInviteError() {
-            document.getElementById('loadingScreen').style.display = 'none';
-            document.getElementById('errorScreen').style.display = 'flex';
-        }
-
-        // Load on page ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadInviteData);
-        } else {
-            loadInviteData();
-        }
-    </script>
+    <title>SlotlyCare — Your Own Booking Infrastructure</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -118,58 +39,12 @@
             font-family: 'Instrument Serif', Georgia, serif;
         }
 
-        /* Partner Bar */
-        .partner-bar {
-            background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
-            padding: 0.75rem 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .partner-bar::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: repeating-linear-gradient(
-                90deg,
-                transparent,
-                transparent 20px,
-                rgba(255,255,255,0.02) 20px,
-                rgba(255,255,255,0.02) 21px
-            );
-        }
-
-        .partner-bar-content {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .partner-bar .lock-icon {
-            width: 14px;
-            height: 14px;
-            color: #D4A843;
-        }
-
-        .partner-bar span {
-            color: #E5E5E5;
-            font-size: 0.82rem;
-            font-weight: 500;
-            letter-spacing: 0.03em;
-        }
-
-        .partner-bar strong {
-            color: #D4A843;
-        }
-
         /* Navigation */
         nav {
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             padding: 1.25rem 2rem;
             display: flex;
             justify-content: space-between;
@@ -247,7 +122,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: center;
-            padding: 4rem 4rem 4rem;
+            padding: 8rem 4rem 4rem;
             max-width: 1300px;
             margin: 0 auto;
         }
@@ -1311,7 +1186,7 @@
         }
 
         .pricing-card::before {
-            content: "EXCLUSIVE";
+            content: "FOUNDERS ONLY";
             position: absolute;
             top: -35px;
             right: -35px;
@@ -1342,27 +1217,6 @@
             color: var(--accent);
             margin-bottom: 0.5rem;
             letter-spacing: -1px;
-        }
-
-        .price-original {
-            font-size: 1.6rem;
-            color: var(--text-muted);
-            text-decoration: line-through;
-            font-weight: 500;
-            margin-bottom: 0.25rem;
-        }
-
-        .price-savings-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            background: #ECFDF5;
-            color: #059669;
-            padding: 0.35rem 0.85rem;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
         }
 
         .price-description {
@@ -1422,148 +1276,6 @@
             transform: translateY(-2px);
             box-shadow: 0 12px 32px rgba(13, 148, 136, 0.3);
         }
-
-        /* New Grad Block */
-        .newgrad-section {
-            max-width: 860px;
-            margin: 0 auto 3rem;
-            padding: 0 2rem;
-        }
-
-        .newgrad-block {
-            background: #FFFBEB;
-            border: 1.5px solid #FCD34D;
-            border-radius: 20px;
-            padding: 2.5rem;
-            position: relative;
-        }
-
-        .newgrad-block::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 20px;
-            background: linear-gradient(135deg, rgba(245,158,11,0.04) 0%, transparent 60%);
-            pointer-events: none;
-        }
-
-        .newgrad-top-row {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .newgrad-badge {
-            background: #FEF3C7;
-            border: 1px solid #FCD34D;
-            color: #92400E;
-            padding: 0.375rem 0.875rem;
-            border-radius: 100px;
-            font-size: 0.8125rem;
-            font-weight: 600;
-        }
-
-        .newgrad-spots {
-            text-align: right;
-        }
-
-        .spots-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.375rem;
-            background: #FEF3C7;
-            border: 1px solid #FCD34D;
-            color: #92400E;
-            padding: 0.25rem 0.75rem;
-            border-radius: 100px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .spots-dot {
-            width: 6px;
-            height: 6px;
-            background: #F59E0B;
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-        }
-
-        .spots-sub {
-            font-size: 0.7rem;
-            color: #B45309;
-            margin-top: 0.25rem;
-        }
-
-        .newgrad-block h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 1rem;
-            letter-spacing: -0.01em;
-        }
-
-        .newgrad-copy {
-            font-size: 0.9375rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-
-        .newgrad-copy strong { color: var(--text); }
-
-        .newgrad-perks {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-bottom: 1.75rem;
-        }
-
-        .newgrad-perk {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: white;
-            border: 1px solid #FCD34D;
-            border-radius: 8px;
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--text);
-        }
-
-        .newgrad-perk-icon { font-size: 1rem; }
-
-        .newgrad-footer {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .newgrad-cta {
-            display: inline-block;
-            background: #F59E0B;
-            color: white;
-            padding: 0.875rem 1.75rem;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.9375rem;
-            text-decoration: none;
-            transition: background 0.2s;
-        }
-
-        .newgrad-cta:hover { background: #D97706; }
-
-        .newgrad-price-note {
-            font-size: 0.875rem;
-            color: #92400E;
-            line-height: 1.5;
-        }
-
-        .newgrad-price-note strong { color: #92400E; font-size: 1rem; }
 
         /* FAQ Section */
         .faq-section {
@@ -1729,7 +1441,7 @@
         @media (max-width: 1000px) {
             .hero {
                 grid-template-columns: 1fr;
-                padding: 4rem 2rem 4rem;
+                padding: 7rem 2rem 4rem;
                 text-align: center;
             }
 
@@ -1767,14 +1479,6 @@
         }
 
         @media (max-width: 600px) {
-            .partner-bar {
-                padding: 0.6rem 1rem;
-            }
-
-            .partner-bar span {
-                font-size: 0.75rem;
-            }
-
             nav {
                 padding: 1rem;
                 gap: 0.5rem;
@@ -1804,7 +1508,7 @@
             }
 
             .hero {
-                padding: 3rem 1.5rem 3rem;
+                padding: 6rem 1.5rem 3rem;
             }
 
             h1 {
@@ -1849,115 +1553,10 @@
                 font-size: 3rem;
             }
         }
-
-        .pricing-trial-note {
-            background: #F0FDF4;
-            border: 2px solid #10B981;
-            border-radius: 12px;
-            padding: 1.25rem;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .pricing-trial-note p {
-            margin: 0;
-            color: #065F46;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .pricing-trial-note .small {
-            font-weight: 400;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 0.25rem;
-        }
-        /* Loading & Error Screens */
-        .loading-screen, .error-screen {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 1.5rem;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .loading-screen { background: var(--bg); }
-        .error-screen { background: var(--bg); display: none; }
-
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--border);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        .error-screen h2 { font-size: 1.5rem; color: var(--text); }
-        .error-screen p { color: var(--text-muted); max-width: 400px; }
-        .error-screen a {
-            background: var(--accent);
-            color: white;
-            padding: 0.875rem 2rem;
-            border-radius: 100px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-        .error-screen a:hover { background: var(--accent-dark); }
-
-        /* Referrer message */
-        .referrer-msg {
-            display: none;
-            text-align: center;
-            padding: 0.5rem 2rem;
-            background: #F0FDF4;
-            border-bottom: 1px solid #BBF7D0;
-            font-size: 0.85rem;
-            color: #166534;
-        }
-        .referrer-msg strong { color: #15803D; }
-
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loadingScreen" class="loading-screen">
-        <div class="loading-spinner"></div>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">Loading your invite...</p>
-    </div>
-
-    <!-- Error Screen (slug not found) -->
-    <div id="errorScreen" class="error-screen">
-        <svg width="48" height="48" fill="none" stroke="#9CA3AF" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        <h2>Invite not found</h2>
-        <p>This invite link doesn't exist or has expired. If you received this link from someone, please ask them to check the URL.</p>
-        <a href="/">Visit SlotlyCare →</a>
-    </div>
-
-    <!-- Page Content (hidden until invite loads) -->
-    <div id="pageContent" style="display:none">
-
-    <!-- Referrer message (shown when invite comes from another doctor) -->
-    <div id="referrerMessage" class="referrer-msg">
-        <strong id="referrerNameDisplay"></strong> uses SlotlyCare and thought you'd like it too.
-    </div>
-
-    <!-- Invite Bar -->
-    <div class="partner-bar">
-        <div class="partner-bar-content">
-            <svg class="lock-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-            </svg>
-            <span>Exclusive invite for <strong id="inviteBarName"></strong> — <span id="inviteBarDiscount"></span>% OFF when you subscribe</span>
-        </div>
-    </div>
-
+    <!-- Navigation -->
     <nav>
         <a href="#" class="logo">
             <div class="logo-icon">
@@ -1968,18 +1567,18 @@
             SlotlyCare
         </a>
         <div class="nav-links">
-            <a href="/login.html" class="nav-login">Log in</a>
-            <a href="#" onclick="handleStartTrial(); return false;" class="nav-cta">Start Free Trial →</a>
+            <a href="login.html" class="nav-login">Log in</a>
+            <a href="#" onclick="handleReserveLink(); return false;" class="nav-cta">Get Founders Access</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <span class="badge">Exclusive Invite — Free Trial</span>
-            <h1>Welcome, <span class="serif" id="heroName"></span></h1>
+            <span class="badge">Founders Access — Limited Spots</span>
+            <h1>Marketplaces help patients find you. <span class="serif">Now control what happens next.</span></h1>
             <p class="hero-tagline">Your scheduling. Your rules. Your patients.</p>
-            <p class="hero-sub">Your personalized booking page is ready to claim.<br>One link. Your name. Full control.<br><strong>Professional scheduling infrastructure.</strong></p>
+            <p class="hero-sub">One link. Your name. Full control.<br>No chaos. No back-and-forth. No lost appointments.<br><strong>Professional scheduling infrastructure.</strong></p>
             
             <div class="link-checker">
                 <!-- Campo 1: Nome profissional -->
@@ -2000,7 +1599,7 @@
                         </div>
                         <button class="check-btn" id="checkBtn" onclick="checkAvailability()">Check</button>
                     </div>
-                    <p class="field-hint">Available now — yours to test, permanently yours when you subscribe. Want a different link? Just edit and check.</p>
+                    <p class="field-hint">This link is available now. Once taken, it's gone.</p>
                 </div>
 
                 <div class="link-result" id="linkResult">
@@ -2014,11 +1613,13 @@
                         <circle cx="12" cy="12" r="10" stroke-width="2"/>
                         <path stroke-linecap="round" stroke-width="2" d="M12 6v6l4 2"/>
                     </svg>
-                    <span>Reserved for <strong id="timerCount">15:00</strong> — complete your signup to secure it.</span>
+                    <span>Reserved for <strong id="timerCount">15:00</strong> — complete your purchase to secure it.</span>
                 </div>
             </div>
 
-            <a href="#" onclick="handleStartTrial(); return false;" class="reserve-btn">Start Free Trial — No Credit Card Required</a>
+            <a href="#" onclick="handleReserveLink(); return false;" class="reserve-btn">Reserve Your Link Now</a>
+
+            <p class="hero-footer">Want to see how patients book? <a href="#demo">Try the live demo</a></p>
         </div>
 
         <div class="hero-visual">
@@ -2026,8 +1627,8 @@
                 <div class="phone-notch"></div>
                 <div class="phone-screen">
                     <div class="phone-header">
-                        <div class="phone-avatar" id="phoneAvatar">JS</div>
-                        <div class="phone-name" id="phoneName"></div>
+                        <div class="phone-avatar" id="phoneAvatar">DJ</div>
+                        <div class="phone-name" id="phoneName">Dr. John</div>
                         <div class="phone-specialty">Health Professional</div>
                     </div>
                     <div class="phone-slots">
@@ -2074,9 +1675,10 @@
                 </div>
             </div>
 
+            <!-- CTA após Before/After -->
             <div class="before-after-cta">
                 <p>Ready to take control of your schedule?</p>
-                <a href="#" onclick="handleStartTrial(); return false;" class="reserve-btn">Start Free Trial Now</a>
+                <a href="#" onclick="handleReserveLink(); return false;" class="reserve-btn">Claim Your Link Now</a>
             </div>
     </section>
 
@@ -2170,14 +1772,14 @@
     <section class="panel-preview-section">
         <h2>Your control panel. Simple and powerful.</h2>
         <p>Describe your availability in your own words. Our AI generates the slots. Your patients see a clean, professional booking page.</p>
-        <img src="/painel-demo.gif" alt="SlotlyCare Panel Demo" class="panel-preview-gif">
+        <img src="painel-demo.gif" alt="SlotlyCare Panel Demo" class="panel-preview-gif">
     </section>
 
     <!-- Demo Section -->
     <section class="demo-section" id="demo">
         <h2>See it working. Right now.</h2>
         <p>This is the exact experience your patients will have. Pick a time, confirm, done. <strong>Real bookings. Real schedules.</strong> No signup required to test.</p>
-        <a href="#" onclick="openDemoWithName(event)" class="demo-btn">
+        <a href="/demo" target="_blank" class="demo-btn" onclick="openDemoWithName(event)">
             Try Live Demo
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
@@ -2282,80 +1884,33 @@
 
     <!-- Pricing Section -->
     <section id="pricing" class="pricing">
-        <h2>Your Exclusive Invite Price</h2>
-        <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.1rem;">Pay for 1 year. Get <span id="pricingYears">3</span> years. Price locked for 36 months.</p>
+        <h2>Founders Access</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.1rem;">Pay for 1 year. Get 3 years. Price locked for 36 months.</p>
         
-        <div class="pricing-badge" id="pricingBadge">Invite Exclusive — Not Available Publicly</div>
+        <div class="pricing-badge">67% OFF — Early Adopters Only</div>
         
         <div class="pricing-card">
-            <h3><span id="pricingAccessYears">3</span>-Year Access</h3>
-
-            <div class="pricing-trial-note">
-                <p>🎁 Start with a free <span id="pricingTrialDays"></span>-day trial. No credit card required.</p>
-                <p class="small">When you're ready to subscribe, this exclusive price is waiting for you.</p>
-            </div>
-
-            <div class="price-original">$<span id="priceOriginal">948</span></div>
-            <div class="price">$<span id="priceFinal">664</span></div>
-            <div class="price-savings-tag">✓ You save $<span id="priceSavings">284</span> — <span id="priceDiscountPct">30</span>% OFF applied automatically</div>
-            <p class="price-description">One payment. <strong><span id="priceDescYears">3</span> years</strong> of access.</p>
-            <p style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">$<span id="priceMonthly">18.44</span>/month — less than one consultation.</p>
-            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem;">This price is exclusive for invited professionals.</p>
+            <h3>3-Year Access</h3>
+            <div class="price">$948</div>
+            <p class="price-description">One payment. <strong>3 years</strong> of access.</p>
+            <p style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">$26/month — less than one consultation.</p>
+            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem;">This is the only founders round. After that, standard pricing applies.</p>
             
             <ul class="pricing-features">
-                <li>Your personalized booking link</li>
+                <li>Your personalized booking link — reserved now</li>
                 <li>Unlimited bookings — no per-booking fees, no commissions</li>
                 <li>Automatic patient reminders</li>
                 <li>AI-powered schedule generation</li>
                 <li>All new features released during the next 36 months included</li>
                 <li>No upgrade fees for founders during this period</li>
                 <li>Priority founder support</li>
-
+                <li>7-day money-back guarantee</li>
             </ul>
             
-            <button class="pricing-cta" onclick="handleStartTrial()">Start Free Trial — No Credit Card Required</button>
-            <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 1rem;">Your link becomes permanently yours when you subscribe.</p>
+            <button class="pricing-cta" onclick="handleReserveLink()">Reserve Your Personal Link</button>
+            <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 1rem;">Takes less than 2 minutes to set up.</p>
         </div>
     </section>
-
-    <!-- New Grad Block -->
-    <div class="newgrad-section">
-        <div class="newgrad-block">
-            <div class="newgrad-top-row">
-                <div class="newgrad-badge">🎓 For recent graduates</div>
-                <div class="newgrad-spots">
-                    <div class="spots-pill">
-                        <div class="spots-dot"></div>
-                        Limited spots available
-                    </div>
-                    <div class="spots-sub">Subject to availability at the time of registration.</div>
-                </div>
-            </div>
-
-            <h3>Just finished your training? We've got your back.</h3>
-
-            <p class="newgrad-copy">
-                We know the first years of practice are the most challenging — you're building your reputation, setting up your structure, and managing costs all at once. <strong>That's why we're offering recent graduates two additional years of access.</strong>
-                <br><br>
-                No strings attached. We're simply betting on you.
-            </p>
-
-            <div class="newgrad-perks">
-                <div class="newgrad-perk"><div class="newgrad-perk-icon">📅</div> 5 years access</div>
-                <div class="newgrad-perk"><div class="newgrad-perk-icon">💰</div> Same $663 price</div>
-                <div class="newgrad-perk"><div class="newgrad-perk-icon">🌍</div> 6 languages</div>
-                <div class="newgrad-perk"><div class="newgrad-perk-icon">✅</div> 7-day guarantee</div>
-            </div>
-
-            <div class="newgrad-footer">
-                <a class="newgrad-cta" href="/invite/graduates?source=newgrad">I'm a recent graduate →</a>
-                <div class="newgrad-price-note">
-                    <strong>$663</strong> · one-time · 5 years access<br>
-                    <span style="font-size:0.8rem;">≈ $11/month over 5 years</span>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- FAQ Section -->
     <section class="faq-section" id="faq">
@@ -2381,16 +1936,12 @@
                     <p class="faq-answer">No. Booking tools help you manage appointments. SlotlyCare gives you infrastructure — your own digital presence for scheduling that you control completely. The booking page is yours. The patient relationship is yours. The data is yours.</p>
                 </div>
                 <div class="faq-item">
-                    <h3 class="faq-question">I already have a website. Can I add SlotlyCare to it?</h3>
-                    <p class="faq-answer">Yes! When you subscribe, you get a personalized booking link and a simple embed code. Just share it with your webdesigner or whoever manages your site — they can add it in under 2 minutes, no technical skills required. And if you don't have a website, no worries — your SlotlyCare link works perfectly on its own. Share it on social media, WhatsApp, email signature, or anywhere you connect with patients.</p>
-                </div>
-                <div class="faq-item">
                     <h3 class="faq-question">What happens after 3 years?</h3>
                     <p class="faq-answer">You'll have the option to renew at the then-current price. Founders who stay active will always have priority access to renewal offers. Your link remains reserved as long as your account is active.</p>
                 </div>
                 <div class="faq-item">
-                    <h3 class="faq-question">How does the free trial work?</h3>
-                    <p class="faq-answer">You get full access to all features for 7 days — no credit card required. Your personalized link is yours to test during this period. When you're ready to subscribe, your exclusive invite discount will be applied automatically. Your link becomes permanently yours once you subscribe.</p>
+                    <h3 class="faq-question">I already have a website. Can I add SlotlyCare to it?</h3>
+                    <p class="faq-answer">Yes! When you subscribe, you get a personalized booking link and a simple embed code. Just share it with your webdesigner or whoever manages your site — they can add it in under 2 minutes, no technical skills required. And if you don't have a website, no worries — your SlotlyCare link works perfectly on its own. Share it on social media, WhatsApp, email signature, or anywhere you connect with patients.</p>
                 </div>
             </div>
         </div>
@@ -2398,7 +1949,6 @@
 
     <!-- Footer -->
     <footer>
-        <p class="footer-partner" style="color: var(--accent); font-size: 0.85rem; margin-bottom: 0.75rem; opacity: 0.85;">This page was created exclusively for <strong id="footerName"></strong>.</p>
         <p class="footer-text">© 2026 SlotlyCare. Your schedule, your rules, your patients.</p>
         <p class="footer-links"><a href="#" onclick="openModal('privacyModal'); return false;">Privacy Policy</a> · <a href="#" onclick="openModal('termsModal'); return false;">Terms of Service</a> · <a href="#" onclick="openModal('contactModal'); return false;">Contact</a></p>
         <p class="footer-early">Early-career professional? <a href="#" onclick="openModal('earlyModal'); return false;">Learn about our Early Practice Program.</a></p>
@@ -2414,7 +1964,7 @@
             <p>SlotlyCare uses industry-standard security measures to protect data and operates in line with GDPR and international data protection standards.</p>
             <p>Healthcare professionals remain fully responsible for how they manage patient relationships, communications, and compliance with applicable professional regulations.</p>
             <p>If you have any questions about this policy or how data is handled, please contact us.</p>
-            <p><strong>Contact:</strong> <a class="email-support" href="#">[loading...]</a></p>
+            <p><strong>Contact:</strong> <a class="email-support" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -2434,7 +1984,7 @@
             <p>SlotlyCare provides the platform on an "as is" basis and continuously improves its features. Pricing, access plans, and availability may evolve over time, except where explicitly stated (such as founders pricing conditions).</p>
             <p>SlotlyCare reserves the right to suspend or terminate accounts that violate these terms or misuse the platform.</p>
             <p>If you have questions regarding these terms, please contact us.</p>
-            <p><strong>Contact:</strong> <a class="email-support" href="#">[loading...]</a></p>
+            <p><strong>Contact:</strong> <a class="email-support" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -2448,7 +1998,7 @@
             <p>Eligible professionals may receive access to special conditions under this program. Eligibility criteria, availability, and conditions are evaluated individually and are not publicly advertised.</p>
             <p>This program is separate from founders access and does not affect existing plans or pricing for other users.</p>
             <p>If you believe you may be eligible, please contact us to learn more.</p>
-            <p><strong>Contact:</strong> <a class="email-programs" href="#">[loading...]</a></p>
+            <p><strong>Contact:</strong> <a class="email-programs" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -2459,17 +2009,20 @@
             <h2>Contact</h2>
             <p>Have questions about SlotlyCare? We'd love to hear from you.</p>
             <p>Send us an email and we'll get back to you as soon as possible.</p>
-            <p style="font-size: 1.25rem; margin-top: 1.5rem;"><strong>Email:</strong> <a class="email-support" href="#">[loading...]</a></p>
+            <p style="font-size: 1.25rem; margin-top: 1.5rem;"><strong>Email:</strong> <a class="email-support" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Supabase Configuration
         const SUPABASE_URL = 'https://hyfqxuvzesbqndglzabi.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5ZnF4dXZ6ZXNicW5kZ2x6YWJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg0MTQ4NDEsImV4cCI6MjA4Mzk5MDg0MX0.Holl4gTk-2bNmHjN2nlIRHBr4-THkZVj0Ws481-PMn4';
         
+        // Backend Configuration
+        const API_BASE = 'https://slotlycare-backend.vercel.app';
+
         // Reserved slugs that cannot be used (system pages)
-        const reservedSlugs = ['admin', 'demo', 'login', 'painel', 'dashboard', 'subscribe', 'success', 'api', 'test', 'www', 'app', 'help', 'support', 'pricing', 'about', 'contact', 'terms', 'privacy', 'invite'];
+        const reservedSlugs = ['admin', 'demo', 'login', 'painel', 'dashboard', 'subscribe', 'success', 'api', 'test', 'www', 'app', 'help', 'support', 'pricing', 'about', 'contact', 'terms', 'privacy'];
 
         // Check if slug exists in Supabase
         async function checkSlugInDatabase(slug) {
@@ -2483,12 +2036,16 @@
                         }
                     }
                 );
-                if (!response.ok) throw new Error('Database error');
+                
+                if (!response.ok) {
+                    throw new Error('Database error');
+                }
+                
                 const data = await response.json();
-                return data.length > 0;
+                return data.length > 0; // true if slug exists (taken)
             } catch (error) {
                 console.error('Error checking slug:', error);
-                return null;
+                return null; // null indicates error
             }
         }
 
@@ -2498,11 +2055,11 @@
             return name
                 .toLowerCase()
                 .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/[\u0300-\u036f]/g, '') // Remove accents
+                .replace(/[^a-z0-9\s-]/g, '') // Remove special chars
                 .trim()
-                .replace(/\s+/g, '-')
-                .replace(/-+/g, '-');
+                .replace(/\s+/g, '-') // Spaces to hyphens
+                .replace(/-+/g, '-'); // Multiple hyphens to single
         }
 
         // Get initials for avatar
@@ -2521,9 +2078,9 @@
         const phoneName = document.getElementById('phoneName');
         const phoneAvatar = document.getElementById('phoneAvatar');
 
-        let userEditedSlug = true; // Start true since slug is pre-filled from invite
+        let userEditedSlug = false;
         let reservationTimerInterval = null;
-        let reservationSeconds = 900;
+        let reservationSeconds = 900; // 15 minutes
         let lastVerifiedSlug = null;
         let lastSlugAvailable = false;
 
@@ -2531,15 +2088,27 @@
         function startReservationTimer() {
             const timerElement = document.getElementById('reservationTimer');
             const timerCount = document.getElementById('timerCount');
+            
+            // Reset timer
             reservationSeconds = 900;
             timerElement.style.display = 'flex';
-            if (reservationTimerInterval) clearInterval(reservationTimerInterval);
+            
+            // Clear any existing interval
+            if (reservationTimerInterval) {
+                clearInterval(reservationTimerInterval);
+            }
+            
+            // Update display immediately
             updateTimerDisplay();
+            
+            // Start countdown
             reservationTimerInterval = setInterval(() => {
                 reservationSeconds--;
                 updateTimerDisplay();
+                
                 if (reservationSeconds <= 0) {
                     stopReservationTimer();
+                    // Show expiration message
                     lastSlugAvailable = false;
                     const resultText = document.getElementById('resultText');
                     resultText.innerHTML = `<strong>slotlycare.com/${lastVerifiedSlug}</strong> reservation expired. Click "Check" to verify availability again.`;
@@ -2557,7 +2126,9 @@
         }
 
         function stopReservationTimer() {
-            document.getElementById('reservationTimer').style.display = 'none';
+            const timerElement = document.getElementById('reservationTimer');
+            timerElement.style.display = 'none';
+            
             if (reservationTimerInterval) {
                 clearInterval(reservationTimerInterval);
                 reservationTimerInterval = null;
@@ -2567,17 +2138,23 @@
         // Update phone mockup and slug when name changes
         nameInput.addEventListener('input', function() {
             const name = this.value.trim();
-            phoneName.textContent = name || INVITE.doctorName;
-            phoneAvatar.textContent = getInitials(name || INVITE.doctorName);
+            
+            // Update phone mockup
+            phoneName.textContent = name || 'Dr. John';
+            phoneAvatar.textContent = getInitials(name || 'Dr. John');
+            
+            // Update slug only if user hasn't manually edited it
             if (!userEditedSlug) {
                 slugInput.value = nameToSlug(name);
             }
         });
 
+        // Mark that user edited slug manually
         slugInput.addEventListener('input', function() {
             userEditedSlug = true;
         });
 
+        // Reset flag when name field is focused (allows re-sync)
         nameInput.addEventListener('focus', function() {
             if (slugInput.value === nameToSlug(this.value)) {
                 userEditedSlug = false;
@@ -2592,115 +2169,108 @@
             
             const slug = slugInput.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
             
-            if (!slug) { result.className = 'link-result'; return; }
+            if (!slug) {
+                result.className = 'link-result';
+                return;
+            }
+
+            // Check minimum length
             if (slug.length < 3) {
                 result.className = 'link-result taken';
                 resultIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
                 resultText.innerHTML = `Link must be at least 3 characters.`;
-                lastVerifiedSlug = slug; lastSlugAvailable = false; stopReservationTimer(); return;
+                lastVerifiedSlug = slug;
+                lastSlugAvailable = false;
+                stopReservationTimer();
+                return;
             }
 
-            btn.disabled = true; btn.textContent = '...';
+            // Show loading
+            btn.disabled = true;
+            btn.textContent = '...';
 
+            // Check reserved slugs first
             if (reservedSlugs.includes(slug)) {
                 result.className = 'link-result taken';
                 resultIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
                 resultText.innerHTML = `<strong>slotlycare.com/${slug}</strong> is reserved. Try another name.`;
-                lastVerifiedSlug = slug; lastSlugAvailable = false; stopReservationTimer();
-                btn.disabled = false; btn.textContent = 'Check'; return;
+                lastVerifiedSlug = slug;
+                lastSlugAvailable = false;
+                stopReservationTimer();
+                btn.disabled = false;
+                btn.textContent = 'Check';
+                return;
             }
 
+            // Check database
             const isTaken = await checkSlugInDatabase(slug);
 
             if (isTaken === null) {
+                // Error occurred
                 result.className = 'link-result taken';
                 resultIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
                 resultText.innerHTML = `Error checking availability. Please try again.`;
-                lastVerifiedSlug = null; lastSlugAvailable = false; stopReservationTimer();
+                lastVerifiedSlug = null;
+                lastSlugAvailable = false;
+                stopReservationTimer();
             } else if (isTaken) {
                 result.className = 'link-result taken';
                 resultIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
                 resultText.innerHTML = `<strong>slotlycare.com/${slug}</strong> is already taken. Try another name.`;
-                lastVerifiedSlug = slug; lastSlugAvailable = false; stopReservationTimer();
+                lastVerifiedSlug = slug;
+                lastSlugAvailable = false;
+                stopReservationTimer();
             } else {
                 result.className = 'link-result available';
                 resultIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>';
                 resultText.innerHTML = `<strong>slotlycare.com/${slug}</strong> is available. Reserve it now before someone else does.`;
-                lastVerifiedSlug = slug; lastSlugAvailable = true; startReservationTimer();
+                lastVerifiedSlug = slug;
+                lastSlugAvailable = true;
+                startReservationTimer();
             }
 
-            btn.disabled = false; btn.textContent = 'Check';
+            btn.disabled = false;
+            btn.textContent = 'Check';
         }
 
-        nameInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') checkAvailability(); });
-        slugInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') checkAvailability(); });
-
-        // Handle Start Trial button
-        function handleStartTrial() {
-            const slug = slugInput.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
-            
-            if (!slug) {
-                scrollToAndHighlight(nameInput, 'Enter your name to get started');
-                return;
+        // Handle Reserve Link button click
+        // Check on Enter key in either field
+        nameInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAvailability();
             }
-            
-            // If user changed slug from the original invite, require check
-            if (slug !== INVITE.slug) {
-                if (slug !== lastVerifiedSlug) {
-                    scrollToAndHighlight(document.getElementById('checkBtn'), 'Click to check availability');
-                    return;
-                }
-                if (!lastSlugAvailable) {
-                    scrollToAndHighlight(slugInput, 'This link is taken — try another');
-                    return;
-                }
+        });
+
+        slugInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAvailability();
             }
-
-            localStorage.setItem('slotlycare_trial_slug', slug);
-            localStorage.setItem('slotlycare_trial_name', nameInput.value.trim());
-
-            // Preserve newgrad source if present in URL
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('source') === 'newgrad') {
-                localStorage.setItem('slotlycare_trial_source', 'newgrad');
-            } else {
-                localStorage.removeItem('slotlycare_trial_source');
-            }
-            
-            // Redirect to trial signup page
-            window.location.href = '/signup-trial.html';
-        }
-
-        function scrollToAndHighlight(element, hintText) {
-            document.querySelector('.hero').scrollIntoView({ behavior: 'smooth' });
-            setTimeout(() => {
-                if (element.tagName === 'INPUT') element.focus();
-                element.classList.add('highlight-pulse');
-                showFieldHint(hintText);
-                setTimeout(() => element.classList.remove('highlight-pulse'), 2000);
-            }, 500);
-        }
-
-        function showFieldHint(text) {
-            const existingHint = document.querySelector('.field-hint-dynamic');
-            if (existingHint) existingHint.remove();
-            const hint = document.createElement('div');
-            hint.className = 'field-hint-dynamic';
-            hint.style.cssText = 'font-size:0.8rem;color:#D97706;font-weight:600;margin-top:0.5rem;transition:opacity 0.3s;';
-            hint.innerHTML = '👆 ' + text;
-            const linkResult = document.getElementById('linkResult');
-            linkResult.parentNode.insertBefore(hint, linkResult.nextSibling);
-            setTimeout(() => { hint.style.opacity = '0'; setTimeout(() => hint.remove(), 300); }, 4000);
-        }
+        });
 
         // Open demo with name parameter
         function openDemoWithName(event) {
             event.preventDefault();
+            const nameInput = document.getElementById('nameInput');
             const name = nameInput.value.trim();
+            
             let url = '/demo';
-            if (name) url = '/demo?preview_name=' + encodeURIComponent(name);
+            if (name) {
+                url = '/demo?preview_name=' + encodeURIComponent(name);
+            }
+            
             window.open(url, '_blank');
         }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
 
         // Modal functions
         function openModal(modalId) {
@@ -2713,6 +2283,7 @@
             document.body.style.overflow = 'auto';
         }
 
+        // Close modal when clicking outside
         window.addEventListener('click', function(e) {
             if (e.target.classList.contains('modal')) {
                 e.target.style.display = 'none';
@@ -2720,73 +2291,135 @@
             }
         });
 
+        // Close modal with Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                document.querySelectorAll('.modal').forEach(modal => { modal.style.display = 'none'; });
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
                 document.body.style.overflow = 'auto';
             }
         });
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
+        // Handle Reserve Link button click
+        async function handleReserveLink() {
+            const slug = slugInput.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
+            
+            // If no slug entered, scroll to hero and highlight field
+            if (!slug) {
+                scrollToAndHighlight(nameInput, 'Enter your name to get started');
+                return;
+            }
 
-        // Initialize invite content (called after Supabase data loads)
-        function initInvite() {
-            const i = INVITE;
+            // If slug wasn't verified or is different from last verified
+            if (slug !== lastVerifiedSlug) {
+                scrollToAndHighlight(document.getElementById('checkBtn'), 'Click to check availability');
+                return;
+            }
+
+            // If slug was verified but not available
+            if (!lastSlugAvailable) {
+                scrollToAndHighlight(slugInput, 'This link is taken — try another');
+                return;
+            }
+
+            // Slug is verified and available - save to localStorage
+            localStorage.setItem('slotlycare_reserved_slug', slug);
+            localStorage.setItem('slotlycare_reserved_name', nameInput.value.trim());
             
-            // Invite bar
-            document.getElementById('inviteBarName').textContent = i.doctorName;
-            document.getElementById('inviteBarDiscount').textContent = i.discount;
-            
-            // Hero — pre-fill fields
-            document.getElementById('heroName').textContent = i.doctorName;
-            nameInput.value = i.doctorName;
-            slugInput.value = i.slug;
-            
-            // Phone mockup
-            phoneName.textContent = i.doctorName;
-            phoneAvatar.textContent = getInitials(i.doctorName.replace('Dr. ', ''));
-            
-            // Pricing
-            document.getElementById('pricingYears').textContent = i.accessYears;
-            document.getElementById('pricingAccessYears').textContent = i.accessYears;
-            document.getElementById('pricingTrialDays').textContent = i.trialDays;
-            document.getElementById('priceOriginal').textContent = i.originalPrice;
-            document.getElementById('priceFinal').textContent = i.finalPrice;
-            document.getElementById('priceSavings').textContent = i.savings;
-            document.getElementById('priceDiscountPct').textContent = i.discount;
-            document.getElementById('priceDescYears').textContent = i.accessYears;
-            document.getElementById('priceMonthly').textContent = i.monthlyEquiv;
-            
-            // Footer
-            document.getElementById('footerName').textContent = i.doctorName;
+            // Redirect directly to Stripe checkout
+            try {
+                const response = await fetch(`${API_BASE}/api/create-checkout-session`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        success_url: window.location.origin + '/success.html',
+                        cancel_url: window.location.origin + '/'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.checkout_url) {
+                    window.location.href = data.checkout_url;
+                } else {
+                    throw new Error(data.error || 'Failed to create checkout session');
+                }
+            } catch (error) {
+                alert('Error connecting to payment. Please try again.');
+                console.error('Checkout error:', error);
+            }
         }
 
-        // Email obfuscation
-        document.addEventListener('DOMContentLoaded', function() {
-            const supportUser = 'support';
-            const programsUser = 'programs';
-            const domain = 'slotlycare.com';
+        // Scroll to element, highlight it, and show hint
+        function scrollToAndHighlight(element, hintText) {
+            // Scroll to hero
+            document.querySelector('.hero').scrollIntoView({ behavior: 'smooth' });
+            
+            // Wait for scroll to finish, then highlight
+            setTimeout(() => {
+                // Focus the element
+                if (element.tagName === 'INPUT') {
+                    element.focus();
+                }
+                
+                // Add highlight animation
+                element.classList.add('highlight-pulse');
+                
+                // Show hint below the link checker
+                showFieldHint(hintText);
+                
+                // Remove highlight after animation
+                setTimeout(() => {
+                    element.classList.remove('highlight-pulse');
+                }, 2000);
+            }, 500);
+        }
 
-            document.querySelectorAll('.email-support').forEach(function(element) {
-                const email = supportUser + '@' + domain;
-                element.innerHTML = email;
-                element.href = 'mailto:' + email;
-            });
-
-            document.querySelectorAll('.email-programs').forEach(function(element) {
-                const email = programsUser + '@' + domain;
-                element.innerHTML = email;
-                element.href = 'mailto:' + email;
-            });
-        });
+        // Show hint message below the link checker
+        function showFieldHint(text) {
+            // Remove existing hint if any
+            const existingHint = document.querySelector('.field-hint');
+            if (existingHint) {
+                existingHint.remove
+            }
+            
+            // Create hint element
+            const hint = document.createElement('div');
+            hint.className = 'field-hint';
+            hint.innerHTML = '👆 ' + text;
+            
+            // Insert after linkResult
+            const linkResult = document.getElementById('linkResult');
+            linkResult.parentNode.insertBefore(hint, linkResult.nextSibling);
+            
+            // Remove after 4 seconds
+            setTimeout(() => {
+                hint.classList.add('fade-out');
+                setTimeout(() => hint.remove(), 300);
+            }, 4000);
+        }
     </script>
-    </div><!-- /pageContent -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const supportUser = 'support';
+        const programsUser = 'programs';
+        const domain = 'slotlycare.com';
+
+        document.querySelectorAll('.email-support').forEach(function(element) {
+          const email = supportUser + '@' + domain;
+          element.innerHTML = email;
+          element.href = 'mailto:' + email;
+        });
+
+        document.querySelectorAll('.email-programs').forEach(function(element) {
+          const email = programsUser + '@' + domain;
+          element.innerHTML = email;
+          element.href = 'mailto:' + email;
+        });
+      });
+    </script>
 </body>
 </html>
