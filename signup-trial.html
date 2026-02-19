@@ -560,14 +560,8 @@
                     showMessage('Account created! Redirecting to your panel...', 'success');
 
                     setTimeout(() => {
-                        const source = localStorage.getItem('slotlycare_trial_source');
-                        if (source === 'newgrad') {
-                            window.location.href = '/newgrad.html';
-                        } else {
-                            window.location.href = '/painel';
-                        }
-                    }, 1500);              
-                        
+                        window.location.href = '/painel';
+                    }, 1500);
                 } else {
                     showMessage(data.error || 'Something went wrong. Please try again.', 'error');
                 }
