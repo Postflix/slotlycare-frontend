@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>SlotlyCare — Welcome</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --teal: #0d9488;
+            --teal-light: #ccfbf1;
+            --teal-dark: #0f766e;
+            --amber: #f59e0b;
+            --amber-light: #fef3c7;
+            --slate: #1e293b;
+            --slate-mid: #475569;
+            --slate-light: #94a3b8;
+            --bg: #f8fafc;
+            --radius: 16px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--slate); line-height: 1.6; min-height: 100vh; }
+
+        .contrapartida-wrapper { max-width: 640px; margin: 0 auto; padding: 60px 40px; }
+
+        .cp-header { text-align: center; margin-bottom: 40px; }
+        .cp-wave { font-size: 48px; margin-bottom: 16px; }
+        .cp-header h2 { font-family: 'DM Serif Display', serif; font-size: 30px; margin-bottom: 12px; line-height: 1.25; }
+        .cp-header p { font-size: 15px; color: var(--slate-mid); max-width: 480px; margin: 0 auto; line-height: 1.7; }
+
+        .cp-spots-bar { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--amber-light); border: 1.5px solid #fcd34d; border-radius: 10px; padding: 10px 20px; margin: 20px auto 0; max-width: 380px; font-size: 13px; font-weight: 500; color: #92400e; text-align: center; }
+        .spots-dot { width: 7px; height: 7px; background: var(--amber); border-radius: 50%; animation: pulse 1.5s infinite; flex-shrink: 0; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+        .cp-card { background: white; border-radius: var(--radius); border: 1px solid #e2e8f0; overflow: hidden; }
+        .cp-section { padding: 28px 32px; border-bottom: 1px solid #f1f5f9; }
+        .cp-section:last-child { border-bottom: none; }
+        .cp-section-title { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--slate-light); margin-bottom: 16px; }
+        .optional-tag { font-size: 11px; color: var(--slate-light); font-weight: 400; margin-left: 4px; text-transform: none; letter-spacing: 0; }
+        .required-tag { font-size: 11px; color: #dc2626; font-weight: 400; margin-left: 4px; text-transform: none; letter-spacing: 0; }
+        .cp-note { font-size: 14px; color: var(--slate-mid); margin-bottom: 16px; line-height: 1.6; }
+
+        .field-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+        .field-group.single { grid-template-columns: 1fr; }
+        .field-label { font-size: 12px; font-weight: 500; color: var(--slate-mid); margin-bottom: 5px; display: block; }
+        .field-input { width: 100%; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--slate); background: #f8fafc; transition: border-color .2s; outline: none; }
+        .field-input:focus { border-color: var(--teal); background: white; }
+        .field-input::placeholder { color: #cbd5e1; }
+        .field-input.error { border-color: #dc2626; }
+
+        .add-colleague { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--teal); cursor: pointer; margin-top: 8px; width: fit-content; font-weight: 500; }
+
+        .cp-footer { padding: 24px 32px; background: #f8fafc; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+        .btn-skip { background: none; border: none; color: var(--slate-light); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; text-decoration: underline; }
+        .btn-submit { background: var(--teal); color: white; border: none; padding: 13px 28px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background .2s; }
+        .btn-submit:hover { background: var(--teal-dark); }
+        .btn-submit:disabled { opacity: .6; cursor: not-allowed; }
+
+        .error-msg { font-size: 12px; color: #dc2626; margin-top: 4px; display: none; }
+        .error-msg.visible { display: block; }
+
+        .fade-in { animation: fadeIn .4s ease; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+        @media(max-width:640px) {
+            .field-group { grid-template-columns: 1fr; }
+            .contrapartida-wrapper { padding: 40px 20px; }
+            .cp-section { padding: 20px 20px; }
+            .cp-footer { flex-direction: column; align-items: stretch; }
+            .btn-submit { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="contrapartida-wrapper fade-in">
+
+    <div class="cp-header">
+        <div class="cp-wave">🤝</div>
+        <h2>You're in. Now help us grow.</h2>
+        <p>We gave you 2 extra years because we believe in early-career doctors. In return, we'd love your help reaching others like you — on your own terms, with zero pressure.</p>
+        <div class="cp-spots-bar">
+            <div class="spots-dot"></div>
+            This is a limited incentive program — spots are filling up.
+        </div>
+    </div>
+
+    <div class="cp-card">
+
+        <!-- 1. Background — obrigatório -->
+        <div class="cp-section">
+            <div class="cp-section-title">Your background <span class="required-tag">required</span></div>
+            <div class="field-group">
+                <div>
+                    <label class="field-label">University / Medical school</label>
+                    <input type="text" class="field-input" id="university" placeholder="University of Berlin">
+                    <div class="error-msg" id="universityError">Please fill in your university.</div>
+                </div>
+                <div>
+                    <label class="field-label">Graduation year</label>
+                    <input type="text" class="field-input" id="graduationYear" placeholder="2024">
+                    <div class="error-msg" id="yearError">Please fill in your graduation year.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Colegas — opcional -->
+        <div class="cp-section">
+            <div class="cp-section-title">Know someone who'd benefit? <span class="optional-tag">optional</span></div>
+            <p class="cp-note">A colleague just starting out, a classmate setting up their practice — anyone who might find SlotlyCare useful.</p>
+            <div id="colleagueFields">
+                <div class="field-group colleague-row">
+                    <div>
+                        <label class="field-label">Colleague's name</label>
+                        <input type="text" class="field-input" placeholder="Dr. Anna Müller">
+                    </div>
+                    <div>
+                        <label class="field-label">Email or WhatsApp</label>
+                        <input type="text" class="field-input" placeholder="anna@example.com">
+                    </div>
+                </div>
+            </div>
+            <div class="add-colleague" id="addColleagueBtn" onclick="addColleague()">+ Add another colleague</div>
+        </div>
+
+        <!-- 3. Comunidades — opcional -->
+        <div class="cp-section">
+            <div class="cp-section-title">Where do we find doctors like you? <span class="optional-tag">optional</span></div>
+            <p class="cp-note">Academic leagues, residency groups, alumni networks, professional associations — anywhere early-career doctors gather.</p>
+            <div class="field-group single">
+                <textarea class="field-input" id="communities" rows="3" placeholder="e.g. German Medical Students' Association, Residency group at Charité, LinkedIn group 'Young Dermatologists'..." style="resize:none;"></textarea>
+            </div>
+        </div>
+
+        <!-- 4. Sugestões — opcional -->
+        <div class="cp-section">
+            <div class="cp-section-title">Your opinion matters <span class="optional-tag">optional</span></div>
+            <p class="cp-note">Feel free to suggest any improvement to SlotlyCare. We'll get back to you with a honest answer on whether it's something we can build.</p>
+            <div class="field-group single">
+                <textarea class="field-input" id="suggestions" rows="3" placeholder="I'd love to see..." style="resize:none;"></textarea>
+            </div>
+        </div>
+
+        <div class="cp-footer">
+            <button class="btn-skip" onclick="goToPanel()">Skip for now</button>
+            <button class="btn-submit" id="btnSubmit" onclick="handleSubmit()">Send & go to my panel →</button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const API_BASE = 'https://slotlycare-backend.vercel.app';
+
+    // Redirect to panel (skip or after save)
+    function goToPanel() {
+        localStorage.removeItem('slotlycare_trial_source');
+        window.location.href = '/painel';
+    }
+
+    // Add colleague row (max 3)
+    let colleagueCount = 1;
+    function addColleague() {
+        if (colleagueCount >= 3) return;
+        colleagueCount++;
+        const container = document.getElementById('colleagueFields');
+        const div = document.createElement('div');
+        div.classList.add('field-group', 'colleague-row');
+        div.style.marginTop = '12px';
+        div.innerHTML = `
+            <div>
+                <label class="field-label">Colleague's name</label>
+                <input type="text" class="field-input" placeholder="Dr. ...">
+            </div>
+            <div>
+                <label class="field-label">Email or WhatsApp</label>
+                <input type="text" class="field-input" placeholder="...">
+            </div>
+        `;
+        container.appendChild(div);
+        if (colleagueCount >= 3) document.getElementById('addColleagueBtn').style.display = 'none';
+    }
+
+    // Collect colleague data from DOM
+    function getColleagues() {
+        const rows = document.querySelectorAll('.colleague-row');
+        const colleagues = [];
+        rows.forEach(row => {
+            const inputs = row.querySelectorAll('input');
+            const name = inputs[0].value.trim();
+            const contact = inputs[1].value.trim();
+            if (name || contact) colleagues.push({ name, contact });
+        });
+        return colleagues;
+    }
+
+    // Validate required fields
+    function validate() {
+        const university = document.getElementById('university').value.trim();
+        const year = document.getElementById('graduationYear').value.trim();
+        let valid = true;
+
+        if (!university) {
+            document.getElementById('university').classList.add('error');
+            document.getElementById('universityError').classList.add('visible');
+            valid = false;
+        } else {
+            document.getElementById('university').classList.remove('error');
+            document.getElementById('universityError').classList.remove('visible');
+        }
+
+        if (!year) {
+            document.getElementById('graduationYear').classList.add('error');
+            document.getElementById('yearError').classList.add('visible');
+            valid = false;
+        } else {
+            document.getElementById('graduationYear').classList.remove('error');
+            document.getElementById('yearError').classList.remove('visible');
+        }
+
+        return valid;
+    }
+
+    async function handleSubmit() {
+        if (!validate()) return;
+
+        const customerId = localStorage.getItem('slotlycare_customer_id');
+        const btn = document.getElementById('btnSubmit');
+
+        btn.disabled = true;
+        btn.textContent = 'Saving...';
+
+        const payload = {
+            customer_id: customerId || '',
+            university: document.getElementById('university').value.trim(),
+            graduation_year: document.getElementById('graduationYear').value.trim(),
+            colleagues: getColleagues(),
+            communities: document.getElementById('communities').value.trim(),
+            suggestions: document.getElementById('suggestions').value.trim()
+        };
+
+        try {
+            await fetch(`${API_BASE}/api/save-newgrad`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+        } catch (e) {
+            console.error('Error saving new grad data:', e);
+            // Fail silently — don't block the user from reaching the panel
+        }
+
+        goToPanel();
+    }
+</script>
+
+</body>
+</html>
