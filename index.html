@@ -357,168 +357,6 @@
             color: #B45309;
         }
 
-        /* New Grad Block */
-        .newgrad-section {
-            max-width: 780px;
-            margin: 0 auto 3rem;
-            padding: 0 2rem;
-        }
-
-        .newgrad-block {
-            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-            border: 2px solid #f59e0b;
-            border-radius: 1.5rem;
-            padding: 2.5rem 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .newgrad-block::before {
-            content: '';
-            position: absolute;
-            top: -40px; right: -40px;
-            width: 200px; height: 200px;
-            background: radial-gradient(circle, rgba(245,158,11,.1) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        .newgrad-top-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 1.25rem;
-        }
-
-        .newgrad-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #f59e0b;
-            color: white;
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: .1em;
-            text-transform: uppercase;
-            padding: 5px 14px;
-            border-radius: 100px;
-        }
-
-        .newgrad-spots {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 4px;
-        }
-
-        .spots-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: white;
-            border: 1.5px solid #fcd34d;
-            color: #92400e;
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 4px 12px;
-            border-radius: 100px;
-        }
-
-        .spots-dot {
-            width: 7px; height: 7px;
-            background: #f59e0b;
-            border-radius: 50%;
-            animation: spot-pulse 1.5s infinite;
-            flex-shrink: 0;
-        }
-
-        @keyframes spot-pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
-
-        .spots-sub {
-            font-size: 0.7rem;
-            color: #92400e;
-            opacity: .7;
-            font-style: italic;
-            text-align: right;
-        }
-
-        .newgrad-block h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            color: var(--text);
-            letter-spacing: -0.01em;
-        }
-
-        .newgrad-copy {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            line-height: 1.75;
-            max-width: 560px;
-        }
-
-        .newgrad-copy strong { color: var(--text); }
-
-        .newgrad-perks {
-            display: flex;
-            gap: 1.25rem;
-            margin-bottom: 1.75rem;
-            flex-wrap: wrap;
-        }
-
-        .newgrad-perk {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.875rem;
-            color: var(--text);
-            font-weight: 500;
-        }
-
-        .newgrad-perk-icon {
-            width: 30px; height: 30px;
-            background: white;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-            box-shadow: 0 1px 3px rgba(0,0,0,.08);
-        }
-
-        .newgrad-footer {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .newgrad-cta {
-            background: #f59e0b;
-            color: white;
-            border: none;
-            padding: 0.875rem 2rem;
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background .2s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .newgrad-cta:hover { background: #d97706; }
-
-        .newgrad-price-note {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-        }
-
-        .newgrad-price-note strong { color: #92400e; font-size: 1rem; }
-
         /* Highlight animation for fields */
         .highlight-pulse {
             animation: pulse-highlight 0.5s ease-in-out 3;
@@ -1781,7 +1619,7 @@
 
             <a href="#" onclick="handleReserveLink(); return false;" class="reserve-btn">Reserve Your Link Now</a>
 
-
+            <p class="hero-footer">Want to see how patients book? <a href="#demo">Try the live demo</a></p>
         </div>
 
         <div class="hero-visual">
@@ -2074,45 +1912,6 @@
         </div>
     </section>
 
-    <!-- New Grad Block -->
-    <div class="newgrad-section">
-        <div class="newgrad-block">
-            <div class="newgrad-top-row">
-                <div class="newgrad-badge">🎓 For recent graduates</div>
-                <div class="newgrad-spots">
-                    <div class="spots-pill">
-                        <div class="spots-dot"></div>
-                        Limited spots available
-                    </div>
-                    <div class="spots-sub">Subject to availability at the time of registration.</div>
-                </div>
-            </div>
-
-            <h3>Just finished your training? We've got your back.</h3>
-
-            <p class="newgrad-copy">
-                We know the first years of practice are the most challenging — you're building your reputation, setting up your structure, and managing costs all at once. <strong>That's why we're offering recent graduates two additional years of access.</strong>
-                <br><br>
-                No strings attached. We're simply betting on you.
-            </p>
-
-            <div class="newgrad-perks">
-                <div class="newgrad-perk"><div class="newgrad-perk-icon">📅</div> 5 years access</div>
-                <div class="newgrad-perk"><div class="newgrad-perk-icon">💰</div> Same $663 price</div>
-                <div class="newgrad-perk"><div class="newgrad-perk-icon">🌍</div> 6 languages</div>
-                <div class="newgrad-perk"><div class="newgrad-perk-icon">✅</div> 7-day guarantee</div>
-            </div>
-
-            <div class="newgrad-footer">
-                <a class="newgrad-cta" href="/invite/newgrad?source=newgrad">I'm a recent graduate →</a>
-                <div class="newgrad-price-note">
-                    <strong>$663</strong> · one-time · 5 years access<br>
-                    <span style="font-size:0.8rem;">≈ $11/month over 5 years</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- FAQ Section -->
     <section class="faq-section" id="faq">
         <div class="container">
@@ -2137,12 +1936,12 @@
                     <p class="faq-answer">No. Booking tools help you manage appointments. SlotlyCare gives you infrastructure — your own digital presence for scheduling that you control completely. The booking page is yours. The patient relationship is yours. The data is yours.</p>
                 </div>
                 <div class="faq-item">
-                    <h3 class="faq-question">I already have a website. Can I add SlotlyCare to it?</h3>
-                    <p class="faq-answer">Yes! When you subscribe, you get a personalized booking link and a simple embed code. Just share it with your webdesigner or whoever manages your site — they can add it in under 2 minutes, no technical skills required. And if you don't have a website, no worries — your SlotlyCare link works perfectly on its own. Share it on social media, WhatsApp, email signature, or anywhere you connect with patients.</p>
-                </div>
-                <div class="faq-item">
                     <h3 class="faq-question">What happens after 3 years?</h3>
                     <p class="faq-answer">You'll have the option to renew at the then-current price. Founders who stay active will always have priority access to renewal offers. Your link remains reserved as long as your account is active.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">I already have a website. Can I add SlotlyCare to it?</h3>
+                    <p class="faq-answer">Yes! When you subscribe, you get a personalized booking link and a simple embed code. Just share it with your webdesigner or whoever manages your site — they can add it in under 2 minutes, no technical skills required. And if you don't have a website, no worries — your SlotlyCare link works perfectly on its own. Share it on social media, WhatsApp, email signature, or anywhere you connect with patients.</p>
                 </div>
             </div>
         </div>
@@ -2152,7 +1951,7 @@
     <footer>
         <p class="footer-text">© 2026 SlotlyCare. Your schedule, your rules, your patients.</p>
         <p class="footer-links"><a href="#" onclick="openModal('privacyModal'); return false;">Privacy Policy</a> · <a href="#" onclick="openModal('termsModal'); return false;">Terms of Service</a> · <a href="#" onclick="openModal('contactModal'); return false;">Contact</a></p>
-        <p class="footer-early"><a href="#" onclick="openModal('earlyModal'); return false;">Financial assistance available.</a></p>
+        <p class="footer-early">Early-career professional? <a href="#" onclick="openModal('earlyModal'); return false;">Learn about our Early Practice Program.</a></p>
     </footer>
 
     <!-- Privacy Policy Modal -->
@@ -2189,16 +1988,17 @@
         </div>
     </div>
 
-    <!-- Financial Assistance Modal -->
+    <!-- Early Practice Program Modal -->
     <div id="earlyModal" class="modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal('earlyModal')">&times;</span>
-            <h2>Financial Assistance</h2>
-            <p>SlotlyCare believes that access to good tools shouldn't depend on geography or financial circumstances.</p>
-            <p>If the standard price is a genuine barrier for you — whether you're navigating financial hardship, practicing in a remote or underserved region, or working in a humanitarian context — we're open to a conversation.</p>
-            <p>There are no guarantees, and each situation is evaluated individually. But if your circumstances are real, we'll do our best to find a way.</p>
-            <p>Reach out and tell us a bit about your situation. We'll get back to you honestly.</p>
-            <p><strong>Contact:</strong> <a class="email-programs" href="#">[loading...]</a></p>
+            <h2>Early Practice Program</h2>
+            <p>SlotlyCare supports healthcare professionals at the beginning of their independent practice.</p>
+            <p>The Early Practice Program is designed for professionals who are in the early years of their career and are building their patient flow, scheduling structure, and operational processes.</p>
+            <p>Eligible professionals may receive access to special conditions under this program. Eligibility criteria, availability, and conditions are evaluated individually and are not publicly advertised.</p>
+            <p>This program is separate from founders access and does not affect existing plans or pricing for other users.</p>
+            <p>If you believe you may be eligible, please contact us to learn more.</p>
+            <p><strong>Contact:</strong> <a class="email-programs" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
