@@ -2477,9 +2477,6 @@
 
             localStorage.setItem('slotlycare_trial_slug', slug);
             localStorage.setItem('slotlycare_trial_name', nameInput.value.trim());
-
-            const sourceParam = new URLSearchParams(window.location.search).get('source');
-            if (sourceParam) localStorage.setItem('slotlycare_trial_source', sourceParam);
             
             // Redirect to trial signup page
             window.location.href = '/signup-trial.html';
