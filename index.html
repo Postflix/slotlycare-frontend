@@ -1576,6 +1576,7 @@
     <section class="hero">
         <div class="hero-content">
             <span class="badge">Founders Access — Limited Spots</span>
+            <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.5rem; margin-top: -0.75rem;">Pay for 1 year. Get 3 years. Price locked for 36 months.</p>
             <h1>Marketplaces help patients find you. <span class="serif">Now control what happens next.</span></h1>
             <p class="hero-tagline">Your scheduling. Your rules. Your patients.</p>
             <p class="hero-sub">One link. Your name. Full control.<br>No chaos. No back-and-forth. No lost appointments.<br><strong>Professional scheduling infrastructure.</strong></p>
@@ -1619,7 +1620,7 @@
 
             <a href="#" onclick="handleReserveLink(); return false;" class="reserve-btn">Reserve Your Link Now</a>
 
-            <p class="hero-footer">Want to see how patients book? <a href="#demo">Try the live demo</a></p>
+
         </div>
 
         <div class="hero-visual">
@@ -1936,12 +1937,12 @@
                     <p class="faq-answer">No. Booking tools help you manage appointments. SlotlyCare gives you infrastructure — your own digital presence for scheduling that you control completely. The booking page is yours. The patient relationship is yours. The data is yours.</p>
                 </div>
                 <div class="faq-item">
-                    <h3 class="faq-question">What happens after 3 years?</h3>
-                    <p class="faq-answer">You'll have the option to renew at the then-current price. Founders who stay active will always have priority access to renewal offers. Your link remains reserved as long as your account is active.</p>
-                </div>
-                <div class="faq-item">
                     <h3 class="faq-question">I already have a website. Can I add SlotlyCare to it?</h3>
                     <p class="faq-answer">Yes! When you subscribe, you get a personalized booking link and a simple embed code. Just share it with your webdesigner or whoever manages your site — they can add it in under 2 minutes, no technical skills required. And if you don't have a website, no worries — your SlotlyCare link works perfectly on its own. Share it on social media, WhatsApp, email signature, or anywhere you connect with patients.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">What happens after 3 years?</h3>
+                    <p class="faq-answer">You'll have the option to renew at the then-current price. Founders who stay active will always have priority access to renewal offers. Your link remains reserved as long as your account is active.</p>
                 </div>
             </div>
         </div>
@@ -1951,7 +1952,11 @@
     <footer>
         <p class="footer-text">© 2026 SlotlyCare. Your schedule, your rules, your patients.</p>
         <p class="footer-links"><a href="#" onclick="openModal('privacyModal'); return false;">Privacy Policy</a> · <a href="#" onclick="openModal('termsModal'); return false;">Terms of Service</a> · <a href="#" onclick="openModal('contactModal'); return false;">Contact</a></p>
-        <p class="footer-early">Early-career professional? <a href="#" onclick="openModal('earlyModal'); return false;">Learn about our Early Practice Program.</a></p>
+        <p class="footer-links" style="margin-top: 0.5rem;">
+            <a href="#" onclick="openModal('financialModal'); return false;">Financial assistance available.</a>
+            &nbsp;·&nbsp;
+            <a href="#" onclick="openModal('earlyModal'); return false;">Early Practice Program.</a>
+        </p>
     </footer>
 
     <!-- Privacy Policy Modal -->
@@ -1964,7 +1969,7 @@
             <p>SlotlyCare uses industry-standard security measures to protect data and operates in line with GDPR and international data protection standards.</p>
             <p>Healthcare professionals remain fully responsible for how they manage patient relationships, communications, and compliance with applicable professional regulations.</p>
             <p>If you have any questions about this policy or how data is handled, please contact us.</p>
-            <p><strong>Contact:</strong> <a class="email-support" href="#">[carregando email...]</a></p>
+            <p><strong>Contact:</strong> <a class="email-legal" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -1984,7 +1989,7 @@
             <p>SlotlyCare provides the platform on an "as is" basis and continuously improves its features. Pricing, access plans, and availability may evolve over time, except where explicitly stated (such as founders pricing conditions).</p>
             <p>SlotlyCare reserves the right to suspend or terminate accounts that violate these terms or misuse the platform.</p>
             <p>If you have questions regarding these terms, please contact us.</p>
-            <p><strong>Contact:</strong> <a class="email-support" href="#">[carregando email...]</a></p>
+            <p><strong>Contact:</strong> <a class="email-legal" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -2009,7 +2014,20 @@
             <h2>Contact</h2>
             <p>Have questions about SlotlyCare? We'd love to hear from you.</p>
             <p>Send us an email and we'll get back to you as soon as possible.</p>
-            <p style="font-size: 1.25rem; margin-top: 1.5rem;"><strong>Email:</strong> <a class="email-support" href="#">[carregando email...]</a></p>
+            <p style="font-size: 1.25rem; margin-top: 1.5rem;"><strong>Email:</strong> <a class="email-contact" href="#">[carregando email...]</a></p>
+        </div>
+    </div>
+
+    <!-- Financial Assistance Modal -->
+    <div id="financialModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('financialModal')">&times;</span>
+            <h2>Financial Assistance</h2>
+            <p>SlotlyCare believes that access to good tools shouldn't depend on geography or financial circumstances.</p>
+            <p>If the standard price is a genuine barrier for you — whether you're navigating financial hardship, practicing in a remote or underserved region, or working in a humanitarian context — we're open to a conversation.</p>
+            <p>There are no guarantees, and each situation is evaluated individually. But if your circumstances are real, we'll do our best to find a way.</p>
+            <p>Reach out and tell us a bit about your situation. We'll get back to you honestly.</p>
+            <p><strong>Contact:</strong> <a class="email-assistance" href="#">[carregando email...]</a></p>
         </div>
     </div>
 
@@ -2406,6 +2424,9 @@
       document.addEventListener('DOMContentLoaded', function() {
         const supportUser = 'support';
         const programsUser = 'programs';
+        const legalUser = 'legal';
+        const contactUser = 'contact';
+        const assistanceUser = 'assistance';
         const domain = 'slotlycare.com';
 
         document.querySelectorAll('.email-support').forEach(function(element) {
@@ -2416,6 +2437,24 @@
 
         document.querySelectorAll('.email-programs').forEach(function(element) {
           const email = programsUser + '@' + domain;
+          element.innerHTML = email;
+          element.href = 'mailto:' + email;
+        });
+
+        document.querySelectorAll('.email-legal').forEach(function(element) {
+          const email = legalUser + '@' + domain;
+          element.innerHTML = email;
+          element.href = 'mailto:' + email;
+        });
+
+        document.querySelectorAll('.email-contact').forEach(function(element) {
+          const email = contactUser + '@' + domain;
+          element.innerHTML = email;
+          element.href = 'mailto:' + email;
+        });
+
+        document.querySelectorAll('.email-assistance').forEach(function(element) {
+          const email = assistanceUser + '@' + domain;
           element.innerHTML = email;
           element.href = 'mailto:' + email;
         });
