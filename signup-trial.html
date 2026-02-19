@@ -557,10 +557,15 @@
                     localStorage.removeItem('slotlycare_trial_name');
                     localStorage.removeItem('slotlycare_trial_slug');
 
-                    showMessage('Account created! Redirecting to your panel...', 'success');
+                    showMessage('Account created! Redirecting...', 'success');
+
+                    // If came from newgrad flow, go to newgrad page; otherwise go to panel
+                    const source = localStorage.getItem('slotlycare_trial_source');
+                    const redirectUrl = source === 'newgrad' ? '/newgrad.html' : '/painel';
+                    localStorage.removeItem('slotlycare_trial_source');
 
                     setTimeout(() => {
-                        window.location.href = '/painel';
+                        window.location.href = redirectUrl;
                     }, 1500);
                 } else {
                     showMessage(data.error || 'Something went wrong. Please try again.', 'error');
