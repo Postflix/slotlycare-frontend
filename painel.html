@@ -1114,24 +1114,22 @@ textarea {
             </div>
 
             <!-- Your Opinion Matters -->
-            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-color);">
-                <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px;">
-                    Your opinion matters <span style="font-size: 11px; font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--text-muted);">(optional)</span>
-                </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">Feel free to suggest any improvement to SlotlyCare. We'll get back to you with a honest answer on whether it's something we can build.</p>
-                <textarea id="opinionTextarea" rows="3" placeholder="I'd love to see..." style="
+            <div style="margin-top: 20px; padding: 16px 20px; background: linear-gradient(135deg, #F8FAFF, #EFF6FF); border: 1px solid #DBEAFE; border-radius: 12px;">
+                <label style="display: block; margin-bottom: 8px;">💡 <span data-i18n="opinion_label">Your opinion matters</span> <span data-i18n="optional_text" style="font-weight: 400; font-size: 0.85rem; color: var(--text-muted);">(optional)</span></label>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;" data-i18n="opinion_hint">Feel free to suggest any improvement to SlotlyCare. We'll get back to you with a honest answer on whether it's something we can build.</p>
+                <textarea id="opinionTextarea" rows="3" placeholder="I'd love to see..." data-i18n-placeholder="opinion_placeholder" style="
                     width: 100%; padding: 10px 13px; border: 1.5px solid var(--border-color);
                     border-radius: 8px; font-family: inherit; font-size: 0.875rem; color: var(--text-main);
-                    background: #F8FAFC; outline: none; resize: none; transition: border-color 0.2s;
-                " onfocus="this.style.borderColor='var(--primary-color)';this.style.background='white'"
-                   onblur="this.style.borderColor='var(--border-color)';this.style.background='#F8FAFC'"></textarea>
-                <button onclick="saveOpinion()" style="
+                    background: white; outline: none; resize: none; transition: border-color 0.2s;
+                " onfocus="this.style.borderColor='var(--primary-color)'"
+                   onblur="this.style.borderColor='var(--border-color)'"></textarea>
+                <button onclick="saveOpinion()" data-i18n="opinion_btn" style="
                     margin-top: 8px; background: none; border: 1px solid var(--border-color);
                     color: var(--text-muted); padding: 7px 16px; border-radius: 8px;
                     font-size: 0.82rem; cursor: pointer; font-family: inherit; transition: all 0.2s;
                 " onmouseover="this.style.borderColor='var(--primary-color)';this.style.color='var(--primary-color)'"
                    onmouseout="this.style.borderColor='var(--border-color)';this.style.color='var(--text-muted)'">Send feedback</button>
-                <span id="opinionSentMsg" style="display:none; font-size:0.82rem; color:#10B981; margin-left:10px;">✅ Sent. Thank you!</span>
+                <span id="opinionSentMsg" style="display:none; font-size:0.82rem; color:#10B981; margin-left:10px;" data-i18n="opinion_sent">✅ Sent. Thank you!</span>
             </div>
         </div>
     </div>
@@ -1462,6 +1460,11 @@ const translations = {
         referral_stats_opened: "opened your link",
         referral_stats_trial: "started a free trial",
         referral_stats_thanks: "SlotlyCare thanks you for your trust. 💚",
+        opinion_label: "Your opinion matters",
+        opinion_hint: "Feel free to suggest any improvement to SlotlyCare. We'll get back to you with a honest answer on whether it's something we can build.",
+        opinion_placeholder: "I'd love to see...",
+        opinion_btn: "Send feedback",
+        opinion_sent: "✅ Sent. Thank you!",
         referral_see_details: "See details",
         placeholders: {
             doctorName: "Dr. John",
@@ -1548,6 +1551,11 @@ const translations = {
         referral_stats_opened: "abriram seu link",
         referral_stats_trial: "iniciaram o teste gratuito",
         referral_stats_thanks: "A SlotlyCare agradece sua confiança. 💚",
+        opinion_label: "Sua opinião importa",
+        opinion_hint: "Fique à vontade para sugerir melhorias para o SlotlyCare. Daremos um retorno honesto sobre o que é possível construir.",
+        opinion_placeholder: "Eu adoraria ver...",
+        opinion_btn: "Enviar sugestão",
+        opinion_sent: "✅ Enviado. Obrigado!",
         referral_see_details: "Ver detalhes",
         placeholders: {
             doctorName: "Dr. João",
@@ -1634,6 +1642,11 @@ const translations = {
         referral_stats_opened: "abrieron tu enlace",
         referral_stats_trial: "iniciaron la prueba gratuita",
         referral_stats_thanks: "SlotlyCare agradece tu confianza. 💚",
+        opinion_label: "Tu opinión importa",
+        opinion_hint: "Siéntete libre de sugerir mejoras para SlotlyCare. Te responderemos con honestidad sobre si es algo que podemos construir.",
+        opinion_placeholder: "Me encantaría ver...",
+        opinion_btn: "Enviar sugerencia",
+        opinion_sent: "✅ Enviado. ¡Gracias!",
         referral_see_details: "Ver detalles",
         placeholders: {
             doctorName: "Dr. Juan",
@@ -1720,6 +1733,11 @@ const translations = {
         referral_stats_opened: "ont ouvert votre lien",
         referral_stats_trial: "ont commencé l'essai gratuit",
         referral_stats_thanks: "SlotlyCare vous remercie pour votre confiance. 💚",
+        opinion_label: "Votre avis compte",
+        opinion_hint: "N'hésitez pas à suggérer des améliorations pour SlotlyCare. Nous vous répondrons honnêtement sur ce que nous pouvons construire.",
+        opinion_placeholder: "J'aimerais voir...",
+        opinion_btn: "Envoyer un avis",
+        opinion_sent: "✅ Envoyé. Merci !",
         referral_see_details: "Voir les détails",
         placeholders: {
             doctorName: "Dr. Jean",
@@ -1806,6 +1824,11 @@ const translations = {
         referral_stats_opened: "haben Ihren Link geöffnet",
         referral_stats_trial: "haben die Testversion gestartet",
         referral_stats_thanks: "SlotlyCare dankt Ihnen für Ihr Vertrauen. 💚",
+        opinion_label: "Ihre Meinung zählt",
+        opinion_hint: "Schlagen Sie gerne Verbesserungen für SlotlyCare vor. Wir antworten ehrlich, ob wir es umsetzen können.",
+        opinion_placeholder: "Ich würde gerne sehen...",
+        opinion_btn: "Feedback senden",
+        opinion_sent: "✅ Gesendet. Danke!",
         referral_see_details: "Details ansehen",
         placeholders: {
             doctorName: "Dr. Hans",
@@ -1892,6 +1915,11 @@ const translations = {
         referral_stats_opened: "hanno aperto il tuo link",
         referral_stats_trial: "hanno iniziato la prova gratuita",
         referral_stats_thanks: "SlotlyCare ti ringrazia per la tua fiducia. 💚",
+        opinion_label: "La tua opinione conta",
+        opinion_hint: "Sentiti libero di suggerire miglioramenti per SlotlyCare. Ti risponderemo onestamente su ciò che possiamo costruire.",
+        opinion_placeholder: "Mi piacerebbe vedere...",
+        opinion_btn: "Invia feedback",
+        opinion_sent: "✅ Inviato. Grazie!",
         referral_see_details: "Vedi dettagli",
         placeholders: {
             doctorName: "Dr. Giovanni",
@@ -1915,6 +1943,11 @@ function applyTranslations() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (langData[key]) el.textContent = langData[key];
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (langData[key]) el.placeholder = langData[key];
     });
 
     // Lista de nomes padrão em todos os idiomas
