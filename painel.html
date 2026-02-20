@@ -1272,15 +1272,17 @@ textarea {
 <div id="referralModal" class="modal-overlay">
     <div class="modal-content" style="max-width: 540px;">
         <div class="modal-header">
-            <span class="modal-icon">👥</span>
-            <h3 class="modal-title" data-i18n="referral_title">Refer Colleagues & Associations</h3>
-            <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 6px; line-height: 1.6;">Founders pricing won't be around forever. Share it with someone who deserves it — a colleague, a residency group, a medical association. We'll present SlotlyCare as a founders opportunity.</p>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                <span class="modal-icon">👥</span>
+                <h3 class="modal-title" data-i18n="referral_title">Refer Colleagues & Associations</h3>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.875rem; line-height: 1.6;" data-i18n="referral_modal_subtitle">Founders pricing won't be around forever. Share it with someone who deserves it — a colleague, a residency group, a medical association. We'll present SlotlyCare as a founders opportunity.</p>
         </div>
 
         <!-- Tabs -->
         <div style="display: flex; border-bottom: 1px solid var(--border-color); background: #FAFAFA;" id="referralTabs">
-            <div id="tabColleagues" onclick="switchReferralTab('colleagues')" style="flex:1; padding:12px 16px; font-size:0.85rem; font-weight:600; color: var(--accent); cursor:pointer; border-bottom: 2.5px solid var(--accent); text-align:center; background: white; transition: all 0.2s;">👤 Colleagues</div>
-            <div id="tabAssociations" onclick="switchReferralTab('associations')" style="flex:1; padding:12px 16px; font-size:0.85rem; font-weight:600; color: var(--text-muted); cursor:pointer; border-bottom: 2.5px solid transparent; text-align:center; transition: all 0.2s;">🏥 Associations & Groups</div>
+            <div id="tabColleagues" onclick="switchReferralTab('colleagues')" style="flex:1; padding:12px 16px; font-size:0.85rem; font-weight:600; color: var(--accent); cursor:pointer; border-bottom: 2.5px solid var(--accent); text-align:center; background: white; transition: all 0.2s;" data-i18n="tab_colleagues">👤 Colleagues</div>
+            <div id="tabAssociations" onclick="switchReferralTab('associations')" style="flex:1; padding:12px 16px; font-size:0.85rem; font-weight:600; color: var(--text-muted); cursor:pointer; border-bottom: 2.5px solid transparent; text-align:center; transition: all 0.2s;" data-i18n="tab_associations">🏥 Associations & Groups</div>
         </div>
 
         <div class="modal-body">
@@ -1323,14 +1325,15 @@ textarea {
 
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding: 8px 12px; background: #F5F3FF; border: 1px solid #DDD6FE; border-radius: 8px;">
                     <input type="checkbox" id="assocEmailToggle" onchange="toggleAssocFields()">
-                    <label for="assocEmailToggle" style="font-size: 0.83rem; color: #5B21B6; cursor: pointer; line-height: 1.3;">Want SlotlyCare to reach out for you?</label>
+                    <label for="assocEmailToggle" style="font-size: 0.83rem; color: #5B21B6; cursor: pointer; line-height: 1.3;" data-i18n="assoc_we_send_toggle">Want SlotlyCare to reach out for you?</label>
                 </div>
 
                 <button onclick="addAssocRow()" style="
                     background: none; border: 1px dashed #BBF7D0; color: #10B981; padding: 8px 16px;
                     border-radius: 8px; font-size: 0.85rem; cursor: pointer; width: 100%; margin-bottom: 12px;
                     transition: all 0.2s ease;
-                " onmouseover="this.style.borderColor='#10B981';this.style.background='#F0FDF4'" onmouseout="this.style.borderColor='#BBF7D0';this.style.background='none'">+ Add another association</button>
+                " onmouseover="this.style.borderColor='#10B981';this.style.background='#F0FDF4'" onmouseout="this.style.borderColor='#BBF7D0';this.style.background='none'"
+                data-i18n="assoc_add_another">+ Add another association</button>
             </div>
 
             <!-- LINKS RESULT VIEW -->
@@ -1425,6 +1428,11 @@ const translations = {
         copied: "Copied!",
         referral_button: "👥 Refer Colleagues & Associations",
         referral_title: "Refer Colleagues & Associations",
+        referral_modal_subtitle: "Founders pricing won't be around forever. Share it with someone who deserves it — a colleague, a residency group, a medical association. We'll present SlotlyCare as a founders opportunity.",
+        tab_colleagues: "👤 Colleagues",
+        tab_associations: "🏥 Associations & Groups",
+        assoc_we_send_toggle: "Want SlotlyCare to reach out for you?",
+        assoc_add_another: "+ Add another association",
         referral_subtitle: "Founders pricing won't be around forever. Share it with someone who deserves it.",
         referral_name: "Name",
         referral_email: "Email",
@@ -1515,7 +1523,12 @@ const translations = {
         schedule_processed: "✅ Agenda processada!",
         copied: "Copiado!",
         referral_button: "👥 Indique Colegas e Associações",
-        referral_title: "Indicar Colegas e Associações",
+        referral_title: "Indique Colegas e Associações",
+        referral_modal_subtitle: "O preço de fundadores não vai durar para sempre. Compartilhe com quem merece — um colega, um grupo de residência, uma associação médica. Vamos apresentar o SlotlyCare como uma oportunidade de fundadores.",
+        tab_colleagues: "👤 Colegas",
+        tab_associations: "🏥 Associações e Grupos",
+        assoc_we_send_toggle: "Quer que a SlotlyCare entre em contato por você?",
+        assoc_add_another: "+ Adicionar outra associação",
         referral_subtitle: "O preço de founders não vai durar para sempre. Compartilhe com quem merece.",
         referral_name: "Nome",
         referral_email: "Email",
@@ -1606,7 +1619,12 @@ const translations = {
         schedule_processed: "✅ ¡Agenda procesada!",
         copied: "¡Copiado!",
         referral_button: "👥 Recomiende Colegas y Asociaciones",
-        referral_title: "Recomendar Colegas y Asociaciones",
+        referral_title: "Recomiende Colegas y Asociaciones",
+        referral_modal_subtitle: "El precio de fundadores no durará para siempre. Compártelo con quien lo merece — un colega, un grupo de residencia, una asociación médica. Presentaremos SlotlyCare como una oportunidad de fundadores.",
+        tab_colleagues: "👤 Colegas",
+        tab_associations: "🏥 Asociaciones y Grupos",
+        assoc_we_send_toggle: "¿Quieres que SlotlyCare contacte por ti?",
+        assoc_add_another: "+ Agregar otra asociación",
         referral_subtitle: "El precio founders no durará para siempre. Compártelo con quien lo merece.",
         referral_name: "Nombre",
         referral_email: "Email",
@@ -1697,7 +1715,12 @@ const translations = {
         schedule_processed: "✅ Agenda traité!",
         copied: "Copié!",
         referral_button: "👥 Recommandez vos Collègues et Associations",
-        referral_title: "Recommander des Collègues et Associations",
+        referral_title: "Recommandez vos Collègues et Associations",
+        referral_modal_subtitle: "Le tarif fondateurs ne durera pas éternellement. Partagez-le avec quelqu'un qui le mérite — un collègue, un groupe de résidence, une association médicale. Nous présenterons SlotlyCare comme une opportunité fondateurs.",
+        tab_colleagues: "👤 Collègues",
+        tab_associations: "🏥 Associations et Groupes",
+        assoc_we_send_toggle: "Vous voulez que SlotlyCare vous contacte à votre place ?",
+        assoc_add_another: "+ Ajouter une autre association",
         referral_subtitle: "Le tarif founders ne durera pas éternellement. Partagez-le avec quelqu'un qui le mérite.",
         referral_name: "Nom",
         referral_email: "Email",
@@ -1788,7 +1811,12 @@ const translations = {
         schedule_processed: "✅ Zeitplan verarbeitet!",
         copied: "Kopiert!",
         referral_button: "👥 Empfehlen Sie Kollegen und Verbände",
-        referral_title: "Kollegen und Verbände Empfehlen",
+        referral_title: "Empfehlen Sie Kollegen und Verbände",
+        referral_modal_subtitle: "Der Gründer-Preis wird nicht ewig gelten. Teilen Sie ihn mit jemandem, der es verdient — ein Kollege, eine Residenzgruppe, ein medizinischer Verband. Wir präsentieren SlotlyCare als Gründer-Chance.",
+        tab_colleagues: "👤 Kollegen",
+        tab_associations: "🏥 Verbände und Gruppen",
+        assoc_we_send_toggle: "Möchten Sie, dass SlotlyCare für Sie Kontakt aufnimmt?",
+        assoc_add_another: "+ Weiteren Verband hinzufügen",
         referral_subtitle: "Der Founders-Preis wird nicht ewig gelten. Teilen Sie ihn mit jemandem, der es verdient.",
         referral_name: "Name",
         referral_email: "Email",
@@ -1879,7 +1907,12 @@ const translations = {
         schedule_processed: "✅ Agenda elaborata!",
         copied: "Copiato!",
         referral_button: "👥 Consigli Colleghi e Associazioni",
-        referral_title: "Consiglia Colleghi e Associazioni",
+        referral_title: "Consigli Colleghi e Associazioni",
+        referral_modal_subtitle: "Il prezzo dei fondatori non durerà per sempre. Condividilo con chi se lo merita — un collega, un gruppo di specializzazione, un'associazione medica. Presenteremo SlotlyCare come un'opportunità per fondatori.",
+        tab_colleagues: "👤 Colleghi",
+        tab_associations: "🏥 Associazioni e Gruppi",
+        assoc_we_send_toggle: "Vuoi che SlotlyCare ti contatti al posto tuo?",
+        assoc_add_another: "+ Aggiungi un'altra associazione",
         referral_subtitle: "Il prezzo founders non durerà per sempre. Condividilo con chi se lo merita.",
         referral_name: "Nome",
         referral_email: "Email",
