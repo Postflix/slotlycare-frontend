@@ -938,7 +938,7 @@ textarea {
 
 <div id="trialBanner" class="trial-banner" style="display: none; max-width: 900px; margin: 0 auto 24px;">
     <h3 id="trialBannerTitle">⏳ Free Trial — <span id="trialDaysText">7 days remaining</span></h3>
-    <p id="trialBannerMsg">Your booking link is active. Note that 3-year access at this price is a founders offer — we can't guarantee it will still be available when your trial ends.</p>
+    <p id="trialBannerMsg">Your booking link and slot generation are active during the trial period.</p>
     <a href="subscribe.html" class="btn-subscribe" id="trialBannerBtn">Subscribe Now</a>
 </div>
 
@@ -1108,7 +1108,28 @@ textarea {
                     transition: all 0.2s ease;
                     box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
                 " onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 12px rgba(16, 185, 129, 0.4)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(16, 185, 129, 0.3)'"
-                data-i18n="referral_button">👥 Refer Colleagues</button>
+                data-i18n="referral_button">👥 Refer Colleagues & Associations</button>
+            </div>
+
+            <!-- Your Opinion Matters -->
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px;">
+                    Your opinion matters <span style="font-size: 11px; font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--text-muted);">(optional)</span>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">Feel free to suggest any improvement to SlotlyCare. We'll get back to you with a honest answer on whether it's something we can build.</p>
+                <textarea id="opinionTextarea" rows="3" placeholder="I'd love to see..." style="
+                    width: 100%; padding: 10px 13px; border: 1.5px solid var(--border-color);
+                    border-radius: 8px; font-family: inherit; font-size: 0.875rem; color: var(--text-main);
+                    background: #F8FAFC; outline: none; resize: none; transition: border-color 0.2s;
+                " onfocus="this.style.borderColor='var(--primary-color)';this.style.background='white'"
+                   onblur="this.style.borderColor='var(--border-color)';this.style.background='#F8FAFC'"></textarea>
+                <button onclick="saveOpinion()" style="
+                    margin-top: 8px; background: none; border: 1px solid var(--border-color);
+                    color: var(--text-muted); padding: 7px 16px; border-radius: 8px;
+                    font-size: 0.82rem; cursor: pointer; font-family: inherit; transition: all 0.2s;
+                " onmouseover="this.style.borderColor='var(--primary-color)';this.style.color='var(--primary-color)'"
+                   onmouseout="this.style.borderColor='var(--border-color)';this.style.color='var(--text-muted)'">Send feedback</button>
+                <span id="opinionSentMsg" style="display:none; font-size:0.82rem; color:#10B981; margin-left:10px;">✅ Sent. Thank you!</span>
             </div>
         </div>
     </div>
@@ -1249,33 +1270,36 @@ textarea {
 
 <!-- Modal de Indicação -->
 <div id="referralModal" class="modal-overlay">
-    <div class="modal-content" style="max-width: 520px;">
+    <div class="modal-content" style="max-width: 540px;">
         <div class="modal-header">
             <span class="modal-icon">👥</span>
-            <h3 class="modal-title" data-i18n="referral_title">Refer Colleagues</h3>
+            <h3 class="modal-title" data-i18n="referral_title">Refer Colleagues & Associations</h3>
+            <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 6px; line-height: 1.6;">Founders pricing won't be around forever. Share it with someone who deserves it — a colleague, a residency group, a medical association. We'll present SlotlyCare as a founders opportunity.</p>
         </div>
+
+        <!-- Tabs -->
+        <div style="display: flex; border-bottom: 1px solid var(--border-color); background: #FAFAFA;" id="referralTabs">
+            <div id="tabColleagues" onclick="switchReferralTab('colleagues')" style="flex:1; padding:12px 16px; font-size:0.85rem; font-weight:600; color: var(--accent); cursor:pointer; border-bottom: 2.5px solid var(--accent); text-align:center; background: white; transition: all 0.2s;">👤 Colleagues</div>
+            <div id="tabAssociations" onclick="switchReferralTab('associations')" style="flex:1; padding:12px 16px; font-size:0.85rem; font-weight:600; color: var(--text-muted); cursor:pointer; border-bottom: 2.5px solid transparent; text-align:center; transition: all 0.2s;">🏥 Associations & Groups</div>
+        </div>
+
         <div class="modal-body">
-            <!-- FORM VIEW -->
-            <div id="referralFormView">
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;" data-i18n="referral_subtitle">Add colleagues who could benefit from SlotlyCare. Each one gets a personalized invite link.</p>
-                
+            <!-- COLLEAGUES PANEL -->
+            <div id="panelColleagues">
                 <!-- Live Link Preview -->
                 <div id="modalLinkPreview" style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; text-align: center;">
                     <div style="font-family: monospace; font-size: 0.82rem; color: #059669; word-break: break-all;">
                         slotlycare.com/invite/<span id="modalLinkDoctorSlug" style="font-weight: 700;"></span>/<span id="modalLinkInviteeSlug" style="font-weight: 700; color: #10B981;">___</span>
                     </div>
                 </div>
-                
-                <div id="referralRows">
-                    <!-- Dynamic rows inserted by JS -->
-                </div>
 
-                <!-- Email toggle -->
+                <div id="referralRows"><!-- Dynamic rows --></div>
+
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding: 8px 12px; background: #F5F3FF; border: 1px solid #DDD6FE; border-radius: 8px;">
                     <input type="checkbox" id="referralEmailToggle" onchange="toggleEmailFields()" style="accent-color: #7C3AED; width: 16px; height: 16px; cursor: pointer;">
                     <label for="referralEmailToggle" style="font-size: 0.83rem; color: #5B21B6; cursor: pointer; line-height: 1.3;" data-i18n="referral_we_send_toggle">Want SlotlyCare to send the invitation for you?</label>
                 </div>
-                
+
                 <button onclick="addReferralRow()" id="btnAddRow" style="
                     background: none; border: 1px dashed #BBF7D0; color: #10B981; padding: 8px 16px;
                     border-radius: 8px; font-size: 0.85rem; cursor: pointer; width: 100%; margin-bottom: 12px;
@@ -1286,36 +1310,53 @@ textarea {
                 <div id="referralStatusMessage" style="display: none; padding: 10px; border-radius: 6px; margin-bottom: 12px; font-size: 0.9rem;"></div>
             </div>
 
+            <!-- ASSOCIATIONS PANEL -->
+            <div id="panelAssociations" style="display: none;">
+                <!-- Link preview -->
+                <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; text-align: center;">
+                    <div style="font-family: monospace; font-size: 0.82rem; color: #059669; word-break: break-all;">
+                        slotlycare.com/invite/<span id="assocLinkDoctorSlug" style="font-weight: 700;"></span>/<span style="font-weight: 700; color: #10B981;">___</span>
+                    </div>
+                </div>
+
+                <div id="assocRows"><!-- Dynamic rows --></div>
+
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding: 8px 12px; background: #F5F3FF; border: 1px solid #DDD6FE; border-radius: 8px;">
+                    <input type="checkbox" id="assocEmailToggle" onchange="toggleAssocFields()">
+                    <label for="assocEmailToggle" style="font-size: 0.83rem; color: #5B21B6; cursor: pointer; line-height: 1.3;">Want SlotlyCare to reach out for you?</label>
+                </div>
+
+                <button onclick="addAssocRow()" style="
+                    background: none; border: 1px dashed #BBF7D0; color: #10B981; padding: 8px 16px;
+                    border-radius: 8px; font-size: 0.85rem; cursor: pointer; width: 100%; margin-bottom: 12px;
+                    transition: all 0.2s ease;
+                " onmouseover="this.style.borderColor='#10B981';this.style.background='#F0FDF4'" onmouseout="this.style.borderColor='#BBF7D0';this.style.background='none'">+ Add another association</button>
+            </div>
+
             <!-- LINKS RESULT VIEW -->
             <div id="referralLinksView" style="display: none;">
                 <div style="text-align: center; margin-bottom: 16px;">
                     <div style="font-size: 2rem; margin-bottom: 8px;">✅</div>
                     <div id="referralLinksTitle" style="font-weight: 600; font-size: 1.05rem; color: var(--text-main);">Invitations created!</div>
                 </div>
-                
                 <div id="referralLinksList" style="
                     background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 10px;
                     padding: 12px; margin-bottom: 16px; max-height: 300px; overflow-y: auto;
-                ">
-                    <!-- Links filled by JS -->
-                </div>
-
+                "></div>
                 <button onclick="copyAllInviteLinks()" id="btnCopyAll" style="
                     background: linear-gradient(135deg, #10B981, #059669); color: white; border: none;
                     padding: 10px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 600;
                     cursor: pointer; width: 100%; margin-bottom: 8px; transition: all 0.2s ease;
                 " data-i18n="referral_copy_all">📋 Copy All Links</button>
-
                 <p style="color: var(--text-muted); font-size: 0.8rem; text-align: center; margin-bottom: 0;" data-i18n="referral_personalized_note">Each colleague will see a personalized page with your recommendation.</p>
             </div>
         </div>
+
         <div class="modal-actions">
-            <!-- FORM BUTTONS -->
             <div id="referralFormButtons">
                 <button class="modal-btn modal-btn-cancel" onclick="closeReferralModal()" data-i18n="referral_cancel">Cancel</button>
                 <button class="modal-btn modal-btn-confirm" id="btnSendReferral" onclick="sendBatchReferrals()" style="background: #10B981;" data-i18n="referral_send">Send Invitations</button>
             </div>
-            <!-- LINKS BUTTONS -->
             <div id="referralLinksButtons" style="display: none;">
                 <button class="modal-btn modal-btn-cancel" onclick="resetReferralModal()" data-i18n="referral_another">Refer More</button>
                 <button class="modal-btn modal-btn-confirm" onclick="closeReferralModal()" style="background: #10B981;" data-i18n="referral_close">Close</button>
@@ -2904,6 +2945,86 @@ function showPasswordMessage(text, type) {
 // ==================== REFERRAL FUNCTIONS ====================
 
 let referralRowCounter = 0;
+let referralRowIds = [0];
+let assocRowIds = [0];
+let assocNextId = 1;
+
+function switchReferralTab(tab) {
+    const isColleagues = tab === 'colleagues';
+    document.getElementById('panelColleagues').style.display = isColleagues ? 'block' : 'none';
+    document.getElementById('panelAssociations').style.display = isColleagues ? 'none' : 'block';
+    const tC = document.getElementById('tabColleagues');
+    const tA = document.getElementById('tabAssociations');
+    tC.style.color = isColleagues ? 'var(--accent)' : 'var(--text-muted)';
+    tC.style.borderBottom = isColleagues ? '2.5px solid var(--accent)' : '2.5px solid transparent';
+    tC.style.background = isColleagues ? 'white' : 'transparent';
+    tA.style.color = isColleagues ? 'var(--text-muted)' : 'var(--accent)';
+    tA.style.borderBottom = isColleagues ? '2.5px solid transparent' : '2.5px solid var(--accent)';
+    tA.style.background = isColleagues ? 'transparent' : 'white';
+}
+
+function initAssocRows() {
+    const container = document.getElementById('assocRows');
+    if (container && container.innerHTML.trim() === '<!-- Dynamic rows -->') {
+        container.innerHTML = createAssocRowHTML(0);
+    }
+}
+
+function createAssocRowHTML(index) {
+    const showContact = document.getElementById('assocEmailToggle') && document.getElementById('assocEmailToggle').checked;
+    return `
+    <div class="referral-row" id="aRow${index}" style="margin-bottom: 10px;">
+        <div style="display: flex; gap: 8px; align-items: center;">
+            <input type="text" placeholder="Association / Group name" style="flex: 1; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem;">
+            ${index > 0 ? `<button onclick="removeAssocRow(${index})" style="background: none; border: none; color: #EF4444; cursor: pointer; font-size: 0.8rem; padding: 4px 8px; white-space: nowrap;">✕</button>` : '<div style="width: 30px;"></div>'}
+        </div>
+        <div class="assoc-contact-row" id="aContact${index}" style="display: ${showContact ? 'flex' : 'none'}; gap: 6px; align-items: center; margin-top: 6px;">
+            <select class="referral-contact-type" onchange="updateContactPlaceholder(this)" style="padding: 8px 6px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.8rem; color: #5B21B6; background: #F5F3FF; cursor: pointer; min-width: 95px;">
+                <option value="whatsapp">WhatsApp</option>
+                <option value="email">Email</option>
+            </select>
+            <input type="text" placeholder="+55 11 99999-9999" class="referral-contact-input" style="flex: 1; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem;">
+        </div>
+    </div>`;
+}
+
+function addAssocRow() {
+    if (assocRowIds.length >= 30) return;
+    const i = assocNextId++;
+    assocRowIds.push(i);
+    const container = document.getElementById('assocRows');
+    container.insertAdjacentHTML('beforeend', createAssocRowHTML(i));
+}
+
+function removeAssocRow(index) {
+    const row = document.getElementById('aRow' + index);
+    if (row) { row.remove(); assocRowIds = assocRowIds.filter(r => r !== index); }
+}
+
+function toggleAssocFields() {
+    const show = document.getElementById('assocEmailToggle').checked;
+    document.querySelectorAll('.assoc-contact-row').forEach(el => {
+        el.style.display = show ? 'flex' : 'none';
+        if (!show) {
+            el.querySelector('.referral-contact-input').value = '';
+            el.querySelector('.referral-contact-type').value = 'whatsapp';
+        }
+    });
+}
+
+function saveOpinion() {
+    const text = document.getElementById('opinionTextarea').value.trim();
+    if (!text) return;
+    const customerId = localStorage.getItem('slotlycare_customer_id');
+    fetch(API_ENDPOINT.replace('/api/save-config', '/api/save-opinion'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ customer_id: customerId, opinion: text })
+    }).catch(() => {});
+    document.getElementById('opinionTextarea').value = '';
+    document.getElementById('opinionSentMsg').style.display = 'inline';
+    setTimeout(() => { document.getElementById('opinionSentMsg').style.display = 'none'; }, 4000);
+}
 
 function createReferralRowHTML(index) {
     const lang = translations[currentLanguage] || translations['en'];
@@ -2957,19 +3078,20 @@ function toggleEmailFields() {
 }
 
 function addReferralRow() {
+    if (referralRowIds.length >= 30) return;
     referralRowCounter++;
+    referralRowIds.push(referralRowCounter);
     const container = document.getElementById('referralRows');
     container.insertAdjacentHTML('beforeend', createReferralRowHTML(referralRowCounter));
 }
 
 function removeReferralRow(index) {
     const row = document.getElementById('referralRow' + index);
-    if (row) row.remove();
+    if (row) { row.remove(); referralRowIds = referralRowIds.filter(r => r !== index); }
 }
 
 function openReferralModal() {
     // Reset to form view
-    document.getElementById('referralFormView').style.display = 'block';
     document.getElementById('referralLinksView').style.display = 'none';
     document.getElementById('referralFormButtons').style.display = 'flex';
     document.getElementById('referralLinksButtons').style.display = 'none';
@@ -2979,16 +3101,30 @@ function openReferralModal() {
     const lang = translations[currentLanguage] || translations['en'];
     document.getElementById('btnSendReferral').textContent = lang.referral_send;
 
-    // Populate doctor slug in modal preview
+    // Populate doctor slug in modal previews
     document.getElementById('modalLinkDoctorSlug').textContent = savedDoctorLink || '';
     document.getElementById('modalLinkInviteeSlug').textContent = '___';
+    if (document.getElementById('assocLinkDoctorSlug')) {
+        document.getElementById('assocLinkDoctorSlug').textContent = savedDoctorLink || '';
+    }
 
-    // Start with one empty row
+    // Reset colleague rows
     referralRowCounter = 0;
+    referralRowIds = [0];
     document.getElementById('referralRows').innerHTML = createReferralRowHTML(0);
-
-    // Reset email toggle
     document.getElementById('referralEmailToggle').checked = false;
+    toggleEmailFields();
+
+    // Reset assoc rows
+    assocRowIds = [0];
+    assocNextId = 1;
+    document.getElementById('assocRows').innerHTML = createAssocRowHTML(0);
+    if (document.getElementById('assocEmailToggle')) {
+        document.getElementById('assocEmailToggle').checked = false;
+    }
+
+    // Reset to colleagues tab
+    switchReferralTab('colleagues');
 
     document.getElementById('referralModal').classList.add('active');
 }
@@ -3000,8 +3136,6 @@ function closeReferralModal() {
 }
 
 function resetReferralModal() {
-    // Go back to form view with clean rows
-    document.getElementById('referralFormView').style.display = 'block';
     document.getElementById('referralLinksView').style.display = 'none';
     document.getElementById('referralFormButtons').style.display = 'flex';
     document.getElementById('referralLinksButtons').style.display = 'none';
@@ -3011,14 +3145,19 @@ function resetReferralModal() {
     const lang = translations[currentLanguage] || translations['en'];
     document.getElementById('btnSendReferral').textContent = lang.referral_send;
 
-    // Reset modal link preview
     document.getElementById('modalLinkInviteeSlug').textContent = '___';
 
     referralRowCounter = 0;
+    referralRowIds = [0];
     document.getElementById('referralRows').innerHTML = createReferralRowHTML(0);
-
-    // Reset email toggle
     document.getElementById('referralEmailToggle').checked = false;
+    toggleEmailFields();
+
+    assocRowIds = [0];
+    assocNextId = 1;
+    document.getElementById('assocRows').innerHTML = createAssocRowHTML(0);
+
+    switchReferralTab('colleagues');
 }
 
 function nameToSlug(name) {
@@ -3111,7 +3250,8 @@ async function sendBatchReferrals() {
 
 function showInviteLinks(invites, lang, sentReferrals) {
     // Switch to links view
-    document.getElementById('referralFormView').style.display = 'none';
+    document.getElementById('panelColleagues').style.display = 'none';
+    document.getElementById('panelAssociations').style.display = 'none';
     document.getElementById('referralLinksView').style.display = 'block';
     document.getElementById('referralFormButtons').style.display = 'none';
     document.getElementById('referralLinksButtons').style.display = 'flex';
