@@ -3063,7 +3063,7 @@ function createAssocRowHTML(index) {
                 <option value="whatsapp">WhatsApp</option>
                 <option value="email">Email</option>
             </select>
-            <input type="text" placeholder="+55 11 99999-9999" class="referral-contact-input" style="flex: 1; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem;">
+            <input type="text" placeholder="+1 555 000 0000" class="referral-contact-input" style="flex: 1; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem;">
         </div>
     </div>`;
 }
@@ -3123,7 +3123,7 @@ function createReferralRowHTML(index) {
                 <option value="whatsapp">WhatsApp</option>
                 <option value="email">Email</option>
             </select>
-            <input type="text" placeholder="+55 11 99999-9999" class="referral-contact-input" style="flex: 1; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem;">
+            <input type="text" placeholder="+1 555 000 0000" class="referral-contact-input" style="flex: 1; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem;">
         </div>
     </div>`;
 }
@@ -3131,7 +3131,7 @@ function createReferralRowHTML(index) {
 function updateContactPlaceholder(select) {
     const input = select.parentElement.querySelector('.referral-contact-input');
     if (select.value === 'whatsapp') {
-        input.placeholder = '+55 11 99999-9999';
+        input.placeholder = '+1 555 000 0000';
         input.type = 'tel';
     } else {
         input.placeholder = 'email@example.com';
@@ -3263,8 +3263,8 @@ async function sendBatchReferrals() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const contactToggleOn = document.getElementById('referralEmailToggle').checked;
     
-    // Collect all rows
-    const rows = document.querySelectorAll('.referral-row');
+    // Collect only colleague rows (not assoc rows)
+    const rows = document.querySelectorAll('#referralRows .referral-row');
     const referrals = [];
     
     for (const row of rows) {
