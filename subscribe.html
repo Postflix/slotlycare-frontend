@@ -321,6 +321,8 @@
                 localStorage.setItem('slotlycare_upgrading_trial', currentCustomerId);
             }
 
+            const trialSource = localStorage.getItem('slotlycare_trial_source') || null;
+
             try {
                 const response = await fetch(`${API_BASE}/api/create-checkout-session`, {
                     method: 'POST',
@@ -330,7 +332,8 @@
                     body: JSON.stringify({
                         success_url: window.location.origin + '/success.html',
                         cancel_url: window.location.origin + '/subscribe.html',
-                        is_trial: currentCustomerId.startsWith('trial_')
+                        is_trial: currentCustomerId.startsWith('trial_'),
+                        trial_source: trialSource
                     })
                 });
 
