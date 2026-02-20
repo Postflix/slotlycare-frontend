@@ -1088,27 +1088,29 @@ textarea {
 
             <!-- Personal Referral Link Preview -->
             <div id="referralLinkPreview" style="display: none; background: linear-gradient(135deg, #EFF6FF, #DBEAFE); border: 1px solid #93C5FD; border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; text-align: center;">
+                
+                <div style="margin-bottom: 16px;">
+                    <button onclick="openReferralModal()" id="btnReferral" style="
+                        background: linear-gradient(135deg, #10B981, #059669);
+                        color: white;
+                        border: none;
+                        padding: 12px 28px;
+                        border-radius: 10px;
+                        font-size: 0.95rem;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.2s ease;
+                        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+                    " onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 12px rgba(16, 185, 129, 0.4)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(16, 185, 129, 0.3)'"
+                    data-i18n="referral_button">👥 Refer Colleagues & Associations</button>
+                </div>
+
                 <div style="font-size: 0.85rem; color: #1E40AF; margin-bottom: 8px; font-weight: 600;" data-i18n="referral_your_link">🔗 Your personal referral link:</div>
                 <div style="background: white; border: 1px solid #BFDBFE; border-radius: 8px; padding: 10px 14px; font-family: monospace; font-size: 0.82rem; color: #2563EB; word-break: break-all;">
-                    slotlycare.com/invite/<span id="referralLinkPreviewSlug" style="font-weight: 700;"></span>/<span style="color: #93C5FD;">___</span>
+                    slotlycare.com/invite/<span id="referralLinkPreviewSlug" style="font-weight: 700;"></span>
                 </div>
+                <div style="font-size: 0.75rem; color: #93C5FD; margin-top: 6px;" data-i18n="referral_link_note">Each colleague you invite receives their own personalized link.</div>
                 <div style="font-size: 0.78rem; color: #3B82F6; margin-top: 8px;" data-i18n="referral_link_explain">Your colleagues deserve to lock in 3 years at founders pricing.</div>
-            </div>
-
-            <div style="text-align: center;">
-                <button onclick="openReferralModal()" id="btnReferral" style="
-                    background: linear-gradient(135deg, #10B981, #059669);
-                    color: white;
-                    border: none;
-                    padding: 12px 28px;
-                    border-radius: 10px;
-                    font-size: 0.95rem;
-                    font-weight: 600;
-                    cursor: pointer;
-                    transition: all 0.2s ease;
-                    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
-                " onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 12px rgba(16, 185, 129, 0.4)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(16, 185, 129, 0.3)'"
-                data-i18n="referral_button">👥 Refer Colleagues & Associations</button>
             </div>
 
             <!-- Your Opinion Matters -->
@@ -1437,6 +1439,7 @@ const translations = {
         referral_copied_all: "✅ All links copied!",
         referral_personalized_note: "Each colleague will see a personalized page with your recommendation.",
         referral_your_link: "🔗 Your personal referral link:",
+        referral_link_note: "Each colleague you invite receives their own personalized link.",
         referral_link_explain: "Your colleagues deserve to lock in 3 years at founders pricing.",
         referral_we_send_toggle: "Want SlotlyCare to send the invitation for you?",
         referral_we_send_whatsapp: "SlotlyCare will send via WhatsApp",
@@ -1521,7 +1524,8 @@ const translations = {
         referral_copied_all: "✅ Todos os links copiados!",
         referral_personalized_note: "Cada colega verá uma página personalizada com sua recomendação.",
         referral_your_link: "🔗 Seu link pessoal de indicação:",
-        referral_link_explain: "Seus colegas merecem garantir 3 anos pelo preço de founders.",
+        referral_link_note: "Cada colega que você indicar recebe um link personalizado.",
+        referral_link_explain: "Seus colegas merecem garantir 3 anos pelo preço de fundadores.",
         referral_we_send_toggle: "Quer que a SlotlyCare envie o convite por você?",
         referral_we_send_whatsapp: "SlotlyCare enviará via WhatsApp",
         referral_we_send_email: "SlotlyCare enviará via email",
@@ -1605,7 +1609,8 @@ const translations = {
         referral_copied_all: "✅ ¡Todos los enlaces copiados!",
         referral_personalized_note: "Cada colega verá una página personalizada con tu recomendación.",
         referral_your_link: "🔗 Tu enlace personal de referencia:",
-        referral_link_explain: "Tus colegas merecen asegurar 3 años al precio de founders.",
+        referral_link_note: "Cada colega que invites recibe su propio enlace personalizado.",
+        referral_link_explain: "Tus colegas merecen asegurar 3 años al precio de fundadores.",
         referral_we_send_toggle: "¿Quieres que SlotlyCare envíe la invitación por ti?",
         referral_we_send_whatsapp: "SlotlyCare enviará por WhatsApp",
         referral_we_send_email: "SlotlyCare enviará por email",
@@ -1689,7 +1694,8 @@ const translations = {
         referral_copied_all: "✅ Tous les liens copiés !",
         referral_personalized_note: "Chaque collègue verra une page personnalisée avec votre recommandation.",
         referral_your_link: "🔗 Votre lien personnel de parrainage :",
-        referral_link_explain: "Vos collègues méritent de bloquer 3 ans au tarif founders.",
+        referral_link_note: "Chaque collègue que vous invitez reçoit son propre lien personnalisé.",
+        referral_link_explain: "Vos collègues méritent de bloquer 3 ans au tarif fondateurs.",
         referral_we_send_toggle: "Vous voulez que SlotlyCare envoie l'invitation pour vous ?",
         referral_we_send_whatsapp: "SlotlyCare enverra par WhatsApp",
         referral_we_send_email: "SlotlyCare enverra par email",
@@ -1773,7 +1779,8 @@ const translations = {
         referral_copied_all: "✅ Alle Links kopiert!",
         referral_personalized_note: "Jeder Kollege sieht eine personalisierte Seite mit Ihrer Empfehlung.",
         referral_your_link: "🔗 Ihr persönlicher Empfehlungslink:",
-        referral_link_explain: "Ihre Kollegen verdienen es, 3 Jahre zum Founders-Preis zu sichern.",
+        referral_link_note: "Jeder Kollege, den Sie einladen, erhält einen eigenen personalisierten Link.",
+        referral_link_explain: "Ihre Kollegen verdienen es, 3 Jahre zum Gründer-Preis zu sichern.",
         referral_we_send_toggle: "Möchten Sie, dass SlotlyCare die Einladung für Sie sendet?",
         referral_we_send_whatsapp: "SlotlyCare sendet per WhatsApp",
         referral_we_send_email: "SlotlyCare sendet per E-Mail",
@@ -1857,7 +1864,8 @@ const translations = {
         referral_copied_all: "✅ Tutti i link copiati!",
         referral_personalized_note: "Ogni collega vedrà una pagina personalizzata con la tua raccomandazione.",
         referral_your_link: "🔗 Il tuo link personale di referral:",
-        referral_link_explain: "I tuoi colleghi meritano di bloccare 3 anni al prezzo founders.",
+        referral_link_note: "Ogni collega che inviti riceve il proprio link personalizzato.",
+        referral_link_explain: "I tuoi colleghi meritano di bloccare 3 anni al prezzo dei fondatori.",
         referral_we_send_toggle: "Vuoi che SlotlyCare invii l'invito per te?",
         referral_we_send_whatsapp: "SlotlyCare invierà tramite WhatsApp",
         referral_we_send_email: "SlotlyCare invierà tramite email",
