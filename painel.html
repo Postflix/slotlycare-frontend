@@ -3062,15 +3062,18 @@ function toggleAssocFields() {
 function saveOpinion() {
     const text = document.getElementById('opinionTextarea').value.trim();
     if (!text) return;
-    const customerId = localStorage.getItem('slotlycare_customer_id');
+    const customerId = localStorage.getItem('slotlycare_customer_id') || '';
     fetch(API_ENDPOINT.replace('/api/save-config', '/api/save-opinion'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ customer_id: customerId, opinion: text })
     }).catch(() => {});
     document.getElementById('opinionTextarea').value = '';
-    document.getElementById('opinionSentMsg').style.display = 'inline';
-    setTimeout(() => { document.getElementById('opinionSentMsg').style.display = 'none'; }, 4000);
+    const lang = translations[currentLanguage] || translations['en'];
+    const sentMsg = document.getElementById('opinionSentMsg');
+    sentMsg.textContent = lang.opinion_sent || '✅ Sent. Thank you!';
+    sentMsg.style.display = 'inline';
+    setTimeout(() => { sentMsg.style.display = 'none'; }, 4000);
 }
 
 function createReferralRowHTML(index) {
