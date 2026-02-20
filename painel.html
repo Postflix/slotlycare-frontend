@@ -3219,6 +3219,7 @@ function closeReferralModal() {
 }
 
 function resetReferralModal() {
+    document.getElementById('referralTabs').style.display = 'flex';
     document.getElementById('referralLinksView').style.display = 'none';
     document.getElementById('referralFormButtons').style.display = 'flex';
     document.getElementById('referralLinksButtons').style.display = 'none';
@@ -3332,7 +3333,8 @@ async function sendBatchReferrals() {
 }
 
 function showInviteLinks(invites, lang, sentReferrals) {
-    // Switch to links view
+    // Switch to links view — hide tabs and both panels
+    document.getElementById('referralTabs').style.display = 'none';
     document.getElementById('panelColleagues').style.display = 'none';
     document.getElementById('panelAssociations').style.display = 'none';
     document.getElementById('referralLinksView').style.display = 'block';
