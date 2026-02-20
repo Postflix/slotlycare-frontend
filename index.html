@@ -2078,10 +2078,9 @@
                 .toLowerCase()
                 .normalize('NFD')
                 .replace(/[\u0300-\u036f]/g, '') // Remove accents
-                .replace(/[^a-z0-9\s-]/g, '') // Remove special chars
+                .replace(/[^a-z0-9\s]/g, '')     // Remove special chars
                 .trim()
-                .replace(/\s+/g, '-') // Spaces to hyphens
-                .replace(/-+/g, '-'); // Multiple hyphens to single
+                .replace(/\s+/g, '');             // Remove spaces (no hyphens)
         }
 
         // Get initials for avatar
