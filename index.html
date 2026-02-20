@@ -1568,7 +1568,7 @@
         </a>
         <div class="nav-links">
             <a href="login.html" class="nav-login">Log in</a>
-            <a href="#" onclick="handleReserveLink(); return false;" class="nav-cta">Get Founders Access</a>
+            <a href="#" onclick="handleReserveLink(); return false;" class="nav-cta">Start Free Trial →</a>
         </div>
     </nav>
 
@@ -1600,7 +1600,7 @@
                         </div>
                         <button class="check-btn" id="checkBtn" onclick="checkAvailability()">Check</button>
                     </div>
-                    <p class="field-hint">This link is available now. Once taken, it's gone.</p>
+                    <p class="field-hint">Available now — yours to test, permanently yours when you subscribe.<br>Want a different link? Just edit and check.</p>
                 </div>
 
                 <div class="link-result" id="linkResult">
@@ -1618,7 +1618,7 @@
                 </div>
             </div>
 
-            <a href="#" onclick="handleReserveLink(); return false;" class="reserve-btn">Reserve Your Link Now</a>
+            <a href="#" onclick="handleReserveLink(); return false;" class="reserve-btn">Start Free Trial →</a>
 
 
         </div>
@@ -1892,6 +1892,7 @@
         
         <div class="pricing-card">
             <h3>3-Year Access</h3>
+            <p style="color: var(--accent); font-size: 0.9rem; font-weight: 600; margin-bottom: 1.25rem; background: var(--accent-light); padding: 0.6rem 1rem; border-radius: 8px; display: inline-block;">🎁 Start with a free 7-day trial. No credit card required.</p>
             <div class="price">$948</div>
             <p class="price-description">One payment. <strong>3 years</strong> of access.</p>
             <p style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">$26/month — less than one consultation.</p>
@@ -1905,11 +1906,10 @@
                 <li>All new features released during the next 36 months included</li>
                 <li>No upgrade fees for founders during this period</li>
                 <li>Priority founder support</li>
-                <li>7-day money-back guarantee</li>
             </ul>
             
-            <button class="pricing-cta" onclick="handleReserveLink()">Reserve Your Personal Link</button>
-            <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 1rem;">Takes less than 2 minutes to set up.</p>
+            <button class="pricing-cta" onclick="handleReserveLink()">START FREE TRIAL — NO CREDIT CARD REQUIRED</button>
+            <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 1rem;">Your link becomes permanently yours when you subscribe.</p>
         </div>
     </section>
 
@@ -1939,6 +1939,10 @@
                 <div class="faq-item">
                     <h3 class="faq-question">I already have a website. Can I add SlotlyCare to it?</h3>
                     <p class="faq-answer">Yes! When you subscribe, you get a personalized booking link and a simple embed code. Just share it with your webdesigner or whoever manages your site — they can add it in under 2 minutes, no technical skills required. And if you don't have a website, no worries — your SlotlyCare link works perfectly on its own. Share it on social media, WhatsApp, email signature, or anywhere you connect with patients.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">How does the free trial work?</h3>
+                    <p class="faq-answer">You get full access to all features for 7 days — no credit card required. Your personalized link is yours to test during this period. Your link becomes permanently yours once you subscribe.</p>
                 </div>
                 <div class="faq-item">
                     <h3 class="faq-question">What happens after 3 years?</h3>
@@ -2341,34 +2345,12 @@
                 return;
             }
 
-            // Slug is verified and available - save to localStorage
-            localStorage.setItem('slotlycare_reserved_slug', slug);
-            localStorage.setItem('slotlycare_reserved_name', nameInput.value.trim());
-            
-            // Redirect directly to Stripe checkout
-            try {
-                const response = await fetch(`${API_BASE}/api/create-checkout-session`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        success_url: window.location.origin + '/success.html',
-                        cancel_url: window.location.origin + '/'
-                    })
-                });
+            // Slug is verified and available — save to localStorage and redirect to trial signup
+            localStorage.setItem('slotlycare_trial_slug', slug);
+            localStorage.setItem('slotlycare_trial_name', nameInput.value.trim());
+            localStorage.setItem('slotlycare_trial_source', 'landing');
 
-                const data = await response.json();
-
-                if (data.success && data.checkout_url) {
-                    window.location.href = data.checkout_url;
-                } else {
-                    throw new Error(data.error || 'Failed to create checkout session');
-                }
-            } catch (error) {
-                alert('Error connecting to payment. Please try again.');
-                console.error('Checkout error:', error);
-            }
+            window.location.href = '/signup-trial.html';
         }
 
         // Scroll to element, highlight it, and show hint
