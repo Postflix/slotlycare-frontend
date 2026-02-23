@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SlotlyCare — Partner Program</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0D1B2A;
+      --ink-mid: #2E4057;
+      --ink-light: #5A7392;
+      --blue: #1A56DB;
+      --blue-dark: #0F3BA8;
+      --blue-light: #EFF6FF;
+      --blue-mid: #DBEAFE;
+      --green: #059669;
+      --green-bg: #ECFDF5;
+      --accent: #F59E0B;
+      --accent-bg: #FFFBEB;
+      --white: #FFFFFF;
+      --gray-50: #F8FAFC;
+      --gray-100: #F1F5F9;
+      --gray-200: #E2E8F0;
+      --gray-400: #94A3B8;
+      --border: #CBD5E1;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(13,27,42,0.08);
+      --shadow-lg: 0 16px 48px rgba(13,27,42,0.14);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--ink);
+      background: var(--white);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 { font-family: 'DM Serif Display', serif; line-height: 1.2; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--ink); }
+
+    .nav-cta {
+      background: var(--blue);
+      color: var(--white);
+      border: none;
+      padding: 0.55rem 1.4rem;
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--blue-dark); }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding: 140px 2rem 100px;
+      text-align: center;
+      background: linear-gradient(160deg, #F0F6FF 0%, #FFFFFF 50%, #F8FCFF 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(26,86,219,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--blue-light);
+      border: 1px solid #BFDBFE;
+      color: var(--blue);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      color: var(--ink);
+      max-width: 780px;
+      margin: 0 auto 1.25rem;
+    }
+
+    .hero h1 em { font-style: italic; color: var(--blue); }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: var(--white);
+      border: none;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(26,86,219,0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--blue-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(26,86,219,0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--blue);
+      border: 2px solid var(--blue);
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover {
+      background: var(--blue-light);
+    }
+
+    .hero-numbers {
+      display: flex; gap: 3rem; justify-content: center; margin-top: 4rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-num {
+      text-align: center;
+    }
+
+    .hero-num strong {
+      display: block;
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: var(--blue);
+    }
+
+    .hero-num span {
+      font-size: 0.85rem;
+      color: var(--ink-light);
+      font-weight: 500;
+    }
+
+    .hero-divider {
+      width: 1px; background: var(--gray-200);
+      align-self: stretch;
+    }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 90px 2rem; }
+
+    .container { max-width: 1060px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      color: var(--ink);
+      margin-bottom: 1rem;
+      max-width: 640px;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--ink-light);
+      max-width: 580px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+
+    /* ─── WHAT IS ─── */
+    .what-is { background: var(--gray-50); }
+
+    .what-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .what-content {}
+
+    .what-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .what-tag {
+      background: var(--blue-light);
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    .what-card h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .what-list { list-style: none; }
+
+    .what-list li {
+      padding: 0.5rem 0;
+      font-size: 0.95rem;
+      color: var(--ink-mid);
+      border-bottom: 1px solid var(--gray-100);
+      display: flex; align-items: flex-start; gap: 0.6rem;
+    }
+
+    .what-list li:last-child { border-bottom: none; }
+
+    .what-list li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 700;
+      margin-top: 0.05rem;
+      flex-shrink: 0;
+    }
+
+    .what-not { margin-top: 1.2rem; }
+
+    .what-list-no li::before {
+      content: '✕';
+      color: #EF4444;
+    }
+
+    .link-index {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--blue);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.95rem;
+      margin-top: 1.5rem;
+      transition: gap 0.2s;
+    }
+
+    .link-index:hover { gap: 0.75rem; }
+
+    /* ─── HOW IT WORKS ─── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      counter-reset: step;
+    }
+
+    .step {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      position: relative;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .step:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    .step-num {
+      width: 40px; height: 40px;
+      background: var(--blue);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .step h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .step p {
+      font-size: 0.9rem;
+      color: var(--ink-light);
+      line-height: 1.6;
+    }
+
+    /* ─── WHY PARTNERS ─── */
+    .why { background: var(--ink); color: var(--white); }
+
+    .why .section-label { color: var(--accent); }
+    .why .section-title { color: var(--white); }
+    .why .section-sub { color: #94A3B8; }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .why-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+    }
+
+    .why-icon {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .why-card h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .why-card p {
+      font-size: 0.9rem;
+      color: #94A3B8;
+      line-height: 1.65;
+    }
+
+    /* ─── IDEAL PARTNERS ─── */
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .profile-card {
+      background: var(--white);
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      text-align: center;
+    }
+
+    .profile-card:hover {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(26,86,219,0.06);
+    }
+
+    .profile-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .profile-card h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+
+    .profile-card p {
+      font-size: 0.82rem;
+      color: var(--ink-light);
+    }
+
+    /* ─── REVENUE SIM ─── */
+    .revenue { background: var(--blue-light); }
+
+    .sim-wrapper {
+      background: var(--white);
+      border: 1px solid var(--blue-mid);
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg);
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .sim-label-row {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .sim-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ink-mid);
+    }
+
+    .sim-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--blue);
+    }
+
+    input[type=range] {
+      width: 100%;
+      accent-color: var(--blue);
+      height: 6px;
+      border-radius: 3px;
+      margin-bottom: 2rem;
+      cursor: pointer;
+    }
+
+    .sim-result {
+      background: linear-gradient(135deg, #1A56DB, #0F3BA8);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      color: var(--white);
+    }
+
+    .sim-result-label {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    .sim-result-amount {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3rem;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .sim-result-note {
+      font-size: 0.82rem;
+      opacity: 0.7;
+    }
+
+    .sim-breakdown {
+      display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;
+    }
+
+    .sim-item {
+      flex: 1; min-width: 140px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .sim-item strong {
+      display: block;
+      font-size: 1.1rem;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .sim-item span {
+      font-size: 0.78rem;
+      color: var(--ink-light);
+    }
+
+    .sim-disclaimer {
+      font-size: 0.78rem;
+      color: var(--ink-light);
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    /* ─── TRANSPARENCY ─── */
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .trust-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+
+    .trust-icon {
+      width: 44px; height: 44px;
+      background: var(--blue-light);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .trust-item h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+
+    .trust-item p {
+      font-size: 0.87rem;
+      color: var(--ink-light);
+      line-height: 1.55;
+    }
+
+    /* ─── FAQ ─── */
+    .faq-list { max-width: 720px; margin: 0 auto; }
+
+    .faq-item {
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .faq-q {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 1.25rem 0;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 1rem;
+      transition: color 0.2s;
+    }
+
+    .faq-q:hover { color: var(--blue); }
+
+    .faq-arrow {
+      font-size: 1.1rem;
+      transition: transform 0.25s;
+      flex-shrink: 0;
+      color: var(--ink-light);
+    }
+
+    .faq-item.open .faq-arrow { transform: rotate(45deg); }
+
+    .faq-a {
+      display: none;
+      font-size: 0.92rem;
+      color: var(--ink-light);
+      line-height: 1.7;
+      padding-bottom: 1.25rem;
+    }
+
+    .faq-item.open .faq-a { display: block; }
+
+    /* ─── CTA SECTION ─── */
+    .cta-section {
+      background: linear-gradient(135deg, #0F3BA8 0%, #1A56DB 60%, #2563EB 100%);
+      text-align: center;
+      padding: 100px 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -100px; left: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .cta-section::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; right: -80px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .cta-section h2 {
+      color: var(--white);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      margin-bottom: 1rem;
+      position: relative; z-index: 1;
+    }
+
+    .cta-section p {
+      color: rgba(255,255,255,0.75);
+      font-size: 1.05rem;
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      position: relative; z-index: 1;
+    }
+
+    .cta-actions {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      position: relative; z-index: 1;
+    }
+
+    .btn-white {
+      background: var(--white);
+      color: var(--blue);
+      border: none;
+      padding: 0.9rem 2.2rem;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    .btn-white:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.5);
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-ghost:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--ink);
+      color: #94A3B8;
+      text-align: center;
+      padding: 2.5rem 2rem;
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: #94A3B8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--white); }
+
+    .footer-links {
+      display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    /* ─── MODAL ─── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(13,27,42,0.6);
+      backdrop-filter: blur(4px);
+      align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: var(--white);
+      border-radius: 16px;
+      max-width: 540px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      animation: modalIn 0.25s ease;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(16px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .modal-header {
+      padding: 1.75rem 1.75rem 1rem;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex; justify-content: space-between; align-items: flex-start;
+    }
+
+    .modal-header h2 {
+      font-size: 1.25rem;
+      color: var(--ink);
+    }
+
+    .modal-close {
+      background: none; border: none;
+      width: 32px; height: 32px;
+      border-radius: 6px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--ink-light);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .modal-close:hover { background: var(--gray-100); }
+
+    .modal-body { padding: 1.75rem; }
+
+    /* Contact modal */
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+
+    .form-group label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0.65rem 0.9rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      transition: border-color 0.2s;
+      outline: none;
+      background: var(--white);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(26,86,219,0.08);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 90px; }
+
+    .form-note {
+      font-size: 0.8rem;
+      color: var(--ink-light);
+    }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .form-success .success-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-success h3 {
+      font-size: 1.25rem;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-success p {
+      color: var(--ink-light);
+      font-size: 0.9rem;
+    }
+
+    /* Terms modal */
+    .terms-content h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    .terms-content h3:first-child { margin-top: 0; }
+
+    .terms-content p {
+      font-size: 0.88rem;
+      color: var(--ink-mid);
+      line-height: 1.7;
+      margin-bottom: 0.75rem;
+    }
+
+    .terms-content ul {
+      padding-left: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .terms-content ul li {
+      font-size: 0.88rem;
+      color: var(--ink-mid);
+      line-height: 1.65;
+      margin-bottom: 0.35rem;
+    }
+
+    .terms-version {
+      font-size: 0.78rem;
+      color: var(--gray-400);
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .what-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-numbers { gap: 2rem; }
+      .hero-divider { display: none; }
+      section { padding: 64px 1.25rem; }
+      nav { padding: 0 1.25rem; }
+    }
+
+    @media (max-width: 480px) {
+      .profiles-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ─── ANIMATIONS ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="https://slotlycare.com" class="nav-logo">Slotly<span>Care</span></a>
+    <button class="nav-cta" onclick="openContact()">Become a Partner</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">🤝 Partner Program — Launch Phase</div>
+    <h1>Turn your network into<br><em>recurring revenue.</em></h1>
+    <p class="hero-sub">
+      If you work with healthcare professionals, you already have what's needed.
+      We handle everything else — tool, tracking, materials, and commission.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="openContact()">Become a Partner</button>
+      <a href="https://slotlycare.com" class="btn-secondary" target="_blank">See the product →</a>
+    </div>
+    <div class="hero-numbers">
+      <div class="hero-num">
+        <strong>US$ 331.80</strong>
+        <span>per conversion</span>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-num">
+        <strong>50%</strong>
+        <span>commission rate</span>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-num">
+        <strong>D+37</strong>
+        <span>payment timeline</span>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-num">
+        <strong>Zero</strong>
+        <span>upfront cost or risk</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IS -->
+  <section class="what-is">
+    <div class="container">
+      <div class="what-grid">
+        <div class="what-content fade-up">
+          <div class="section-label">What is SlotlyCare</div>
+          <h2 class="section-title">A scheduling tool built exclusively for health professionals.</h2>
+          <p class="section-sub">
+            The doctor gets a personal booking link — slotlycare.com/dr-name.
+            Patients access it, pick a time slot, and confirm. No middlemen, no marketplace, no per-appointment fees.
+          </p>
+          <a href="https://slotlycare.com" class="link-index" target="_blank">
+            See the full product page →
+          </a>
+        </div>
+        <div class="fade-up" style="animation-delay:0.1s">
+          <div class="what-card">
+            <div class="what-tag">✓ What it is</div>
+            <h3>A private scheduling infrastructure for health professionals</h3>
+            <ul class="what-list">
+              <li>Personal booking link the doctor shares anywhere</li>
+              <li>Patients book online, 24/7, without calling</li>
+              <li>AI-generated availability slots</li>
+              <li>One-time payment — 3 years of access, price locked</li>
+              <li>6 languages supported</li>
+            </ul>
+            <div class="what-not">
+              <div class="what-tag" style="background:#FEF2F2;color:#DC2626;border-color:#FECACA;">✕ What it is not</div>
+              <ul class="what-list what-list-no" style="margin-top:0.75rem">
+                <li>Not a marketplace — no competitor ads</li>
+                <li>Not a per-appointment service — flat price</li>
+                <li>Not a monthly subscription</li>
+                <li>Doesn't interfere in the doctor-patient relationship</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section>
+    <div class="container">
+      <div class="section-label">How it works</div>
+      <h2 class="section-title">Five steps. No operational overhead.</h2>
+      <p class="section-sub">You open doors. We take care of everything else.</p>
+      <div class="steps">
+        <div class="step fade-up">
+          <div class="step-num">1</div>
+          <h3>You join the program</h3>
+          <p>No cost, no commitment. Sign a simple partnership document and you're in.</p>
+        </div>
+        <div class="step fade-up" style="animation-delay:0.07s">
+          <div class="step-num">2</div>
+          <h3>We set everything up</h3>
+          <p>SlotlyCare creates your exclusive coupon and a dedicated landing page in your name.</p>
+        </div>
+        <div class="step fade-up" style="animation-delay:0.14s">
+          <div class="step-num">3</div>
+          <h3>We communicate to your base</h3>
+          <p>All materials are produced by SlotlyCare and approved by you before sending. You don't sell.</p>
+        </div>
+        <div class="step fade-up" style="animation-delay:0.21s">
+          <div class="step-num">4</div>
+          <h3>Tracking is automatic</h3>
+          <p>Every signup is traced via your coupon and landing page. Dual attribution, no disputes.</p>
+        </div>
+        <div class="step fade-up" style="animation-delay:0.28s">
+          <div class="step-num">5</div>
+          <h3>You get paid</h3>
+          <p>Commission transferred in D+37 after the 7-day guarantee window closes. Monthly report included.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY PARTNERS -->
+  <section class="why">
+    <div class="container">
+      <div class="section-label">The opportunity</div>
+      <h2 class="section-title">You already have what's most valuable.</h2>
+      <p class="section-sub">Reaching healthcare professionals individually is slow and expensive. You already have their trust. That's the asset.</p>
+      <div class="why-grid">
+        <div class="why-card fade-up">
+          <div class="why-icon">💼</div>
+          <h3>For you — the partner</h3>
+          <p>A new revenue stream on top of what you already do. No investment, no operational cost, no financial risk. The only requirement is communicating the benefit to your base.</p>
+        </div>
+        <div class="why-card fade-up" style="animation-delay:0.07s">
+          <div class="why-icon">🏥</div>
+          <h3>For your clients</h3>
+          <p>An exclusive 30% discount that doesn't exist on the public site. A professional tool at launch pricing, accessible only through you. It reinforces your value to them.</p>
+        </div>
+        <div class="why-card fade-up" style="animation-delay:0.14s">
+          <div class="why-icon">🚀</div>
+          <h3>For SlotlyCare</h3>
+          <p>Qualified access to professionals through a trusted channel. A partnership built on transparency, not on empty promises or aggressive sales tactics.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IDEAL PARTNERS -->
+  <section style="background: var(--gray-50)">
+    <div class="container">
+      <div class="section-label">Who this is for</div>
+      <h2 class="section-title">Ideal partner profiles.</h2>
+      <p class="section-sub">The main criterion isn't size — it's direct, qualified access to a real base of healthcare professionals.</p>
+      <div class="profiles-grid">
+        <div class="profile-card fade-up">
+          <div class="profile-icon">🦷</div>
+          <h3>Professional associations</h3>
+          <p>Dental, medical, physiotherapy, psychology councils and associations</p>
+        </div>
+        <div class="profile-card fade-up" style="animation-delay:0.06s">
+          <div class="profile-icon">🎓</div>
+          <h3>Educational institutions</h3>
+          <p>Universities, specialization schools, continuing education centers</p>
+        </div>
+        <div class="profile-card fade-up" style="animation-delay:0.12s">
+          <div class="profile-icon">🏪</div>
+          <h3>Equipment suppliers</h3>
+          <p>Companies that sell to clinics and private practices</p>
+        </div>
+        <div class="profile-card fade-up" style="animation-delay:0.18s">
+          <div class="profile-icon">📊</div>
+          <h3>Consulting firms</h3>
+          <p>Practice management, healthcare marketing, career planning</p>
+        </div>
+        <div class="profile-card fade-up" style="animation-delay:0.24s">
+          <div class="profile-icon">🎪</div>
+          <h3>Event organizers</h3>
+          <p>Fairs, congresses and conferences in the health sector</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVENUE SIMULATOR -->
+  <section class="revenue">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:2.5rem">
+        <div class="section-label">Revenue simulator</div>
+        <h2 class="section-title" style="margin:0 auto">How much can you earn?</h2>
+        <p class="section-sub" style="margin:0.75rem auto 0">Drag the slider to simulate your potential commission based on your base size.</p>
+      </div>
+      <div class="sim-wrapper fade-up">
+        <div class="sim-label-row">
+          <span class="sim-label">Health professionals in your base</span>
+          <span class="sim-value" id="baseSize">500</span>
+        </div>
+        <input type="range" id="baseSlider" min="50" max="5000" step="50" value="500" oninput="updateSim()" />
+
+        <div class="sim-label-row">
+          <span class="sim-label">Estimated conversion rate</span>
+          <span class="sim-value" id="convRate">3%</span>
+        </div>
+        <input type="range" id="convSlider" min="1" max="20" step="1" value="3" oninput="updateSim()" />
+
+        <div class="sim-result">
+          <div class="sim-result-label">Your estimated commission</div>
+          <div class="sim-result-amount" id="totalCommission">US$ 4,977</div>
+          <div class="sim-result-note" id="convCount">Based on ~15 conversions</div>
+        </div>
+
+        <div class="sim-breakdown">
+          <div class="sim-item">
+            <strong id="convNum">15</strong>
+            <span>Estimated conversions</span>
+          </div>
+          <div class="sim-item">
+            <strong>US$ 331.80</strong>
+            <span>Per conversion</span>
+          </div>
+          <div class="sim-item">
+            <strong>D+37</strong>
+            <span>Payment timeline</span>
+          </div>
+        </div>
+
+        <p class="sim-disclaimer">Illustrative simulation only. Results depend on audience engagement and product fit.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSPARENCY -->
+  <section>
+    <div class="container">
+      <div class="section-label">Transparency & trust</div>
+      <h2 class="section-title">Built on process, not promises.</h2>
+      <p class="section-sub">Every conversion is documented. Every payment has a clear timeline. No ambiguity.</p>
+      <div class="trust-grid">
+        <div class="trust-item fade-up">
+          <div class="trust-icon">🔗</div>
+          <div>
+            <h4>Dual tracking</h4>
+            <p>Each conversion is registered by both the exclusive coupon and your dedicated landing page — two independent mechanisms.</p>
+          </div>
+        </div>
+        <div class="trust-item fade-up" style="animation-delay:0.07s">
+          <div class="trust-icon">📋</div>
+          <div>
+            <h4>Monthly report</h4>
+            <p>Sent by the 10th of each month, detailing every attributed subscription, the amount, commission owed and payment status.</p>
+          </div>
+        </div>
+        <div class="trust-item fade-up" style="animation-delay:0.14s">
+          <div class="trust-icon">💳</div>
+          <div>
+            <h4>Stripe as intermediary</h4>
+            <p>All payments are processed by Stripe, one of the world's largest payment platforms — full security and traceability.</p>
+          </div>
+        </div>
+        <div class="trust-item fade-up" style="animation-delay:0.21s">
+          <div class="trust-icon">⏱️</div>
+          <div>
+            <h4>D+37 payment</h4>
+            <p>Commission paid 30 days after the 7-day guarantee window closes. Clear timeline, no surprises.</p>
+          </div>
+        </div>
+        <div class="trust-item fade-up" style="animation-delay:0.28s">
+          <div class="trust-icon">📄</div>
+          <div>
+            <h4>Formal agreement</h4>
+            <p>Partnership formalized with a simple document plus an Operational Annex — clear rules for attribution, cancellations and disputes.</p>
+          </div>
+        </div>
+        <div class="trust-item fade-up" style="animation-delay:0.35s">
+          <div class="trust-icon">🛡️</div>
+          <div>
+            <h4>Your brand is protected</h4>
+            <p>SlotlyCare will never use your name or brand in public communications without your express authorization.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="background: var(--gray-50)">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:2.5rem">
+        <div class="section-label">FAQ</div>
+        <h2 class="section-title" style="margin:0 auto">Common questions.</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Do I need to sell anything to my clients? <span class="faq-arrow">+</span>
+          </button>
+          <p class="faq-a">No. SlotlyCare handles all communication with your base. You authorize, we create the materials, you approve before anything is sent. You're offering an exclusive benefit — not making a sales pitch.</p>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            What if a client asks for a refund? <span class="faq-arrow">+</span>
+          </button>
+          <p class="faq-a">SlotlyCare offers a 7-day money-back guarantee. If a refund is requested within this window, no commission is owed. After 7 days, the product is no longer refundable, so your commission remains valid regardless.</p>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Is there any upfront cost or financial risk? <span class="faq-arrow">+</span>
+          </button>
+          <p class="faq-a">None. Joining the program is completely free. There's no minimum commitment, no required investment, and no operational cost on your end. You only benefit if conversions happen.</p>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            How are my conversions tracked if someone buys later? <span class="faq-arrow">+</span>
+          </button>
+          <p class="faq-a">Attribution is based on coupon use and/or access through your dedicated landing page at the moment of purchase. Conversions without your coupon or landing page do not generate commission, and conversions after partnership termination are not attributed retroactively.</p>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Can I have exclusive territory or segment rights? <span class="faq-arrow">+</span>
+          </button>
+          <p class="faq-a">The default program doesn't include exclusivity. However, if you're interested in exclusivity for a specific territory or professional segment, this can be negotiated individually during the formalization process.</p>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Will these launch conditions last forever? <span class="faq-arrow">+</span>
+          </button>
+          <p class="faq-a">No. The current conditions — US$ 948 price, 30% partner discount, and 50% commission — are valid during SlotlyCare's launch phase only. They may change in the future with 30 days prior notice to active partners. Conversions confirmed before any change keep their original conditions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>Your base deserves a better scheduling tool.</h2>
+    <p>Start a partnership today. No investment, no risk. Just a conversation.</p>
+    <div class="cta-actions">
+      <button class="btn-white" onclick="openContact()">Become a Partner</button>
+      <button class="btn-ghost" onclick="openTerms()">View program terms</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-links">
+      <a href="https://slotlycare.com" target="_blank">slotlycare.com</a>
+      <a href="#" onclick="openTerms(); return false;">Program Terms</a>
+      <a href="#" onclick="openContact(); return false;">Contact</a>
+    </div>
+    <p>© 2026 SlotlyCare. Confidential — not for public distribution.</p>
+    <p style="margin-top:0.35rem">
+      <script>
+        document.write('<a href="mailto:contact@slotlycare.com">contact@slotlycare.com</a>');
+      </script>
+    </p>
+  </footer>
+
+  <!-- ─── CONTACT MODAL ─── -->
+  <div class="modal-overlay" id="contactModal" onclick="closeOnOverlay(event, 'contactModal')">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Become a Partner</h2>
+        <button class="modal-close" onclick="closeModal('contactModal')">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="contactForm">
+          <p style="font-size:0.9rem; color:var(--ink-light); margin-bottom:1.25rem; line-height:1.6">
+            Tell us a bit about your organization. We'll get back to you with a direct, honest answer about whether this partnership makes sense.
+          </p>
+          <div class="contact-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Your name *</label>
+                <input type="text" id="inputName" placeholder="Full name" />
+              </div>
+              <div class="form-group">
+                <label>Organization *</label>
+                <input type="text" id="inputOrg" placeholder="Company / Association" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Email *</label>
+              <input type="email" id="inputEmail" placeholder="your@email.com" />
+            </div>
+            <div class="form-group">
+              <label>Type of organization</label>
+              <select id="inputType">
+                <option value="">Select...</option>
+                <option>Professional association / council</option>
+                <option>Educational institution</option>
+                <option>Equipment / supplies supplier</option>
+                <option>Consulting firm</option>
+                <option>Event organizer</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Approximate size of your base (health professionals)</label>
+              <select id="inputBase">
+                <option value="">Select...</option>
+                <option>Less than 100</option>
+                <option>100 – 500</option>
+                <option>500 – 2,000</option>
+                <option>2,000 – 10,000</option>
+                <option>More than 10,000</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Message (optional)</label>
+              <textarea id="inputMessage" placeholder="Any context you'd like to share..."></textarea>
+            </div>
+            <p class="form-note">We respond within 1–2 business days.</p>
+            <button class="btn-primary" style="width:100%" onclick="submitContact()">Send message</button>
+          </div>
+        </div>
+        <div class="form-success" id="contactSuccess">
+          <div class="success-icon">✅</div>
+          <h3>Message sent.</h3>
+          <p>We'll review your details and get back to you shortly at the email you provided.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── TERMS MODAL ─── -->
+  <div class="modal-overlay" id="termsModal" onclick="closeOnOverlay(event, 'termsModal')">
+    <div class="modal" style="max-width:640px">
+      <div class="modal-header">
+        <h2>Program Terms — Operational Annex</h2>
+        <button class="modal-close" onclick="closeModal('termsModal')">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="terms-content">
+          <h3>1. Conversion Attribution</h3>
+          <p>A conversion is attributed to the partner when the healthcare professional completes the SlotlyCare subscription using the partner's exclusive coupon or accessing through the dedicated landing page.</p>
+          <p>Tracking is performed by two independent mechanisms: the exclusive coupon applied at the time of payment, and the partner's personalized landing page. Both are recorded automatically.</p>
+          <ul>
+            <li>Each subscription is attributed to a single partner.</li>
+            <li>In case of multiple coupons, the one used at payment prevails.</li>
+            <li>Subscriptions without a coupon or partner landing page do not generate commission.</li>
+            <li>SlotlyCare does not attribute conversions retroactively.</li>
+          </ul>
+
+          <h3>2. Reports</h3>
+          <p>SlotlyCare generates a monthly report for each partner, containing: number of subscriptions attributed in the period, value of each subscription, commission owed, and payment status.</p>
+          <p>The report is sent by the 10th of the following month. The partner has 15 calendar days after receipt to contest any information in writing. In the absence of contestation, the report is considered accepted.</p>
+
+          <h3>3. Payments</h3>
+          <p>Commission is paid within 30 days (D+30) after subscription payment confirmation, respecting the 7-day guarantee window. In practice, the effective payment timeline is approximately D+37 from the purchase date.</p>
+          <p>Payment method: international bank transfer or agreed payment platform.</p>
+
+          <h3>4. Cancellations, Refunds & Chargebacks</h3>
+          <ul>
+            <li><strong>Refund within guarantee period (7 days):</strong> subscription cancelled, no commission owed.</li>
+            <li><strong>Cancellation after guarantee period:</strong> SlotlyCare does not refund after 7 days. Commission already paid remains valid.</li>
+            <li><strong>Chargebacks:</strong> SlotlyCare reserves the right to deduct the corresponding value from future commissions or request refund from the partner.</li>
+          </ul>
+
+          <h3>5. Communication & Compliance</h3>
+          <p>All communication to the partner's base is conducted by SlotlyCare, with prior partner authorization. Every material is produced by SlotlyCare and validated by the partner before sending.</p>
+          <p>The partner may not use the SlotlyCare brand, name or materials for purposes other than those established in the program. SlotlyCare will not use the partner's name or brand in public communications without express authorization.</p>
+          <p>The partner commits to not use spam, misleading communication, false promises or any approach that may harm SlotlyCare's reputation.</p>
+
+          <h3>6. Program Termination</h3>
+          <p>Either party may terminate with 30 days written notice. SlotlyCare may terminate immediately in case of conduct violations, brand misuse, spam or reputational damage.</p>
+          <p>Upon termination, the coupon is deactivated and the landing page is removed. Commissions for conversions confirmed before termination remain due. Conversions after the termination date, even from earlier communications, do not generate commission.</p>
+
+          <h3>7. Launch Phase Conditions</h3>
+          <p>The conditions described — US$ 948.00 price, 30% partner discount, and 50% commission — are valid exclusively during SlotlyCare's launch phase. SlotlyCare may end this phase at any time with 30 days notice to active partners. Confirmed conversions maintain the conditions valid at the time of purchase.</p>
+
+          <h3>8. General Provisions</h3>
+          <ul>
+            <li>Amendments must be communicated in writing and accepted by both parties.</li>
+            <li>In case of conflict, the Operational Annex prevails over the main document.</li>
+            <li>Unforeseeable matters will be resolved in good faith between the parties.</li>
+          </ul>
+
+          <div class="terms-version">Version 1.1 — February 2026. Contact: contact@slotlycare.com</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ─── FAQ ───
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    // ─── MODALS ───
+    function openContact() {
+      document.getElementById('contactModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function openTerms() {
+      document.getElementById('termsModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function closeOnOverlay(e, id) {
+      if (e.target === e.currentTarget) closeModal(id);
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closeModal('contactModal');
+        closeModal('termsModal');
+      }
+    });
+
+    // ─── CONTACT SUBMIT ───
+    function submitContact() {
+      const name = document.getElementById('inputName').value.trim();
+      const org = document.getElementById('inputOrg').value.trim();
+      const email = document.getElementById('inputEmail').value.trim();
+
+      if (!name || !org || !email) {
+        alert('Please fill in your name, organization and email.');
+        return;
+      }
+
+      const subject = encodeURIComponent('Partner Program — ' + org);
+      const body = encodeURIComponent(
+        'Name: ' + name + '\n' +
+        'Organization: ' + org + '\n' +
+        'Email: ' + email + '\n' +
+        'Type: ' + (document.getElementById('inputType').value || 'Not specified') + '\n' +
+        'Base size: ' + (document.getElementById('inputBase').value || 'Not specified') + '\n\n' +
+        'Message:\n' + (document.getElementById('inputMessage').value || '—')
+      );
+
+      window.location.href = 'mailto:contact@slotlycare.com?subject=' + subject + '&body=' + body;
+
+      document.getElementById('contactForm').style.display = 'none';
+      document.getElementById('contactSuccess').style.display = 'block';
+    }
+
+    // ─── REVENUE SIMULATOR ───
+    function updateSim() {
+      const base = parseInt(document.getElementById('baseSlider').value);
+      const rate = parseInt(document.getElementById('convSlider').value);
+      const conversions = Math.round(base * rate / 100);
+      const commission = conversions * 331.80;
+
+      document.getElementById('baseSize').textContent = base.toLocaleString();
+      document.getElementById('convRate').textContent = rate + '%';
+      document.getElementById('convNum').textContent = conversions;
+      document.getElementById('totalCommission').textContent = 'US$ ' + commission.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+      document.getElementById('convCount').textContent = 'Based on ~' + conversions + ' conversion' + (conversions !== 1 ? 's' : '');
+    }
+
+    updateSim();
+
+    // ─── FADE-UP ANIMATIONS ───
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
