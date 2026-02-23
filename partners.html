@@ -165,11 +165,6 @@
       font-family: monospace; display: flex; align-items: center; gap: 0.6rem;
     }
 
-    .url-dots { display: flex; gap: 4px; }
-    .url-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); }
-    .url-dot:nth-child(1) { background: #EF4444; }
-    .url-dot:nth-child(2) { background: #F59E0B; }
-    .url-dot:nth-child(3) { background: #10B981; }
     .url-text strong { color: var(--accent-dark); }
 
     .preview-inner { padding: 2rem; text-align: center; }
@@ -613,9 +608,38 @@
     @media (max-width: 480px) {
       .profiles-grid { grid-template-columns: 1fr 1fr; }
     }
+    .preview-url-bar { padding-left: 1.25rem; }
+
+    .preview-access {
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      margin-bottom: 1rem; font-size: 0.9rem;
+    }
+    .access-old { text-decoration: line-through; color: var(--text-muted); }
+    .access-new { font-weight: 700; color: var(--accent); }
+
+    .preview-monthly {
+      display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.85rem 1rem;
+      margin-bottom: 1rem; flex-wrap: wrap;
+    }
+
+    .monthly-item { text-align: center; }
+    .monthly-label { display: block; font-size: 0.68rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+    .monthly-val { font-size: 1.1rem; font-weight: 700; color: var(--text-muted); }
+    .monthly-val.accent { color: var(--accent); }
+    .monthly-old .monthly-val { text-decoration: line-through; opacity: 0.6; }
+    .monthly-period { font-size: 0.75rem; font-weight: 500; }
+    .monthly-divider { font-size: 1.2rem; color: var(--accent); font-weight: 700; }
+
   </style>
 </head>
 <body>
+
+  <!-- TOP BAR -->
+  <div style="background:var(--accent);color:white;text-align:center;padding:0.6rem 1rem;font-size:0.82rem;font-weight:600;letter-spacing:0.04em;position:relative;z-index:101;">
+    Convite para parceria &nbsp;·&nbsp; Página exclusiva para [Your Organization]
+  </div>
 
   <!-- NAV -->
   <nav>
@@ -631,7 +655,6 @@
       SlotlyCare
     </a>
     <div class="nav-links">
-      <a href="https://slotlycare.com" class="nav-login">See the product</a>
       <button class="nav-cta" onclick="openContact()">Become a Partner</button>
     </div>
   </nav>
@@ -643,12 +666,12 @@
     <h1>Your clients deserve a better<br><span class="serif">scheduling tool.</span></h1>
 
     <p class="hero-sub">
-      And when you're the one who brings it to them — at an exclusive price they won't find anywhere else — that's not a sales pitch. That's leadership.
+      And when you're the one who brings it to them — with exclusive conditions they won't find anywhere else — you're not just offering a tool. You're showing your base that you actively look out for them.
     </p>
 
     <div class="hero-actions">
-      <button class="btn-primary" onclick="openContact()">Become a Partner</button>
-      <a href="https://slotlycare.com" class="btn-outline" target="_blank">See the product →</a>
+      <a href="https://slotlycare.com" class="btn-outline" target="_blank">Conheça o produto →</a>
+      <button class="btn-primary" onclick="openContact()">Torne-se Sócio</button>
     </div>
 
     <!-- SIMULATED PARTNER PAGE -->
@@ -656,11 +679,6 @@
       <div class="preview-label">This is what your partner page looks like</div>
       <div class="preview-card">
         <div class="preview-url-bar">
-          <div class="url-dots">
-            <div class="url-dot"></div>
-            <div class="url-dot"></div>
-            <div class="url-dot"></div>
-          </div>
           <span class="url-text">slotlycare.com/<strong>yourorganization</strong></span>
         </div>
         <div class="preview-inner">
@@ -669,7 +687,21 @@
           <div class="preview-price">
             <span class="price-old">US$ 948</span>
             <span class="price-new">US$ 663.60</span>
-            <span class="price-note">one-time · 3 years access</span>
+          </div>
+          <div class="preview-access">
+            <span class="access-old">1 year access</span>
+            <span class="access-new">3 years access</span>
+          </div>
+          <div class="preview-monthly">
+            <div class="monthly-item monthly-old">
+              <span class="monthly-label">Per month (standard)</span>
+              <span class="monthly-val">US$ 79<span class="monthly-period">/mo</span></span>
+            </div>
+            <div class="monthly-divider">→</div>
+            <div class="monthly-item monthly-new">
+              <span class="monthly-label">Per month (your access)</span>
+              <span class="monthly-val accent">US$ 18.43<span class="monthly-period">/mo</span></span>
+            </div>
           </div>
           <div class="preview-note">This discount is not available on the public site. It exists only through [Your Organization].</div>
         </div>
