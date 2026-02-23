@@ -37,7 +37,7 @@
 
     /* NAV */
     nav {
-      position: fixed; top: 0; left: 0; right: 0;
+      position: fixed; top: 38px; left: 0; right: 0;
       padding: 1.25rem 2rem;
       display: flex; justify-content: space-between; align-items: center;
       background: rgba(250,250,249,0.9);
@@ -82,7 +82,7 @@
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       text-align: center;
-      padding: 8rem 2rem 5rem;
+      padding: 10rem 2rem 5rem;
       max-width: 860px; margin: 0 auto;
     }
 
@@ -144,13 +144,13 @@
     .partner-preview { width: 100%; max-width: 580px; margin: 0 auto 3rem; }
 
     .preview-label {
-      font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
-      text-transform: uppercase; letter-spacing: 0.08em;
-      margin-bottom: 0.75rem;
+      font-size: 0.8rem; font-weight: 800; color: var(--accent-dark);
+      text-transform: uppercase; letter-spacing: 0.12em;
+      margin-bottom: 1rem;
       display: flex; align-items: center; gap: 0.75rem;
     }
     .preview-label::before, .preview-label::after {
-      content: ''; flex: 1; height: 1px; background: var(--border);
+      content: ''; flex: 1; height: 2px; background: var(--accent-light);
     }
 
     .preview-card {
@@ -637,7 +637,7 @@
 <body>
 
   <!-- TOP BAR -->
-  <div style="background:var(--accent);color:white;text-align:center;padding:0.6rem 1rem;font-size:0.82rem;font-weight:600;letter-spacing:0.04em;position:relative;z-index:101;">
+  <div style="background:var(--accent);color:white;text-align:center;padding:0.6rem 1rem;font-size:0.82rem;font-weight:600;letter-spacing:0.04em;position:fixed;top:0;left:0;right:0;z-index:102;">
     Partnership Invitation &nbsp;·&nbsp; Exclusive page for [Your Organization]
   </div>
 
@@ -666,47 +666,12 @@
     <h1>Your clients deserve a better<br><span class="serif">scheduling tool.</span></h1>
 
     <p class="hero-sub">
-      And when you're the one who brings it to them — with exclusive conditions they won't find anywhere else — you're not just offering a tool. You're showing your base that you actively look out for them.
+      And when you're the one who brings it to them — with exclusive conditions they won't find anywhere else — you're not just offering a tool. You're showing your base that you care about their success.
     </p>
 
     <div class="hero-actions">
       <a href="https://slotlycare.com" class="btn-outline" target="_blank">Explore the product →</a>
       <button class="btn-primary" onclick="openContact()">Become a Partner</button>
-    </div>
-
-    <!-- SIMULATED PARTNER PAGE -->
-    <div class="partner-preview fade-up">
-      <div class="preview-label">This is what your partner page looks like</div>
-      <div class="preview-card">
-        <div class="preview-url-bar">
-          <span class="url-text">slotlycare.com/<strong>yourorganization</strong></span>
-        </div>
-        <div class="preview-inner">
-          <div class="preview-exclusive-badge">✦ Exclusive for [Your Organization] members</div>
-          <div class="preview-title">Get SlotlyCare with 30% off</div>
-          <div class="preview-price">
-            <span class="price-old">US$ 948</span>
-            <span class="price-new">US$ 663.60</span>
-          </div>
-          <div class="preview-access">
-            <span class="access-old">1 year access</span>
-            <span class="access-new">3 years access</span>
-          </div>
-          <div class="preview-monthly">
-            <div class="monthly-item monthly-old">
-              <span class="monthly-label">Per month (standard)</span>
-              <span class="monthly-val">US$ 79<span class="monthly-period">/mo</span></span>
-            </div>
-            <div class="monthly-divider">→</div>
-            <div class="monthly-item monthly-new">
-              <span class="monthly-label">Per month (your access)</span>
-              <span class="monthly-val accent">US$ 18.43<span class="monthly-period">/mo</span></span>
-            </div>
-          </div>
-          <div class="preview-note">This discount is not available on the public site. It exists only through [Your Organization].</div>
-        </div>
-        <div class="preview-footer">Coupon applied automatically at checkout — no code needed.</div>
-      </div>
     </div>
 
     <!-- NUMBERS -->
@@ -729,6 +694,45 @@
       </div>
     </div>
   </div>
+
+  <!-- PARTNER PAGE PREVIEW -->
+  <section style="background:var(--bg); padding: 60px 2rem;">
+    <div class="container">
+      <div class="partner-preview fade-up" style="max-width:620px;margin:0 auto;">
+        <div class="preview-label">This is what your partner page looks like</div>
+        <div class="preview-card" style="box-shadow: 0 8px 32px rgba(13,148,136,0.12); border: 2px solid var(--accent-light);">
+          <div class="preview-url-bar" style="background:var(--accent-light); border-bottom:1px solid #99F6E4; font-size:0.9rem; font-weight:700; color:var(--accent-dark); padding: 0.65rem 1.25rem;">
+            🔗 slotlycare.com/<strong>yourorganization</strong>
+          </div>
+          <div class="preview-inner">
+            <div class="preview-exclusive-badge">✦ Exclusive for [Your Organization] members</div>
+            <div class="preview-title">Get SlotlyCare with 30% off</div>
+            <div class="preview-price">
+              <span class="price-old">US$ 948</span>
+              <span class="price-new">US$ 663.60</span>
+            </div>
+            <div class="preview-access">
+              <span class="access-old">1 year access</span>
+              <span class="access-new">3 years access</span>
+            </div>
+            <div class="preview-monthly">
+              <div class="monthly-item monthly-old">
+                <span class="monthly-label">Per month (standard)</span>
+                <span class="monthly-val">US$ 79<span class="monthly-period">/mo</span></span>
+              </div>
+              <div class="monthly-divider">→</div>
+              <div class="monthly-item monthly-new">
+                <span class="monthly-label">Per month (through your link)</span>
+                <span class="monthly-val accent">US$ 18.43<span class="monthly-period">/mo</span></span>
+              </div>
+            </div>
+            <div class="preview-note">These conditions are not available on the public site. They exist only through [Your Organization].</div>
+          </div>
+          <div class="preview-footer">Coupon applied automatically at checkout — no code needed.</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ABOUT US -->
   <section class="about">
