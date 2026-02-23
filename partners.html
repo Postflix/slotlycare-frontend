@@ -256,19 +256,9 @@
 
     .about-body { font-size: 0.95rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; }
 
-    .about-stats {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 0.75rem; margin-top: 1.5rem;
-    }
 
-    .about-stat {
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.1rem;
-    }
-    .about-stat strong { display: block; font-size: 1.4rem; font-weight: 700; color: var(--accent); margin-bottom: 0.2rem; }
-    .about-stat span { font-size: 0.8rem; color: var(--text-muted); }
 
-    .about-values { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; }
+    .about-values { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; border-left: 2px solid var(--border); padding-left: 2.5rem; }
 
     .about-values li {
       display: flex; gap: 1rem; align-items: flex-start;
@@ -738,7 +728,7 @@
   </div>
 
   <!-- ABOUT US -->
-  <section class="about">
+  <section class="about" style="padding-top:40px;">
     <div class="container">
       <div class="about-grid">
         <div class="fade-up">
@@ -753,12 +743,7 @@
           <p class="about-body">
             We operate internationally, process payments through Stripe, and support professionals in six languages across multiple countries. This is a focused, purposeful product — not a platform trying to do everything.
           </p>
-          <div class="about-stats">
-            <div class="about-stat"><strong>6</strong><span>Languages supported</span></div>
-            <div class="about-stat"><strong>24/7</strong><span>Booking availability</span></div>
-            <div class="about-stat"><strong>3 years</strong><span>Access, price locked</span></div>
-            <div class="about-stat"><strong>Stripe</strong><span>Secure payment processing</span></div>
-          </div>
+
         </div>
 
         <ul class="about-values fade-up" style="animation-delay:0.1s">
@@ -796,16 +781,16 @@
   </section>
 
   <!-- HOW IT WORKS -->
-  <section class="how">
+  <section class="how" style="padding-top:40px;">
     <div class="container">
       <div class="section-badge">How it works</div>
-      <h2 class="section-title">Five steps. No operational overhead.</h2>
+      <h2 class="section-title">Four steps. No operational overhead. Straightforward by design.</h2>
       <p class="section-sub">You open doors. We take care of everything else.</p>
       <div class="steps">
         <div class="step fade-up">
           <div class="step-num">1</div>
           <h3>You join</h3>
-          <p>No cost, no commitment. Sign a simple partnership document and you're in.</p>
+          <p>No cost. Sign a simple partnership document and you're in.</p>
         </div>
         <div class="step fade-up" style="animation-delay:0.06s">
           <div class="step-num">2</div>
@@ -814,16 +799,11 @@
         </div>
         <div class="step fade-up" style="animation-delay:0.12s">
           <div class="step-num">3</div>
-          <h3>We communicate</h3>
-          <p>Materials produced by SlotlyCare, approved by you before sending. You don't sell.</p>
+          <h3>Tracking is automatic</h3>
+          <p>Every conversion is recorded via coupon and landing page. Results are reported to you monthly — no manual tracking needed.</p>
         </div>
         <div class="step fade-up" style="animation-delay:0.18s">
           <div class="step-num">4</div>
-          <h3>Tracking is automatic</h3>
-          <p>Every signup traced via coupon and landing page. Dual attribution, no disputes.</p>
-        </div>
-        <div class="step fade-up" style="animation-delay:0.24s">
-          <div class="step-num">5</div>
           <h3>You get paid</h3>
           <p>Commission in D+45 after the 7-day guarantee window closes. Monthly report included.</p>
         </div>
