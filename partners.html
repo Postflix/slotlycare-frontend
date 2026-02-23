@@ -293,77 +293,59 @@
     /* JOURNEY */
     .journey { background: var(--white); }
 
-    .journey-flow {
-      max-width: 800px; margin: 0 auto;
-      display: flex; flex-direction: column; gap: 0;
-    }
-
-    .journey-step {
+    .journey-grid {
       display: grid;
-      grid-template-columns: 58px 1fr;
-      gap: 1.75rem;
-      align-items: stretch;
+      grid-template-columns: 1fr 80px 1fr;
+      gap: 0;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
-    .journey-left {
-      display: flex; flex-direction: column; align-items: center;
-    }
-
-    .journey-icon {
-      width: 58px; height: 58px; flex-shrink: 0;
-      border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem;
-      border: 2px solid var(--border);
-      background: var(--white);
-      position: relative; z-index: 1;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .journey-step:hover .journey-icon {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px var(--accent-light);
-    }
-
-    .journey-line {
-      flex: 1; width: 2px;
-      background: linear-gradient(to bottom, var(--border), var(--accent-light));
-      margin: 4px auto;
-    }
-
-    .journey-card {
+    .journey-box {
       background: var(--bg); border: 1.5px solid var(--border);
-      border-radius: 14px; padding: 1.25rem 1.5rem;
-      margin-bottom: 1.5rem;
-      transition: border-color 0.2s;
+      border-radius: 14px; padding: 1.4rem 1.5rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      position: relative;
     }
 
-    .journey-step:hover .journey-card { border-color: var(--accent); }
+    .journey-box:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(13,148,136,0.1); }
+
+    .journey-box.result {
+      border-color: var(--accent);
+      background: #F0FDF4;
+    }
+
+    .journey-connector {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; color: var(--accent);
+    }
+
+    .journey-spacer { grid-column: 1 / -1; height: 1rem; }
 
     .journey-tag {
       font-size: 0.7rem; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.07em;
       padding: 0.2rem 0.65rem; border-radius: 100px;
-      display: inline-block; margin-bottom: 0.5rem;
+      display: inline-block; margin-bottom: 0.6rem;
     }
 
     .tag-you { background: #EFF6FF; color: #1D4ED8; }
     .tag-slotly { background: var(--accent-light); color: var(--accent-dark); }
     .tag-result { background: #F0FDF4; color: #166534; }
 
-    .journey-card h3 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
-    .journey-card p { font-size: 0.87rem; color: var(--text-muted); line-height: 1.65; }
+    .journey-box-emoji { font-size: 1.6rem; margin-bottom: 0.5rem; display: block; }
+    .journey-box h3 { font-size: 0.92rem; font-weight: 700; color: var(--text); margin-bottom: 0.35rem; }
+    .journey-box p { font-size: 0.84rem; color: var(--text-muted); line-height: 1.6; }
 
-    .journey-bubble {
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1rem 1.25rem;
-      margin-top: 0.75rem; font-size: 0.85rem;
-      color: var(--text-muted); line-height: 1.65; font-style: italic;
+    .journey-down {
+      grid-column: 1 / -1;
+      display: flex; justify-content: center; align-items: center;
+      height: 2rem; font-size: 1.4rem; color: var(--accent);
     }
 
-    .journey-bubble-sender {
-      font-size: 0.75rem; font-weight: 700;
-      color: var(--accent-dark); margin-top: 0.5rem; font-style: normal;
+    @media (max-width: 640px) {
+      .journey-grid { grid-template-columns: 1fr; }
+      .journey-connector { transform: rotate(90deg); height: 2rem; }
     }
 
     /* WHY */
@@ -811,94 +793,67 @@
     </div>
   </section>
   <!-- JOURNEY -->
-  <section class="journey">
+  <section class="journey" style="padding-top:40px;">
     <div class="container">
       <div class="section-badge">From first contact to first payment</div>
-      <h2 class="section-title">What this looks like in practice.</h2>
-      <p class="section-sub" style="margin-bottom:3.5rem">You're a business owner. You receive a message from SlotlyCare. Here's exactly what happens next — step by step, from your perspective.</p>
+      <h2 class="section-title">How this works in practice.</h2>
+      <p class="section-sub" style="margin-bottom:3rem">Six steps — from the moment you evaluate this page to the moment your commission arrives.</p>
 
-      <div class="journey-flow">
+      <div class="journey-grid">
 
-        <div class="journey-step fade-up">
-          <div class="journey-left"><div class="journey-icon">📩</div><div class="journey-line"></div></div>
-          <div class="journey-card">
-            <span class="journey-tag tag-you">You receive</span>
-            <h3>You get a message from SlotlyCare</h3>
-            <p>An email or LinkedIn message explains the program. You're invited to take a look.</p>
-            <div class="journey-bubble">Hi, I'm reaching out because your organization works closely with healthcare professionals — exactly the audience that benefits most from SlotlyCare. We have a partner program that generates real revenue for organizations like yours, with zero upfront investment. Would you be open to learning more?<div class="journey-bubble-sender">— SlotlyCare team</div></div>
-          </div>
+        <!-- ROW 1 -->
+        <div class="journey-box fade-up">
+          <span class="journey-box-emoji">🔍</span>
+          <span class="journey-tag tag-you">You evaluate</span>
+          <h3>You review the proposal</h3>
+          <p>You read this page, understand how the commission works, and go through the terms. No surprises, no fine print. Questions? Write to <strong>programs@slotlycare.com</strong>.</p>
         </div>
 
-        <div class="journey-step fade-up" style="animation-delay:0.05s">
-          <div class="journey-left"><div class="journey-icon">🔍</div><div class="journey-line"></div></div>
-          <div class="journey-card">
-            <span class="journey-tag tag-you">You evaluate</span>
-            <h3>You review the proposal</h3>
-            <p>You visit this page. You understand what SlotlyCare is, how the commission works, what the program requires — and what it doesn't. You read the terms. No surprises.</p>
-          </div>
+        <div class="journey-connector fade-up" style="animation-delay:0.05s">→</div>
+
+        <div class="journey-box fade-up" style="animation-delay:0.1s">
+          <span class="journey-box-emoji">🤝</span>
+          <span class="journey-tag tag-you">You decide</span>
+          <h3>You sign in minutes</h3>
+          <p>You fill in the contact form. Both sides sign a simple document — the exact same terms you already read here. That's it.</p>
         </div>
 
-        <div class="journey-step fade-up" style="animation-delay:0.1s">
-          <div class="journey-left"><div class="journey-icon">🤝</div><div class="journey-line"></div></div>
-          <div class="journey-card">
-            <span class="journey-tag tag-you">You decide</span>
-            <h3>You express interest and sign</h3>
-            <p>You fill in the contact form. SlotlyCare reaches out, you have a brief alignment conversation. Both parties sign a simple document — the same terms you already read on this page. No surprises, no fine print.</p>
-          </div>
+        <div class="journey-down fade-up" style="animation-delay:0.15s">↓</div>
+
+        <!-- ROW 2 -->
+        <div class="journey-box fade-up" style="animation-delay:0.25s">
+          <span class="journey-box-emoji">📣</span>
+          <span class="journey-tag tag-you">You communicate</span>
+          <h3>You share the link</h3>
+          <p>Send your personalized page to your base — by email, WhatsApp, Instagram, newsletter, whatever you already use. You're not selling. You're offering an exclusive benefit.</p>
         </div>
 
-        <div class="journey-step fade-up" style="animation-delay:0.15s">
-          <div class="journey-left"><div class="journey-icon">⚙️</div><div class="journey-line"></div></div>
-          <div class="journey-card">
-            <span class="journey-tag tag-slotly">SlotlyCare does</span>
-            <h3>Your page and coupon are created</h3>
-            <p>SlotlyCare builds a dedicated landing page at <strong>slotlycare.com/yourorganization</strong> and generates an exclusive coupon. Both are linked — every professional who subscribes through either one is automatically attributed to you.</p>
-          </div>
+        <div class="journey-connector fade-up" style="animation-delay:0.2s">←</div>
+
+        <div class="journey-box fade-up" style="animation-delay:0.2s">
+          <span class="journey-box-emoji">⚙️</span>
+          <span class="journey-tag tag-slotly">SlotlyCare does</span>
+          <h3>Your page and coupon go live</h3>
+          <p>SlotlyCare creates <strong>slotlycare.com/yourorganization</strong> and an exclusive coupon. Every subscription through either one is automatically attributed to you.</p>
         </div>
 
-        <div class="journey-step fade-up" style="animation-delay:0.2s">
-          <div class="journey-left"><div class="journey-icon">✉️</div><div class="journey-line"></div></div>
-          <div class="journey-card">
-            <span class="journey-tag tag-slotly">SlotlyCare does</span>
-            <h3>We prepare the communication — you approve it</h3>
-            <p>SlotlyCare writes the emails, messages, or posts that will go to your base. You review everything before a single word goes out. If something doesn't match your tone or values, you say so and we adjust. Nothing is sent without your sign-off.</p>
-          </div>
+        <div class="journey-down fade-up" style="animation-delay:0.3s">↓</div>
+
+        <!-- ROW 3 -->
+        <div class="journey-box fade-up" style="animation-delay:0.35s">
+          <span class="journey-box-emoji">💳</span>
+          <span class="journey-tag tag-slotly">Automatic</span>
+          <h3>Subscriptions come in</h3>
+          <p>Professionals visit your page, see the exclusive conditions, and subscribe at their own pace. Each one is recorded in Stripe with your coupon. You get a monthly report by the 10th.</p>
         </div>
 
-        <div class="journey-step fade-up" style="animation-delay:0.25s">
-          <div class="journey-left"><div class="journey-icon">📣</div><div class="journey-line"></div></div>
-          <div class="journey-card">
-            <span class="journey-tag tag-you">You communicate</span>
-            <h3>The benefit reaches your base</h3>
-            <p>You send the approved communication through your own channels — email list, WhatsApp group, Instagram, newsletter, whatever you already use. You're not selling. You're sharing an exclusive discount your base can't get anywhere else.</p>
-          </div>
-        </div>
+        <div class="journey-connector fade-up" style="animation-delay:0.4s">→</div>
 
-        <div class="journey-step fade-up" style="animation-delay:0.3s">
-          <div class="journey-left"><div class="journey-icon">💳</div><div class="journey-line"></div></div>
-          <div class="journey-card">
-            <span class="journey-tag tag-slotly">Automatic</span>
-            <h3>Professionals subscribe at their own pace</h3>
-            <p>Health professionals in your base visit your landing page, see their exclusive price, and subscribe when it makes sense for them. Each subscription is recorded in Stripe the moment it happens. No manual tracking on your end.</p>
-          </div>
-        </div>
-
-        <div class="journey-step fade-up" style="animation-delay:0.35s">
-          <div class="journey-left"><div class="journey-icon">📋</div><div class="journey-line"></div></div>
-          <div class="journey-card">
-            <span class="journey-tag tag-slotly">SlotlyCare sends</span>
-            <h3>You receive a monthly report</h3>
-            <p>By the 10th of each month, you receive a report showing every subscription attributed to your coupon: who subscribed, how much they paid, what commission is owed, and its payment status. If anything looks off, you have 15 days to flag it.</p>
-          </div>
-        </div>
-
-        <div class="journey-step fade-up" style="animation-delay:0.4s">
-          <div class="journey-left"><div class="journey-icon" style="background:var(--accent);border-color:var(--accent)">💰</div></div>
-          <div class="journey-card" style="border-color:var(--accent);background:#F0FDF4;margin-bottom:0">
-            <span class="journey-tag tag-result">Result</span>
-            <h3>You get paid — D+45 from each subscription</h3>
-            <p>After the 7-day guarantee window closes on each subscription, your commission enters the payment queue. Transfer is made within 30 days — approximately 45 days after the original purchase. No chasing, no invoices. It just arrives.</p>
-          </div>
+        <div class="journey-box result fade-up" style="animation-delay:0.45s">
+          <span class="journey-box-emoji">💰</span>
+          <span class="journey-tag tag-result">Result</span>
+          <h3>You get paid — D+45</h3>
+          <p>After the 7-day guarantee window closes on each subscription, your commission is queued. Bank transfer within 30 days. No chasing, no invoices. It just arrives.</p>
         </div>
 
       </div>
