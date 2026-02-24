@@ -630,7 +630,7 @@
 
   <!-- TOP BAR -->
   <div style="background:var(--accent-dark);color:white;text-align:center;padding:0.7rem 1rem;font-size:0.85rem;font-weight:600;letter-spacing:0.04em;position:fixed;top:0;left:0;right:0;z-index:102;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
-    🤝 &nbsp; <strong style="font-size:0.95rem;letter-spacing:0.06em;">Partnership Invitation</strong> &nbsp;·&nbsp; Exclusive page for <strong>[Your Organization]</strong>
+    🤝 &nbsp; <strong style="font-size:0.95rem;letter-spacing:0.06em;">Partnership Invitation</strong> &nbsp;·&nbsp; Exclusive page for <strong id="topBarOrg">[Your Organization]</strong>
   </div>
 
   <!-- NAV -->
@@ -670,7 +670,7 @@
     <div class="partner-preview fade-up" style="width:100%;max-width:580px;animation-delay:0.1s">
       <div class="preview-card" style="box-shadow: 0 8px 32px rgba(13,148,136,0.12); border: 2px solid var(--accent-light);">
         <div class="preview-inner">
-          <div class="preview-exclusive-badge" style="background:#FFFBEB;color:#92400E;border:1px solid #FDE68A;">✦ Exclusive for [Your Organization] members</div>
+          <div class="preview-exclusive-badge" style="background:#FFFBEB;color:#92400E;border:1px solid #FDE68A;">✦ Exclusive for <span id="badgeOrg">[Your Organization]</span> members</div>
           <div class="preview-title" style="font-weight:700;">Get SlotlyCare with 30% off and three years of access</div>
           <div class="preview-price">
             <span class="price-old">US$ 948</span>
@@ -691,7 +691,7 @@
               <span class="monthly-val accent">US$ 18.43<span class="monthly-period">/mo</span></span>
             </div>
           </div>
-          <div class="preview-note">These conditions are not available on the public site. They exist only through [Your Organization].</div>
+          <div class="preview-note">These conditions are not available on the public site. They exist only through <span id="previewNoteOrg">[Your Organization]</span>.</div>
         </div>
         <div class="preview-footer" style="background:#FFFBEB;border-top:1px solid #FDE68A;color:#92400E;font-weight:600;">Coupon applied automatically at checkout — no code needed.</div>
       </div>
@@ -723,7 +723,7 @@
         <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent-dark);opacity:0.7;">This is what your partner page looks like</span>
         <div style="display:flex;align-items:center;gap:0.6rem;">
           <span style="font-size:1.1rem;">🔗</span>
-          <span style="font-size:1rem;font-weight:700;color:var(--accent-dark);">slotlycare.com/<strong>yourorganization</strong></span>
+          <span style="font-size:1rem;font-weight:700;color:var(--accent-dark);">slotlycare.com/<strong id="partnerSlug">yourorganization</strong></span>
         </div>
       </div>
     </div>
@@ -1062,6 +1062,7 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
       <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write('<a href="mailto:partners@slotlycare.com">partners@slotlycare.com</a>')</script>
     </p>
     <p style="margin-top:0.35rem;">The entire partnership process is 100% digital — no calls or paperwork required.</p>
+    <p id="footerExclusive" style="margin-top:0.5rem; display:none;"></p>
   </footer>
 
   <!-- CONTACT MODAL -->
@@ -1230,6 +1231,33 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
       document.getElementById('convCount').textContent = 'Based on ~' + conversions + ' conversion' + (conversions !== 1 ? 's' : '');
     }
     updateSim();
+
+    // --- DYNAMIC PERSONALIZATION ---
+    (async function() {
+      const parts = location.pathname.split('/').filter(Boolean);
+      // Expects /partners/:slug
+      const slug = parts[0] === 'partners' && parts[1] ? parts[1] : null;
+      if (!slug) return;
+      try {
+        const res = await fetch('/partners.json');
+        if (!res.ok) return;
+        const data = await res.json();
+        const prospect = data.prospects && data.prospects[slug];
+        if (!prospect) return;
+        const org = prospect.organization;
+        // Fill all personalization fields
+        document.getElementById('topBarOrg').textContent = org;
+        document.getElementById('badgeOrg').textContent = org;
+        document.getElementById('previewNoteOrg').textContent = org;
+        document.getElementById('partnerSlug').textContent = slug;
+        document.title = 'SlotlyCare — Partner Program · ' + org;
+        // Footer exclusive line
+        const footerEl = document.getElementById('footerExclusive');
+        footerEl.textContent = 'This page was created exclusively for ' + org + '.';
+        footerEl.style.display = 'block';
+      } catch(e) {}
+    })();
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
