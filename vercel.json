@@ -1,4 +1,11 @@
 {
+  "redirects": [
+    {
+      "source": "/partnership-invitation",
+      "destination": "https://slotlycare.com",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/painel",
@@ -15,10 +22,6 @@
     {
       "source": "/invite/:slug",
       "destination": "/invite.html"
-    },
-    {
-      "source": "/partnership-invitation",
-      "destination": "/partners.html"
     },
     {
       "source": "/partnership-invitation/:slug",
