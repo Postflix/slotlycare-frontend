@@ -1046,7 +1046,6 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
   <!-- CTA -->
   <section class="cta-section">
     <h2>Your clients need a better scheduling tool.<br><span class="serif">Be the one who brings it.</span></h2>
-    <p>No investment. No risk. Just a conversation about whether this makes sense for your base.</p>
     <div class="cta-actions">
       <button class="btn-cta-primary" onclick="openContact()">Become a Partner</button>
       <button class="btn-cta-ghost" onclick="openTerms()">View program terms</button>
@@ -1057,12 +1056,10 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
   <footer>
     <div class="footer-links">
       <a href="https://slotlycare.com" target="_blank">slotlycare.com</a>
-      <a href="#" onclick="openTerms(); return false;">Program Terms</a>
-      <a href="#" onclick="openContact(); return false;">Contact</a>
     </div>
     <p>© 2026 SlotlyCare. Confidential — not for public distribution.</p>
     <p style="margin-top:0.35rem">
-      <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write('<a href="mailto:contact@slotlycare.com">contact@slotlycare.com</a>');</script>
+      <script>document.write('<a href="mailto:partners@slotlycare.com">partners@slotlycare.com</a>')</script>
     </p>
   </footer>
 
@@ -1107,6 +1104,8 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
               </select>
             </div>
             <div class="form-group"><label>Message (optional)</label><textarea id="inputMessage" placeholder="Any context you'd like to share..."></textarea></div>
+            <div class="form-group"><label>Country *</label><input type="text" id="inputCountry" placeholder="e.g. United States, Brazil, Germany" /></div>
+            <div class="form-group"><label>Website, LinkedIn or social media</label><input type="text" id="inputPresence" placeholder="e.g. instagram.com/yourorg or linkedin.com/in/you" /></div>
             <div class="form-check">
               <input type="checkbox" id="agreeTerms" />
               <label for="agreeTerms">I have read and agree to the <a href="#" onclick="openTerms(); return false;">program terms</a></label>
@@ -1160,7 +1159,7 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
           <h3>6. Ending the partnership</h3>
           <p>Either party may end the partnership with 30 days notice. SlotlyCare may terminate immediately in cases of brand misuse, spam, or conduct that causes reputational damage. Commissions for conversions confirmed before termination remain due and will be paid normally.</p>
 
-          <div class="terms-version">Version 2.0 — February 2026 · <script>document.write('<a href="mailto:partners@slotlycare.com">partners@slotlycare.com</a>')</script> · slotlycare.com</div>
+          <div class="terms-version">Version 2.0 — February 2026 · slotlycare.com</div>
         </div>
       </div>
     </div>
@@ -1206,6 +1205,8 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
         'Name: ' + name + '\nOrganization: ' + org + '\nEmail: ' + email +
         '\nType: ' + (document.getElementById('inputType').value || 'Not specified') +
         '\nBase size: ' + (document.getElementById('inputBase').value || 'Not specified') +
+        '\nCountry: ' + (document.getElementById('inputCountry').value || 'Not specified') +
+        '\nOnline presence: ' + (document.getElementById('inputPresence').value || 'Not provided') +
         '\n\nMessage:\n' + (document.getElementById('inputMessage').value || '—')
       );
       window.location.href = 'mailto:contact@slotlycare.com?subject=' + subject + '&body=' + body;
