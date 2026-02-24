@@ -111,7 +111,7 @@
     h1 .serif { font-weight: 400; font-style: italic; color: var(--accent); }
 
     .hero-sub {
-      font-size: 1.125rem; color: var(--text-muted);
+      font-size: 1.2rem; color: var(--text);
       max-width: 580px; margin: 0 auto 2.5rem; line-height: 1.8;
     }
 
@@ -193,14 +193,14 @@
     .price-note { font-size: 0.78rem; color: var(--text-muted); }
 
     .preview-note {
-      font-size: 0.82rem; color: var(--text-muted);
-      max-width: 360px; margin: 0 auto; line-height: 1.55;
+      font-size: 0.93rem; color: var(--text);
+      max-width: 360px; margin: 0 auto; line-height: 1.6;
     }
 
     .preview-footer {
       background: var(--accent-light); border-top: 1px solid #99F6E4;
       padding: 0.7rem 1.5rem; text-align: center;
-      font-size: 0.8rem; color: var(--accent-dark); font-weight: 600;
+      font-size: 0.93rem; color: var(--accent-dark); font-weight: 700;
     }
 
     /* HERO NUMBERS */
@@ -238,7 +238,7 @@
     }
 
     .section-sub {
-      font-size: 1.05rem; color: var(--text-muted);
+      font-size: 1.1rem; color: var(--text);
       max-width: 580px; line-height: 1.7; margin-bottom: 3rem;
     }
 
@@ -254,7 +254,7 @@
     }
     .about-quote span { color: var(--accent); }
 
-    .about-body { font-size: 0.95rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; }
+    .about-body { font-size: 1rem; color: var(--text); line-height: 1.8; margin-bottom: 1rem; }
 
 
 
@@ -268,10 +268,17 @@
     .about-values li:hover { border-color: var(--accent); }
     .about-val-icon { font-size: 1.3rem; flex-shrink: 0; }
     .about-val-title { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
-    .about-val-text { font-size: 0.83rem; color: var(--text-muted); line-height: 1.55; }
+    .about-val-text { font-size: 0.95rem; color: var(--text); line-height: 1.6; }
 
     /* HOW */
-    .how { background: var(--bg); }
+    .how { background: #1E293B; }
+    .how .section-title { color: white; }
+    .how .section-sub { color: #94A3B8; }
+    .how .section-badge { background: rgba(255,255,255,0.1); color: #5EEAD4; border: none; }
+    .how .step { background: #0F172A; border-color: #334155; }
+    .how .step h3 { color: white; }
+    .how .step p { color: #CBD5E1; }
+    .how .step-num { background: var(--accent); color: white; }
 
     .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 1.25rem; }
 
@@ -288,16 +295,16 @@
     }
 
     .step h3 { font-size: 0.92rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
-    .step p { font-size: 0.86rem; color: var(--text-muted); line-height: 1.6; }
+    .step p { font-size: 1rem; color: #CBD5E1; line-height: 1.6; }
 
     /* JOURNEY */
     .journey { background: var(--white); }
 
     .journey-grid {
       display: grid;
-      grid-template-columns: 1fr 80px 1fr;
-      gap: 0;
-      max-width: 900px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      max-width: 1100px;
       margin: 0 auto;
     }
 
@@ -315,37 +322,39 @@
       background: #F0FDF4;
     }
 
-    .journey-connector {
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; color: var(--accent);
+    .journey-box-header {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 0.75rem;
     }
 
-    .journey-spacer { grid-column: 1 / -1; height: 1rem; }
+    .journey-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--accent); color: white;
+      font-size: 0.75rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .journey-box.result .journey-num { background: #166534; }
+
+    .journey-box-emoji { font-size: 1.4rem; }
 
     .journey-tag {
-      font-size: 0.7rem; font-weight: 700;
+      font-size: 0.68rem; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.07em;
       padding: 0.2rem 0.65rem; border-radius: 100px;
-      display: inline-block; margin-bottom: 0.6rem;
+      display: inline-block; margin-bottom: 0.5rem;
     }
 
     .tag-you { background: #EFF6FF; color: #1D4ED8; }
     .tag-slotly { background: var(--accent-light); color: var(--accent-dark); }
     .tag-result { background: #F0FDF4; color: #166534; }
 
-    .journey-box-emoji { font-size: 1.6rem; margin-bottom: 0.5rem; display: block; }
     .journey-box h3 { font-size: 0.92rem; font-weight: 700; color: var(--text); margin-bottom: 0.35rem; }
-    .journey-box p { font-size: 0.84rem; color: var(--text-muted); line-height: 1.6; }
-
-    .journey-down {
-      grid-column: 1 / -1;
-      display: flex; justify-content: center; align-items: center;
-      height: 2rem; font-size: 1.4rem; color: var(--accent);
-    }
+    .journey-box p { font-size: 0.95rem; color: var(--text); line-height: 1.65; }
 
     @media (max-width: 640px) {
       .journey-grid { grid-template-columns: 1fr; }
-      .journey-connector { transform: rotate(90deg); height: 2rem; }
     }
 
     /* WHY */
@@ -363,12 +372,12 @@
     .why-card:hover { border-color: var(--accent); }
     .why-icon { font-size: 1.75rem; margin-bottom: 1rem; }
     .why-card h3 { font-size: 0.92rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
-    .why-card p { font-size: 0.86rem; color: #9CA3AF; line-height: 1.65; }
+    .why-card p { font-size: 1rem; color: #CBD5E1; line-height: 1.65; }
 
     /* PROFILES */
     .profiles { background: var(--white); }
 
-    .profiles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 1rem; }
+    .profiles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 
     .profile-card {
       background: var(--bg); border: 1.5px solid var(--border);
@@ -377,7 +386,7 @@
     .profile-card:hover { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-light); }
     .profile-icon { font-size: 1.9rem; margin-bottom: 0.65rem; }
     .profile-card h3 { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 0.35rem; }
-    .profile-card p { font-size: 0.78rem; color: var(--text-muted); }
+    .profile-card p { font-size: 0.97rem; color: var(--text); }
 
     /* REVENUE */
     .revenue { background: var(--bg); }
@@ -410,8 +419,8 @@
       border: 1px solid var(--border); border-radius: 10px; padding: 1rem; text-align: center;
     }
     .sim-item strong { display: block; font-size: 1.1rem; color: var(--text); font-weight: 700; }
-    .sim-item span { font-size: 0.76rem; color: var(--text-muted); }
-    .sim-disclaimer { font-size: 0.76rem; color: var(--text-muted); text-align: center; margin-top: 1.25rem; }
+    .sim-item span { font-size: 0.95rem; color: var(--text-muted); }
+    .sim-disclaimer { font-size: 0.9rem; color: var(--text-muted); text-align: center; margin-top: 1.25rem; }
 
     /* TRUST */
     .trust { background: var(--white); }
@@ -435,23 +444,28 @@
 
     /* FAQ */
     .faq-section { background: var(--bg); }
-    .faq-list { max-width: 720px; margin: 0 auto; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+    .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.5rem; }
 
-    .faq-item { border-bottom: 1px solid var(--border); background: var(--white); }
-    .faq-item:last-child { border-bottom: none; }
+    .faq-item { border: 1.5px solid var(--border); border-radius: 12px; background: var(--white); overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s; }
+    .faq-item.open { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
 
     .faq-q {
       width: 100%; text-align: left; background: none; border: none;
       padding: 1.25rem 1.5rem; font-family: inherit;
-      font-size: 0.95rem; font-weight: 600; color: var(--text);
+      font-size: 0.97rem; font-weight: 600; color: var(--text);
       cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem;
       transition: color 0.2s;
     }
     .faq-q:hover { color: var(--accent); }
-    .faq-arrow { font-size: 1.1rem; transition: transform 0.25s; flex-shrink: 0; color: var(--text-muted); }
+    .faq-arrow { font-size: 1.25rem; font-weight: 300; transition: transform 0.25s; flex-shrink: 0; color: var(--text-muted); }
     .faq-item.open .faq-arrow { transform: rotate(45deg); color: var(--accent); }
-    .faq-a { display: none; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; padding: 0 1.5rem 1.25rem; }
+    .faq-a { display: none; font-size: 0.97rem; color: var(--text); line-height: 1.75; padding: 0 1.5rem 1.25rem; white-space: pre-line; }
     .faq-item.open .faq-a { display: block; }
+
+    .faq-contact { max-width: 720px; margin: 2rem auto 0; text-align: center; padding: 1.5rem; background: var(--white); border: 1.5px solid var(--border); border-radius: 12px; }
+    .faq-contact p { font-size: 0.97rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .faq-contact a { font-size: 1rem; font-weight: 600; color: var(--accent); text-decoration: none; }
+    .faq-contact a:hover { color: var(--accent-dark); text-decoration: underline; }
 
     /* CTA */
     .cta-section {
@@ -552,6 +566,11 @@
     .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-light); }
     .form-group textarea { resize: vertical; min-height: 90px; }
     .form-note { font-size: 0.8rem; color: var(--text-muted); }
+    .form-check { display: flex; align-items: flex-start; gap: 0.6rem; margin: 0.75rem 0; }
+    .form-check input[type=checkbox] { margin-top: 0.2rem; accent-color: var(--accent); width: 15px; height: 15px; flex-shrink: 0; cursor: pointer; }
+    .form-check label { font-size: 0.85rem; color: var(--text); line-height: 1.5; cursor: pointer; }
+    .form-check label a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .form-check label a:hover { text-decoration: underline; }
 
     .form-success { display: none; text-align: center; padding: 2rem; }
     .form-success .success-icon { font-size: 2.5rem; margin-bottom: 1rem; }
@@ -572,6 +591,7 @@
     /* RESPONSIVE */
     @media (max-width: 768px) {
       .about-grid, .why-grid, .form-row { grid-template-columns: 1fr; }
+      .journey-grid { grid-template-columns: repeat(2, 1fr); }
       .hero-numbers { flex-wrap: wrap; }
       .hero-num { min-width: 45%; border-right: none; border-bottom: 1px solid var(--border); }
       section { padding: 64px 1.25rem; }
@@ -597,7 +617,7 @@
     }
 
     .monthly-item { text-align: center; }
-    .monthly-label { display: block; font-size: 0.68rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+    .monthly-label { display: block; font-size: 0.72rem; color: var(--text); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem; }
     .monthly-val { font-size: 1.1rem; font-weight: 700; color: var(--text-muted); }
     .monthly-val.accent { color: var(--accent); }
     .monthly-old .monthly-val { text-decoration: line-through; opacity: 0.6; }
@@ -651,7 +671,7 @@
       <div class="preview-card" style="box-shadow: 0 8px 32px rgba(13,148,136,0.12); border: 2px solid var(--accent-light);">
         <div class="preview-inner">
           <div class="preview-exclusive-badge" style="background:#FFFBEB;color:#92400E;border:1px solid #FDE68A;">✦ Exclusive for [Your Organization] members</div>
-          <div class="preview-title">Get SlotlyCare with 30% off and three years of access</div>
+          <div class="preview-title" style="font-weight:700;">Get SlotlyCare with 30% off and three years of access</div>
           <div class="preview-price">
             <span class="price-old">US$ 948</span>
             <span class="price-new">US$ 663.60</span>
@@ -715,7 +735,7 @@
       <div class="about-grid">
         <div class="fade-up">
           <div class="section-badge">Who we are</div>
-          <div class="about-quote">Built by people who understand what health professionals <span>actually need.</span></div>
+          <div class="about-quote"><strong>Built by people who understand what health professionals <span>actually need.</span></strong></div>
           <p class="about-body">
             SlotlyCare was designed from the ground up for healthcare professionals — not adapted from a generic scheduling tool. The team combines deep product experience with a genuine understanding of how clinics and private practices operate day-to-day.
           </p>
@@ -763,7 +783,7 @@
   </section>
 
   <!-- HOW IT WORKS -->
-  <section class="how" style="padding-top:40px;">
+  <section class="how" style="padding-top:40px; background:#1E293B;">
     <div class="container">
       <div class="section-badge">How it works</div>
       <h2 class="section-title">Four steps. No operational overhead. Straightforward by design.</h2>
@@ -801,63 +821,67 @@
 
       <div class="journey-grid">
 
-        <!-- ROW 1 -->
         <div class="journey-box fade-up">
-          <span class="journey-box-emoji">🔍</span>
-          <span class="journey-tag tag-you">You evaluate</span>
+          <div class="journey-box-header">
+            <div class="journey-num">1</div>
+            <span class="journey-box-emoji">🔍</span>
+            <span class="journey-tag tag-you">You evaluate</span>
+          </div>
           <h3>You review the proposal</h3>
-          <p>You read this page, understand how the commission works, and go through the terms. No surprises, no fine print. Questions? Write to <strong>programs@slotlycare.com</strong>.</p>
+          <p>You read this page, understand how the commission works, and go through the terms. No surprises, no fine print. Questions? Write to <strong><script>document.write('<a href="mailto:partners@slotlycare.com">partners@slotlycare.com</a>')</script></strong>.</p>
         </div>
 
-        <div class="journey-connector fade-up" style="animation-delay:0.05s">→</div>
-
-        <div class="journey-box fade-up" style="animation-delay:0.1s">
-          <span class="journey-box-emoji">🤝</span>
-          <span class="journey-tag tag-you">You decide</span>
+        <div class="journey-box fade-up" style="animation-delay:0.07s">
+          <div class="journey-box-header">
+            <div class="journey-num">2</div>
+            <span class="journey-box-emoji">🤝</span>
+            <span class="journey-tag tag-you">You decide</span>
+          </div>
           <h3>You sign in minutes</h3>
-          <p>You fill in the contact form. Both sides sign a simple document — the exact same terms you already read here. That's it.</p>
+          <p>Fill in the contact form, accept the terms, and you're in. The entire process happens right here — 100% digital, no back-and-forth needed.</p>
         </div>
 
-        <div class="journey-down fade-up" style="animation-delay:0.15s">↓</div>
-
-        <!-- ROW 2 -->
-        <div class="journey-box fade-up" style="animation-delay:0.25s">
-          <span class="journey-box-emoji">📣</span>
-          <span class="journey-tag tag-you">You communicate</span>
-          <h3>You share the link</h3>
-          <p>Send your personalized page to your base — by email, WhatsApp, Instagram, newsletter, whatever you already use. You're not selling. You're offering an exclusive benefit.</p>
-        </div>
-
-        <div class="journey-connector fade-up" style="animation-delay:0.2s">←</div>
-
-        <div class="journey-box fade-up" style="animation-delay:0.2s">
-          <span class="journey-box-emoji">⚙️</span>
-          <span class="journey-tag tag-slotly">SlotlyCare does</span>
+        <div class="journey-box fade-up" style="animation-delay:0.14s">
+          <div class="journey-box-header">
+            <div class="journey-num">3</div>
+            <span class="journey-box-emoji">⚙️</span>
+            <span class="journey-tag tag-slotly">SlotlyCare does</span>
+          </div>
           <h3>Your page and coupon go live</h3>
-          <p>SlotlyCare creates <strong>slotlycare.com/yourorganization</strong> and an exclusive coupon. Every subscription through either one is automatically attributed to you.</p>
+          <p>SlotlyCare creates <strong>slotlycare.com/yourorganization</strong> and an exclusive coupon. Every subscription through either is automatically attributed to you.</p>
         </div>
 
-        <div class="journey-down fade-up" style="animation-delay:0.3s">↓</div>
+        <div class="journey-box fade-up" style="animation-delay:0.21s">
+          <div class="journey-box-header">
+            <div class="journey-num">4</div>
+            <span class="journey-box-emoji">📣</span>
+            <span class="journey-tag tag-you">You communicate</span>
+          </div>
+          <h3>You share the link</h3>
+          <p>Send your personalized page to your base — email, WhatsApp, Instagram, newsletter, whatever you already use. You're not selling. You're offering an exclusive benefit.</p>
+        </div>
 
-        <!-- ROW 3 -->
-        <div class="journey-box fade-up" style="animation-delay:0.35s">
-          <span class="journey-box-emoji">💳</span>
-          <span class="journey-tag tag-slotly">Automatic</span>
+        <div class="journey-box fade-up" style="animation-delay:0.28s">
+          <div class="journey-box-header">
+            <div class="journey-num">5</div>
+            <span class="journey-box-emoji">💳</span>
+            <span class="journey-tag tag-slotly">Automatic</span>
+          </div>
           <h3>Subscriptions come in</h3>
-          <p>Professionals visit your page, see the exclusive conditions, and subscribe at their own pace. Each one is recorded in Stripe with your coupon. You get a monthly report by the 10th.</p>
+          <p>Professionals visit your page, see the exclusive conditions, and subscribe at their own pace. Each one is recorded in Stripe with your coupon. Monthly report sent by the 10th.</p>
         </div>
 
-        <div class="journey-connector fade-up" style="animation-delay:0.4s">→</div>
-
-        <div class="journey-box result fade-up" style="animation-delay:0.45s">
-          <span class="journey-box-emoji">💰</span>
-          <span class="journey-tag tag-result">Result</span>
+        <div class="journey-box result fade-up" style="animation-delay:0.35s">
+          <div class="journey-box-header">
+            <div class="journey-num">6</div>
+            <span class="journey-box-emoji">💰</span>
+            <span class="journey-tag tag-result">Result</span>
+          </div>
           <h3>You get paid — D+45</h3>
-          <p>After the 7-day guarantee window closes on each subscription, your commission is queued. Bank transfer within 30 days. No chasing, no invoices. It just arrives.</p>
+          <p>After the 7-day guarantee window closes, your commission is queued. Bank transfer within 30 days. No chasing, no invoices. It just arrives.</p>
         </div>
 
       </div>
-    </div>
   </section>
 
 
@@ -871,13 +895,13 @@
       <div class="why-grid">
         <div class="why-card fade-up">
           <div class="why-icon">💼</div>
-          <h3>For you — the partner</h3>
+          <h3>For you</h3>
           <p>A new revenue stream on top of what you already do. No investment, no operational cost. The only requirement is communicating the benefit to your base.</p>
         </div>
         <div class="why-card fade-up" style="animation-delay:0.07s">
           <div class="why-icon">🏥</div>
           <h3>For your clients</h3>
-          <p>An exclusive 30% discount not available on the public site. A professional tool at launch pricing, accessible only through you — it reinforces your value to them.</p>
+          <p>Exclusive price and access conditions not available on the public site. A professional tool at launch pricing, accessible only through you — it reinforces your value to them.</p>
         </div>
         <div class="why-card fade-up" style="animation-delay:0.14s">
           <div class="why-icon">🚀</div>
@@ -889,38 +913,38 @@
   </section>
 
   <!-- IDEAL PARTNERS -->
-  <section class="profiles">
+  <section class="profiles" style="background:var(--bg); padding-top:40px;">
     <div class="container">
       <div class="section-badge">Who this is for</div>
       <h2 class="section-title">Ideal partner profiles.</h2>
-      <p class="section-sub">The main criterion isn't size — it's direct, qualified access to a real base of healthcare professionals.</p>
+      <p class="section-sub">The main criterion isn't only size — it's direct, qualified access to a real base of healthcare professionals.</p>
       <div class="profiles-grid">
-        <div class="profile-card fade-up">
-          <div class="profile-icon">🦷</div>
+        <div class="profile-card fade-up" style="">
+          <div class="profile-icon">🏛️</div>
           <h3>Professional associations</h3>
-          <p>Dental, medical, physiotherapy, psychology councils and associations</p>
+          <p>Dental, medical, physiotherapy, psychology councils and associations, among others</p>
         </div>
-        <div class="profile-card fade-up" style="animation-delay:0.06s">
+        <div class="profile-card fade-up" style="">
           <div class="profile-icon">🎓</div>
           <h3>Educational institutions</h3>
           <p>Universities, specialization schools, continuing education centers</p>
         </div>
-        <div class="profile-card fade-up" style="animation-delay:0.12s">
-          <div class="profile-icon">🏪</div>
-          <h3>Equipment suppliers</h3>
-          <p>Companies that sell to clinics and private practices</p>
+        <div class="profile-card fade-up" style="">
+          <div class="profile-icon">🏬</div>
+          <h3>Equipment & supply companies</h3>
+          <p>Companies that sell to clinics, hospitals and private practices</p>
         </div>
-        <div class="profile-card fade-up" style="animation-delay:0.18s">
+        <div class="profile-card fade-up" style="">
           <div class="profile-icon">📊</div>
           <h3>Consulting firms</h3>
           <p>Practice management, healthcare marketing, career planning consultants</p>
         </div>
-        <div class="profile-card fade-up" style="animation-delay:0.24s">
-          <div class="profile-icon">🎪</div>
+        <div class="profile-card fade-up" style="">
+          <div class="profile-icon">🎤</div>
           <h3>Event organizers</h3>
           <p>Fairs, congresses and conferences in the health sector</p>
         </div>
-        <div class="profile-card fade-up" style="animation-delay:0.30s">
+        <div class="profile-card fade-up" style="">
           <div class="profile-icon">📱</div>
           <h3>Digital educators & specialists</h3>
           <p>Creators, instructors and specialists with audiences of healthcare professionals — courses, communities, newsletters</p>
@@ -930,12 +954,12 @@
   </section>
 
   <!-- REVENUE SIMULATOR -->
-  <section class="revenue">
+  <section class="revenue" style="background:#1E293B;">
     <div class="container">
       <div style="text-align:center; margin-bottom:2.5rem">
-        <div class="section-badge">Revenue simulator</div>
-        <h2 class="section-title" style="margin:0 auto">How much can you earn?</h2>
-        <p class="section-sub" style="margin:0.75rem auto 0">Drag the sliders to simulate your potential commission.</p>
+        <div class="section-badge" style="background:rgba(255,255,255,0.1);color:#5EEAD4;border:none;">Revenue simulator</div>
+        <h2 class="section-title" style="margin:0 auto;color:white;">How much can you earn?</h2>
+        <p class="section-sub" style="margin:0.75rem auto 0;color:#94A3B8;">Drag the sliders to simulate your potential commission.</p>
       </div>
       <div class="sim-wrapper fade-up">
         <div class="sim-row">
@@ -948,7 +972,7 @@
           <span class="sim-label">Estimated conversion rate</span>
           <span class="sim-value" id="convRate">3%</span>
         </div>
-        <input type="range" id="convSlider" min="1" max="20" step="1" value="3" oninput="updateSim()" />
+        <input type="range" id="convSlider" min="1" max="20" step="1" value="10" oninput="updateSim()" />
 
         <div class="sim-result">
           <div class="sim-result-label">Your estimated commission</div>
@@ -967,41 +991,6 @@
     </div>
   </section>
 
-  <!-- TRANSPARENCY -->
-  <section class="trust">
-    <div class="container">
-      <div class="section-badge">Transparency & trust</div>
-      <h2 class="section-title">Built on process, not promises.</h2>
-      <p class="section-sub">Every conversion is documented. Every payment has a clear timeline. No ambiguity.</p>
-      <div class="trust-grid">
-        <div class="trust-item fade-up">
-          <div class="trust-icon">🔗</div>
-          <div><h4>Dual tracking</h4><p>Each conversion registered by both the exclusive coupon and your dedicated landing page — two independent mechanisms.</p></div>
-        </div>
-        <div class="trust-item fade-up" style="animation-delay:0.07s">
-          <div class="trust-icon">📋</div>
-          <div><h4>Monthly report</h4><p>Sent by the 10th of each month, detailing every attributed subscription, amount, commission owed and payment status.</p></div>
-        </div>
-        <div class="trust-item fade-up" style="animation-delay:0.14s">
-          <div class="trust-icon">💳</div>
-          <div><h4>Stripe as intermediary</h4><p>All payments processed by Stripe — full security and traceability on every transaction.</p></div>
-        </div>
-        <div class="trust-item fade-up" style="animation-delay:0.21s">
-          <div class="trust-icon">⏱️</div>
-          <div><h4>D+45 payment</h4><p>Commission paid 30 days after the 7-day guarantee window closes (~45 days from purchase). Clear timeline, no surprises.</p></div>
-        </div>
-        <div class="trust-item fade-up" style="animation-delay:0.28s">
-          <div class="trust-icon">📄</div>
-          <div><h4>Formal agreement</h4><p>Partnership formalized with a document plus Operational Annex — clear rules for attribution, cancellations and disputes.</p></div>
-        </div>
-        <div class="trust-item fade-up" style="animation-delay:0.35s">
-          <div class="trust-icon">🛡️</div>
-          <div><h4>Your brand is protected</h4><p>SlotlyCare will never use your name or brand in public communications without your express authorization.</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- FAQ -->
   <section class="faq-section">
     <div class="container">
@@ -1015,10 +1004,6 @@
           <p class="faq-a">The commission goes to the partner whose link or coupon was used at the moment of purchase — that's the only thing that counts. If a professional was in contact with two partners but subscribed through partner A's page or using partner A's coupon, only partner A receives the commission. There is no split attribution.</p>
         </div>
         <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">Do I need to sell anything to my clients? <span class="faq-arrow">+</span></button>
-          <p class="faq-a">No. SlotlyCare handles all communication with your base. You authorize, we create the materials, you approve before anything is sent. You're offering an exclusive benefit — not making a sales pitch.</p>
-        </div>
-        <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">What if a client asks for a refund? <span class="faq-arrow">+</span></button>
           <p class="faq-a">SlotlyCare offers a 7-day money-back guarantee. If a refund is requested within this window, no commission is owed. After 7 days, the product is no longer refundable, so your commission remains valid regardless.</p>
         </div>
@@ -1028,24 +1013,32 @@
         </div>
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">How are my conversions tracked if someone buys later? <span class="faq-arrow">+</span></button>
-          <p class="faq-a">Attribution is based on coupon use and/or access through your dedicated landing page at the moment of purchase. Conversions without your coupon or landing page do not generate commission, and conversions after partnership termination are not attributed retroactively.</p>
+          <p class="faq-a">Attribution is based on coupon use and/or access through your dedicated landing page at the moment of purchase. Conversions without your coupon do not generate commission.</p>
         </div>
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">Will these launch conditions last forever? <span class="faq-arrow">+</span></button>
-          <p class="faq-a">No. The current conditions — US$ 948 price, 30% partner discount, and 40% commission — are valid during SlotlyCare's launch phase only. They may change with 30 days prior notice to active partners. Conversions confirmed before any change keep their original conditions.</p>
+          <p class="faq-a">No. The current conditions — 30% discount for subscribers from partners, three-year access, and 40% commission — are valid during SlotlyCare's launch phase only. They may change at any time, but active partners will be notified 30 days in advance. Conversions confirmed before any change keep their original conditions, with guaranteed payment.</p>
         </div>
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">What if SlotlyCare doesn't pay? <span class="faq-arrow">+</span></button>
-          <p class="faq-a">This program is built on a simple premise: we only want partners who trust us, and we only work with partners we can trust.<br><br>If that question is genuinely on your mind before we've even started, this is probably not the right fit — and that's fine. Not every partnership makes sense.<br><br>There's also a practical side worth considering: a partner who promotes SlotlyCare to their base is putting their own reputation behind it. If something goes wrong, it's their credibility on the line with their own audience. We take that responsibility seriously — and we expect our partners to as well.</p>
+          <p class="faq-a">This program is built on a simple premise: we only want partners who trust us, and we only work with partners we can trust.
+If that question is genuinely on your mind before we've even started, this is probably not the right fit — and that's fine. Not every partnership makes sense.
+There's also a practical side worth considering: a partner who promotes SlotlyCare to their base is putting their own reputation behind it. If something goes wrong, it's their credibility on the line with their own audience. We take that responsibility seriously — and we expect our partners to as well.</p>
         </div>
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">Why is the commission so high? <span class="faq-arrow">+</span></button>
-          <p class="faq-a">Because it's a deliberate choice.<br><br>We could spend that money on ads. Pay for impressions, clicks, and campaigns that reach strangers with no reason to trust us. Instead, we chose to invest in people who already have the trust of the professionals we're trying to reach.<br><br>When a partner communicates a benefit to their base, it carries real weight. That's worth more than any ad campaign — and we want to recognize that you're standing by our side.</p>
+          <p class="faq-a">Because it's a deliberate choice.
+We could spend that money on ads. Pay for impressions, clicks, and campaigns that reach strangers with no reason to trust us. Instead, we chose to invest in people who already have the trust of the professionals we're trying to reach.
+When a partner communicates a benefit to their base, it carries real weight. That's worth more than any ad campaign — and we want to recognize that you're standing by our side.</p>
         </div>
-                <div class="faq-item">
+        <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">Can I have exclusive territory or segment rights? <span class="faq-arrow">+</span></button>
           <p class="faq-a">The default program doesn't include exclusivity. However, if you're interested in exclusivity for a specific territory or professional segment, this can be negotiated individually during the formalization process.</p>
         </div>
+      </div>
+      <div class="faq-contact">
+        <p>Have a question not answered here? Write to us — we'll be happy to get back to you.</p>
+        <a href="mailto:partners@slotlycare.com">partners@slotlycare.com</a>
       </div>
     </div>
   </section>
@@ -1069,7 +1062,7 @@
     </div>
     <p>© 2026 SlotlyCare. Confidential — not for public distribution.</p>
     <p style="margin-top:0.35rem">
-      <script>document.write('<a href="mailto:contact@slotlycare.com">contact@slotlycare.com</a>');</script>
+      <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write('<a href="mailto:contact@slotlycare.com">contact@slotlycare.com</a>');</script>
     </p>
   </footer>
 
@@ -1114,6 +1107,10 @@
               </select>
             </div>
             <div class="form-group"><label>Message (optional)</label><textarea id="inputMessage" placeholder="Any context you'd like to share..."></textarea></div>
+            <div class="form-check">
+              <input type="checkbox" id="agreeTerms" />
+              <label for="agreeTerms">I have read and agree to the <a href="#" onclick="openTerms(); return false;">program terms</a></label>
+            </div>
             <p class="form-note">We respond within 1–2 business days.</p>
             <button class="btn-primary" style="width:100%; display:block" onclick="submitContact()">Send message</button>
           </div>
@@ -1131,49 +1128,45 @@
   <div class="modal-overlay" id="termsModal" onclick="closeOnOverlay(event,'termsModal')">
     <div class="modal" style="max-width:640px">
       <div class="modal-header">
-        <h2>Program Terms — Operational Annex</h2>
+        <h2>Program Terms — SlotlyCare Partner Program</h2>
         <button class="modal-close" onclick="closeModal('termsModal')">×</button>
       </div>
       <div class="modal-body">
         <div class="terms-content">
-          <h3>1. Conversion Attribution</h3>
-          <p>A conversion is attributed to the partner when the healthcare professional completes the SlotlyCare subscription using the partner's exclusive coupon or accessing through the dedicated landing page. Tracking is performed by two independent mechanisms.</p>
-          <ul>
-            <li>Each subscription is attributed to a single partner.</li>
-            <li>In case of multiple coupons, the one used at payment prevails.</li>
-            <li>If a professional was in contact with two partners, the commission belongs exclusively to the partner whose link or coupon was used at the moment of purchase. There is no split attribution.</li>
-            <li>Subscriptions without a coupon or partner landing page do not generate commission.</li>
-            <li>SlotlyCare does not attribute conversions retroactively.</li>
-          </ul>
-          <h3>2. Reports</h3>
-          <p>SlotlyCare generates a monthly report for each partner sent by the 10th of the following month, containing: subscriptions attributed, value, commission owed, and payment status. The partner has 15 calendar days to contest in writing.</p>
-          <h3>3. Payments</h3>
-          <p>Commission is paid within 30 days (D+30) after payment confirmation, respecting the 7-day guarantee window. In practice, the effective timeline is approximately D+45 from the purchase date. Payment method: international bank transfer or agreed platform.</p>
-          <h3>4. Cancellations, Refunds & Chargebacks</h3>
-          <ul>
-            <li><strong>Refund within 7 days:</strong> subscription cancelled, no commission owed.</li>
-            <li><strong>After 7 days:</strong> SlotlyCare does not refund. Commission already paid remains valid.</li>
-            <li><strong>Chargebacks:</strong> SlotlyCare reserves the right to deduct the corresponding value from future commissions or request refund from the partner.</li>
-          </ul>
-          <h3>5. Communication & Compliance</h3>
-          <p>All communication to the partner's base is conducted by SlotlyCare with prior authorization. Every material is produced by SlotlyCare and validated by the partner before sending. The partner may not use the SlotlyCare brand for other purposes. SlotlyCare will not use the partner's name without express authorization.</p>
-          <h3>6. Program Termination</h3>
-          <p>Either party may terminate with 30 days written notice. SlotlyCare may terminate immediately for conduct violations, brand misuse, spam or reputational damage. Commissions for conversions confirmed before termination remain due.</p>
-          <h3>7. Launch Phase Conditions</h3>
-          <p>The conditions — US$ 948.00 price, 30% partner discount, and 40% commission — are valid exclusively during the launch phase. SlotlyCare may end this phase at any time with 30 days notice to active partners.</p>
-          <h3>8. General Provisions</h3>
-          <ul>
-            <li>Amendments must be communicated in writing and accepted by both parties.</li>
-            <li>In case of conflict, the Operational Annex prevails over the main document.</li>
-            <li>Unforeseeable matters will be resolved in good faith between the parties.</li>
-          </ul>
-          <div class="terms-version">Version 1.1 — February 2026 · contact@slotlycare.com · slotlycare.com</div>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1.5rem">Version 2.0 — February 2026</p>
+
+          <h3>What this document is</h3>
+          <p>These terms describe how the SlotlyCare partner program works — how conversions are tracked, how commissions are calculated, and how payments are made. Everything here reflects exactly what is shown on this page. No surprises, no fine print.</p>
+
+          <h3>1. How conversions are tracked</h3>
+          <p>Every partnership comes with two independent tracking mechanisms: an exclusive coupon code and a dedicated landing page at slotlycare.com/yourorganization. A conversion is recorded when a healthcare professional completes a SlotlyCare subscription using your coupon.</p>
+          <p>Each subscription is attributed to a single partner. If a professional was in contact with more than one partner, the commission belongs exclusively to whoever's coupon was used at the moment of purchase. There is no split attribution. Subscriptions completed without a coupon do not generate commission.</p>
+
+          <h3>2. Reports and transparency</h3>
+          <p>SlotlyCare sends a monthly report to each partner by the 10th of the following month. The report includes: subscriptions attributed, subscription value, commission owed, and payment status. Every conversion is documented in Stripe — full traceability on every transaction.</p>
+
+          <h3>3. Commissions and payments</h3>
+          <p>The commission is 40% of each subscription completed through your coupon — US$ 265.44 per conversion, based on the partner price of US$ 663.60.</p>
+          <p>Payment is made within 30 days after the 7-day money-back guarantee window closes. In practice, this means approximately D+45 from the purchase date. Payment method: international bank transfer or mutually agreed platform.</p>
+          <p>If a refund is requested within the 7-day window, no commission is owed. After 7 days, the subscription is final and the commission remains valid regardless of any dispute.</p>
+
+          <h3>4. Your brand and ours</h3>
+          <p>SlotlyCare will never use your organization's name or brand in any public communication.</p>
+          <p>In return, the partner may not use the SlotlyCare brand, logo, or content for purposes outside this program without prior written authorization.</p>
+
+          <h3>5. Launch phase conditions</h3>
+          <p>The current conditions — US$ 948.00 product price, 30% exclusive discount for your base, and 40% commission — are valid during SlotlyCare's launch phase. They may change at any time, with 30 days notice to active partners. Conversions confirmed before any change keep their original conditions and payment is guaranteed.</p>
+
+          <h3>6. Ending the partnership</h3>
+          <p>Either party may end the partnership with 30 days notice. SlotlyCare may terminate immediately in cases of brand misuse, spam, or conduct that causes reputational damage. Commissions for conversions confirmed before termination remain due and will be paid normally.</p>
+
+          <div class="terms-version">Version 2.0 — February 2026 · <script>document.write('<a href="mailto:partners@slotlycare.com">partners@slotlycare.com</a>')</script> · slotlycare.com</div>
         </div>
       </div>
     </div>
   </div>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     function toggleFaq(btn) {
       const item = btn.parentElement;
       const isOpen = item.classList.contains('open');
@@ -1207,6 +1200,7 @@
       const org = document.getElementById('inputOrg').value.trim();
       const email = document.getElementById('inputEmail').value.trim();
       if (!name || !org || !email) { alert('Please fill in your name, organization and email.'); return; }
+      if (!document.getElementById('agreeTerms').checked) { alert('Please read and agree to the program terms to continue.'); return; }
       const subject = encodeURIComponent('Partner Program — ' + org);
       const body = encodeURIComponent(
         'Name: ' + name + '\nOrganization: ' + org + '\nEmail: ' + email +
@@ -1230,13 +1224,10 @@
       document.getElementById('totalCommission').textContent = 'US$ ' + commission.toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0});
       document.getElementById('convCount').textContent = 'Based on ~' + conversions + ' conversion' + (conversions !== 1 ? 's' : '');
     }
-
     updateSim();
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
     }, { threshold: 0.08 });
-
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   </script>
 </body>
