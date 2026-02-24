@@ -17,11 +17,11 @@
       "destination": "/invite.html"
     },
     {
-      "source": "/partners",
+      "source": "/partnership-invitation",
       "destination": "/partners.html"
     },
     {
-      "source": "/partners/:slug",
+      "source": "/partnership-invitation/:slug",
       "destination": "/partners.html"
     },
     {
