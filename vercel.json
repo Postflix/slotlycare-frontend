@@ -17,6 +17,14 @@
       "destination": "/invite.html"
     },
     {
+      "source": "/partners",
+      "destination": "/partners.html"
+    },
+    {
+      "source": "/partners/:slug",
+      "destination": "/partners.html"
+    },
+    {
       "source": "/:doctor",
       "destination": "/paciente.html"
     }
