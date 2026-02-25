@@ -1317,14 +1317,14 @@ textarea {
                 <!-- Link preview -->
                 <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; text-align: center;">
                     <div style="font-family: monospace; font-size: 0.82rem; color: #059669; word-break: break-all;">
-                        slotlycare.com/invite/<span id="assocLinkDoctorSlug" style="font-weight: 700;"></span>/<span style="font-weight: 700; color: #10B981;">___</span>
+                        slotlycare.com/invite/<span id="assocLinkDoctorSlug" style="font-weight: 700;"></span>/<span id="assocLinkInviteeSlug" style="font-weight: 700; color: #10B981;">___</span>
                     </div>
                 </div>
 
                 <div id="assocRows" style="max-height: 260px; overflow-y: auto; padding-right: 4px; margin-bottom: 4px;"><!-- Dynamic rows --></div>
 
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding: 8px 12px; background: #F5F3FF; border: 1px solid #DDD6FE; border-radius: 8px;">
-                    <input type="checkbox" id="assocEmailToggle" onchange="toggleAssocFields()">
+                    <input type="checkbox" id="assocEmailToggle" onchange="toggleAssocFields()" style="accent-color: #7C3AED; width: 16px; height: 16px; cursor: pointer;">
                     <label for="assocEmailToggle" style="font-size: 0.83rem; color: #5B21B6; cursor: pointer; line-height: 1.3;" data-i18n="assoc_we_send_toggle">Want SlotlyCare to reach out for you?</label>
                 </div>
 
@@ -3031,10 +3031,15 @@ function switchReferralTab(tab) {
     tA.style.background = isColleagues ? 'transparent' : 'white';
 }
 
-function initAssocRows() {
-    const container = document.getElementById('assocRows');
-    if (container && container.innerHTML.trim() === '<!-- Dynamic rows -->') {
-        container.innerHTML = createAssocRowHTML(0);
+function onAssocNameInput(input, index) {
+    // Update live preview from the first assoc row
+    if (index === 0) {
+        const slug = nameToSlug(input.value);
+        const previewEl = document.getElementById('assocLinkInviteeSlug');
+        if (previewEl) {
+            previewEl.textContent = slug || '___';
+            previewEl.style.color = slug ? '#059669' : '#10B981';
+        }
     }
 }
 
@@ -3043,7 +3048,7 @@ function createAssocRowHTML(index) {
     return `
     <div class="referral-row" id="aRow${index}" style="margin-bottom: 10px;">
         <div style="display: flex; gap: 8px; align-items: center;">
-            <input type="text" placeholder="Association / Group name" style="flex: 1; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem;">
+            <input type="text" placeholder="Association / Group name" class="assoc-name-input" oninput="onAssocNameInput(this, ${index})" style="flex: 1; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem;">
             ${index > 0 ? `<button onclick="removeAssocRow(${index})" style="background: none; border: none; color: #EF4444; cursor: pointer; font-size: 0.8rem; padding: 4px 8px; white-space: nowrap;">✕</button>` : '<div style="width: 30px;"></div>'}
         </div>
         <div class="assoc-contact-row" id="aContact${index}" style="display: ${showContact ? 'flex' : 'none'}; gap: 6px; align-items: center; margin-top: 6px;">
@@ -3178,6 +3183,10 @@ function openReferralModal() {
     if (document.getElementById('assocLinkDoctorSlug')) {
         document.getElementById('assocLinkDoctorSlug').textContent = savedDoctorLink || '';
     }
+    if (document.getElementById('assocLinkInviteeSlug')) {
+        document.getElementById('assocLinkInviteeSlug').textContent = '___';
+        document.getElementById('assocLinkInviteeSlug').style.color = '#10B981';
+    }
 
     // Reset colleague rows
     referralRowCounter = 0;
@@ -3250,14 +3259,22 @@ function showReferralMessage(text, type) {
 async function sendBatchReferrals() {
     const lang = translations[currentLanguage] || translations['en'];
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const contactToggleOn = document.getElementById('referralEmailToggle').checked;
     
-    // Collect only colleague rows (not assoc rows)
-    const rows = document.querySelectorAll('#referralRows .referral-row');
+    // Detect which panel is active
+    const isAssocTab = document.getElementById('panelAssociations').style.display !== 'none';
+    
+    const contactToggleOn = isAssocTab
+        ? document.getElementById('assocEmailToggle').checked
+        : document.getElementById('referralEmailToggle').checked;
+    
+    // Collect rows from the active panel
+    const rowsSelector = isAssocTab ? '#assocRows .referral-row' : '#referralRows .referral-row';
+    const rows = document.querySelectorAll(rowsSelector);
     const referrals = [];
     
     for (const row of rows) {
-        const name = row.querySelector('.referral-name-input').value.trim();
+        const nameInput = row.querySelector('.assoc-name-input') || row.querySelector('.referral-name-input');
+        const name = nameInput ? nameInput.value.trim() : '';
         const contactInput = row.querySelector('.referral-contact-input');
         const contactType = row.querySelector('.referral-contact-type');
         const contact = contactInput ? contactInput.value.trim() : '';
