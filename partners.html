@@ -1254,7 +1254,7 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
         document.title = 'SlotlyCare — Partner Program · ' + org;
         // Footer exclusive line
         const footerEl = document.getElementById('footerExclusive');
-        footerEl.textContent = 'This page was created exclusively for ' + org + '.';
+        footerEl.innerHTML = 'This page was created exclusively for <strong>' + org + '</strong>.';
         footerEl.style.display = 'block';
       } catch(e) {}
     })();
