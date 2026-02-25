@@ -1093,12 +1093,12 @@ textarea {
                     data-i18n="referral_button">👥 Refer Colleagues & Associations</button>
                 </div>
 
+                <div style="font-size: 0.8rem; color: #1E40AF; margin-bottom: 12px; line-height: 1.5;" data-i18n="referral_link_explain">Refer colleagues to join SlotlyCare under the same conditions you have today. Each one receives a personalized invitation link.</div>
+
                 <div style="font-size: 0.85rem; color: #1E40AF; margin-bottom: 8px; font-weight: 600;" data-i18n="referral_your_link">🔗 Your personal referral link:</div>
                 <div style="background: white; border: 1px solid #BFDBFE; border-radius: 8px; padding: 10px 14px; font-family: monospace; font-size: 0.82rem; color: #2563EB; word-break: break-all;">
                     slotlycare.com/invite/<span id="referralLinkPreviewSlug" style="font-weight: 700;"></span>
                 </div>
-                <div style="font-size: 0.78rem; color: #3B82F6; margin-top: 6px;" data-i18n="referral_link_note">Each colleague you invite receives their own personalized link.</div>
-                <div style="font-size: 0.78rem; color: #1E40AF; margin-top: 8px; font-weight: 600;" data-i18n="referral_link_explain">Your colleagues deserve to lock in 3 years at founders pricing.</div>
             </div>
 
             <!-- Referral Stats Panel -->
@@ -1129,7 +1129,7 @@ textarea {
                     font-size: 0.82rem; cursor: pointer; font-family: inherit; transition: all 0.2s;
                 " onmouseover="this.style.borderColor='var(--primary-color)';this.style.color='var(--primary-color)'"
                    onmouseout="this.style.borderColor='var(--border-color)';this.style.color='var(--text-muted)'">Send feedback</button>
-                <span id="opinionSentMsg" style="display:none; font-size:0.82rem; color:#10B981; margin-left:10px;" data-i18n="opinion_sent">✅ Sent. Thank you!</span>
+                <span id="opinionSentMsg" style="display:none; font-size:0.82rem; color:#10B981; margin-left:10px;" data-i18n="opinion_sent">✅ Received. You took the time to write — we'll take the time to answer.</span>
             </div>
         </div>
     </div>
@@ -1446,8 +1446,7 @@ const translations = {
         referral_copied_all: "✅ All links copied!",
         referral_personalized_note: "Each colleague will see a personalized page with your recommendation.",
         referral_your_link: "🔗 Your personal referral link:",
-        referral_link_note: "Each colleague you invite receives their own personalized link.",
-        referral_link_explain: "Your colleagues deserve to lock in 3 years at founders pricing.",
+        referral_link_explain: "Refer colleagues to join SlotlyCare under the same conditions you have today. Each one receives a personalized invitation link.",
         referral_we_send_toggle: "Want SlotlyCare to send the invitation for you?",
         referral_we_send_whatsapp: "SlotlyCare will send via WhatsApp",
         referral_we_send_email: "SlotlyCare will send via email",
@@ -1472,7 +1471,7 @@ const translations = {
         opinion_hint: "Feel free to suggest any improvement to SlotlyCare. We'll get back to you with a honest answer on whether it's something we can build.",
         opinion_placeholder: "I'd love to see...",
         opinion_btn: "Send feedback",
-        opinion_sent: "✅ Sent. Thank you!",
+        opinion_sent: "✅ Received. You took the time to write — we'll take the time to answer.",
         referral_see_details: "See details",
         placeholders: {
             doctorName: "Dr. John",
@@ -1542,8 +1541,7 @@ const translations = {
         referral_copied_all: "✅ Todos os links copiados!",
         referral_personalized_note: "Cada colega verá uma página personalizada com sua recomendação.",
         referral_your_link: "🔗 Seu link pessoal de indicação:",
-        referral_link_note: "Cada colega que você indicar recebe um link personalizado.",
-        referral_link_explain: "Seus colegas merecem garantir 3 anos pelo preço de fundadores.",
+        referral_link_explain: "Indique colegas para assinarem o SlotlyCare nas mesmas condições que você tem hoje. Cada um receberá um link de convite personalizado.",
         referral_we_send_toggle: "Quer que a SlotlyCare envie o convite por você?",
         referral_we_send_whatsapp: "SlotlyCare enviará via WhatsApp",
         referral_we_send_email: "SlotlyCare enviará via email",
@@ -1568,7 +1566,7 @@ const translations = {
         opinion_hint: "Fique à vontade para sugerir melhorias para o SlotlyCare. Daremos um retorno honesto sobre o que é possível construir.",
         opinion_placeholder: "Eu adoraria ver...",
         opinion_btn: "Enviar sugestão",
-        opinion_sent: "✅ Enviado. Obrigado!",
+        opinion_sent: "✅ Recebido. Você dedicou tempo para escrever — nós vamos dedicar tempo para responder.",
         referral_see_details: "Ver detalhes",
         placeholders: {
             doctorName: "Dr. João",
@@ -1638,8 +1636,7 @@ const translations = {
         referral_copied_all: "✅ ¡Todos los enlaces copiados!",
         referral_personalized_note: "Cada colega verá una página personalizada con tu recomendación.",
         referral_your_link: "🔗 Tu enlace personal de referencia:",
-        referral_link_note: "Cada colega que invites recibe su propio enlace personalizado.",
-        referral_link_explain: "Tus colegas merecen asegurar 3 años al precio de fundadores.",
+        referral_link_explain: "Recomiende colegas para que se unan a SlotlyCare en las mismas condiciones que usted tiene hoy. Cada uno recibirá un enlace de invitación personalizado.",
         referral_we_send_toggle: "¿Quieres que SlotlyCare envíe la invitación por ti?",
         referral_we_send_whatsapp: "SlotlyCare enviará por WhatsApp",
         referral_we_send_email: "SlotlyCare enviará por email",
@@ -1664,7 +1661,7 @@ const translations = {
         opinion_hint: "Siéntete libre de sugerir mejoras para SlotlyCare. Te responderemos con honestidad sobre si es algo que podemos construir.",
         opinion_placeholder: "Me encantaría ver...",
         opinion_btn: "Enviar sugerencia",
-        opinion_sent: "✅ Enviado. ¡Gracias!",
+        opinion_sent: "✅ Recibido. Usted dedicó tiempo a escribir — nosotros dedicaremos tiempo a responder.",
         referral_see_details: "Ver detalles",
         placeholders: {
             doctorName: "Dr. Juan",
@@ -1734,8 +1731,7 @@ const translations = {
         referral_copied_all: "✅ Tous les liens copiés !",
         referral_personalized_note: "Chaque collègue verra une page personnalisée avec votre recommandation.",
         referral_your_link: "🔗 Votre lien personnel de parrainage :",
-        referral_link_note: "Chaque collègue que vous invitez reçoit son propre lien personnalisé.",
-        referral_link_explain: "Vos collègues méritent de bloquer 3 ans au tarif fondateurs.",
+        referral_link_explain: "Recommandez à vos collègues de rejoindre SlotlyCare aux mêmes conditions que vous avez aujourd'hui. Chacun recevra un lien d'invitation personnalisé.",
         referral_we_send_toggle: "Vous voulez que SlotlyCare envoie l'invitation pour vous ?",
         referral_we_send_whatsapp: "SlotlyCare enverra par WhatsApp",
         referral_we_send_email: "SlotlyCare enverra par email",
@@ -1760,7 +1756,7 @@ const translations = {
         opinion_hint: "N'hésitez pas à suggérer des améliorations pour SlotlyCare. Nous vous répondrons honnêtement sur ce que nous pouvons construire.",
         opinion_placeholder: "J'aimerais voir...",
         opinion_btn: "Envoyer un avis",
-        opinion_sent: "✅ Envoyé. Merci !",
+        opinion_sent: "✅ Reçu. Vous avez pris le temps d'écrire — nous prendrons le temps de répondre.",
         referral_see_details: "Voir les détails",
         placeholders: {
             doctorName: "Dr. Jean",
@@ -1830,8 +1826,7 @@ const translations = {
         referral_copied_all: "✅ Alle Links kopiert!",
         referral_personalized_note: "Jeder Kollege sieht eine personalisierte Seite mit Ihrer Empfehlung.",
         referral_your_link: "🔗 Ihr persönlicher Empfehlungslink:",
-        referral_link_note: "Jeder Kollege, den Sie einladen, erhält einen eigenen personalisierten Link.",
-        referral_link_explain: "Ihre Kollegen verdienen es, 3 Jahre zum Gründer-Preis zu sichern.",
+        referral_link_explain: "Empfehlen Sie Kollegen, SlotlyCare zu den gleichen Konditionen beizutreten, die Sie heute haben. Jeder erhält einen personalisierten Einladungslink.",
         referral_we_send_toggle: "Möchten Sie, dass SlotlyCare die Einladung für Sie sendet?",
         referral_we_send_whatsapp: "SlotlyCare sendet per WhatsApp",
         referral_we_send_email: "SlotlyCare sendet per E-Mail",
@@ -1856,7 +1851,7 @@ const translations = {
         opinion_hint: "Schlagen Sie gerne Verbesserungen für SlotlyCare vor. Wir antworten ehrlich, ob wir es umsetzen können.",
         opinion_placeholder: "Ich würde gerne sehen...",
         opinion_btn: "Feedback senden",
-        opinion_sent: "✅ Gesendet. Danke!",
+        opinion_sent: "✅ Erhalten. Sie haben sich Zeit zum Schreiben genommen — wir werden uns Zeit zum Antworten nehmen.",
         referral_see_details: "Details ansehen",
         placeholders: {
             doctorName: "Dr. Hans",
@@ -1926,8 +1921,7 @@ const translations = {
         referral_copied_all: "✅ Tutti i link copiati!",
         referral_personalized_note: "Ogni collega vedrà una pagina personalizzata con la tua raccomandazione.",
         referral_your_link: "🔗 Il tuo link personale di referral:",
-        referral_link_note: "Ogni collega che inviti riceve il proprio link personalizzato.",
-        referral_link_explain: "I tuoi colleghi meritano di bloccare 3 anni al prezzo dei fondatori.",
+        referral_link_explain: "Consiglia ai colleghi di unirsi a SlotlyCare alle stesse condizioni che hai oggi. Ognuno riceverà un link di invito personalizzato.",
         referral_we_send_toggle: "Vuoi che SlotlyCare invii l'invito per te?",
         referral_we_send_whatsapp: "SlotlyCare invierà tramite WhatsApp",
         referral_we_send_email: "SlotlyCare invierà tramite email",
@@ -1952,7 +1946,7 @@ const translations = {
         opinion_hint: "Sentiti libero di suggerire miglioramenti per SlotlyCare. Ti risponderemo onestamente su ciò che possiamo costruire.",
         opinion_placeholder: "Mi piacerebbe vedere...",
         opinion_btn: "Invia feedback",
-        opinion_sent: "✅ Inviato. Grazie!",
+        opinion_sent: "✅ Ricevuto. Hai dedicato tempo a scrivere — noi dedicheremo tempo a rispondere.",
         referral_see_details: "Vedi dettagli",
         placeholders: {
             doctorName: "Dr. Giovanni",
@@ -3104,9 +3098,9 @@ function saveOpinion() {
     document.getElementById('opinionTextarea').value = '';
     const lang = translations[currentLanguage] || translations['en'];
     const sentMsg = document.getElementById('opinionSentMsg');
-    sentMsg.textContent = lang.opinion_sent || '✅ Sent. Thank you!';
+    sentMsg.textContent = lang.opinion_sent || '✅ Received. You took the time to write — we\'ll take the time to answer.';
     sentMsg.style.display = 'inline';
-    setTimeout(() => { sentMsg.style.display = 'none'; }, 4000);
+    setTimeout(() => { sentMsg.style.display = 'none'; }, 6000);
 }
 
 function createReferralRowHTML(index) {
