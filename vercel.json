@@ -28,6 +28,18 @@
       "destination": "/partners.html"
     },
     {
+      "source": "/cremesp",
+      "destination": "/partner-page.html"
+    },
+    {
+      "source": "/medvet",
+      "destination": "/partner-page.html"
+    },
+    {
+      "source": "/apcd",
+      "destination": "/partner-page.html"
+    },
+    {
       "source": "/:doctor",
       "destination": "/paciente.html"
     }
