@@ -17,7 +17,8 @@
             discount: 30,
             originalPrice: 948,
             checkoutUrl: "https://buy.stripe.com/XXXXXX",
-            accessYears: 3
+            accessYears: 3,
+            status: "preview"  // "preview" or "active"
         };
         PARTNER.finalPrice = Math.round(PARTNER.originalPrice * (1 - PARTNER.discount / 100));
         PARTNER.savings = PARTNER.originalPrice - PARTNER.finalPrice;
@@ -68,6 +69,43 @@
             font-weight: 600;
             letter-spacing: 0.04em;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        /* Preview Banner */
+        .preview-banner {
+            display: none;
+            background: #FFFBEB;
+            border-bottom: 2px solid #FDE68A;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+
+        .preview-banner.visible {
+            display: block;
+        }
+
+        .preview-banner-inner {
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .preview-banner-icon {
+            font-size: 1.1rem;
+        }
+
+        .preview-banner-text {
+            font-size: 0.85rem;
+            color: #92400E;
+            line-height: 1.5;
+        }
+
+        .preview-banner-text strong {
+            font-weight: 700;
         }
 
         /* Navigation */
@@ -1613,6 +1651,14 @@
         🤝 &nbsp; Exclusive benefit for <strong id="partnerBarName">Your Organization</strong> members: 30% OFF + 3 year access
     </div>
 
+    <!-- Preview Banner -->
+    <div class="preview-banner" id="previewBanner">
+        <div class="preview-banner-inner">
+            <span class="preview-banner-icon">👁️</span>
+            <span class="preview-banner-text"><strong>Preview mode.</strong> This is a preview of what your member page would look like. Your exclusive coupon and link will be activated after the partnership is confirmed.</span>
+        </div>
+    </div>
+
     <!-- Navigation -->
     <nav>
         <a href="https://slotlycare.com" class="logo">
@@ -2403,6 +2449,12 @@
             localStorage.setItem('slotlycare_reserved_slug', slug);
             localStorage.setItem('slotlycare_reserved_name', nameInput.value.trim());
 
+            // Block checkout in preview mode
+            if (PARTNER.status === 'preview') {
+                alert('This page is in preview mode. The checkout will be available once the partnership is confirmed.');
+                return;
+            }
+
             window.location.href = PARTNER.checkoutUrl;
         }
 
@@ -2503,6 +2555,9 @@
             // Partner bar
             document.getElementById('partnerBarName').textContent = p.name;
             
+            // Page title
+            document.title = 'SlotlyCare — Exclusive Benefit · ' + p.name;
+            
             // Hero badge
             document.getElementById('heroBadge').textContent = p.name + ' exclusive — launch condition';
             
@@ -2520,6 +2575,11 @@
             
             // Footer
             document.getElementById('footerPartnerName').textContent = p.name;
+            
+            // Preview mode
+            if (p.status === 'preview') {
+                document.getElementById('previewBanner').classList.add('visible');
+            }
         })();
     </script>
 </body>
