@@ -662,7 +662,7 @@
     </p>
 
     <div class="hero-actions">
-      <a href="https://slotlycare.com" class="btn-outline" target="_blank">Explore the product →</a>
+      <a id="exploreBtn" href="https://slotlycare.com" class="btn-outline" target="_blank">Explore the product →</a>
       <button class="btn-primary" onclick="openContact()">Become a Partner</button>
     </div>
 
@@ -966,7 +966,7 @@
           <span class="sim-label">Health professionals in your base</span>
           <span class="sim-value" id="baseSize">500</span>
         </div>
-        <input type="range" id="baseSlider" min="50" max="5000" step="50" value="500" oninput="updateSim()" />
+        <input type="range" id="baseSlider" min="50" max="50000" step="50" value="500" oninput="updateSim()" />
 
         <div class="sim-row">
           <span class="sim-label">Estimated conversion rate</span>
@@ -1250,6 +1250,7 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
         document.getElementById('badgeOrg').textContent = org;
         document.getElementById('previewNoteOrg').textContent = org;
         document.getElementById('partnerSlug').textContent = slug;
+        document.getElementById('exploreBtn').href = 'https://slotlycare.com/' + slug;
         document.title = 'SlotlyCare — Partner Program · ' + org;
         // Footer exclusive line
         const footerEl = document.getElementById('footerExclusive');
