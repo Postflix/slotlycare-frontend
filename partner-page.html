@@ -7,18 +7,19 @@
     <title>SlotlyCare — Exclusive Partner Benefit</title>
 
     <!-- ============================================
-         PARTNER CONFIGURATION
-         This will be replaced by partners.json dynamic system.
-         For now, edit ONLY this block for each partner.
+         PARTNER DATA
+         Loaded dynamically from partners.json.
+         No manual editing needed per partner.
     ============================================= -->
     <script>
+        // Will be populated from partners.json
         const PARTNER = {
             name: "Your Organization",
             discount: 30,
             originalPrice: 948,
-            checkoutUrl: "https://buy.stripe.com/XXXXXX",
+            checkoutUrl: null,
             accessYears: 3,
-            status: "preview"  // "preview" or "active"
+            status: "preview"
         };
         PARTNER.finalPrice = Math.round(PARTNER.originalPrice * (1 - PARTNER.discount / 100));
         PARTNER.savings = PARTNER.originalPrice - PARTNER.finalPrice;
@@ -2548,37 +2549,69 @@
       });
     </script>
     <script>
-        // Initialize partner-specific content
-        (function initPartner() {
-            const p = PARTNER;
-            
-            // Partner bar
-            document.getElementById('partnerBarName').textContent = p.name;
-            
-            // Page title
-            document.title = 'SlotlyCare — Exclusive Benefit · ' + p.name;
-            
-            // Hero badge
-            document.getElementById('heroBadge').textContent = p.name + ' exclusive — launch condition';
-            
-            // Pricing section
-            document.getElementById('pricingYears').textContent = p.accessYears;
-            document.getElementById('pricingBadge').textContent = p.name + ' Exclusive — Not Available Publicly';
-            document.getElementById('pricingAccessYears').textContent = p.accessYears;
-            document.getElementById('priceOriginal').textContent = p.originalPrice;
-            document.getElementById('priceFinal').textContent = p.finalPrice;
-            document.getElementById('priceSavings').textContent = p.savings;
-            document.getElementById('priceDiscountPct').textContent = p.discount;
-            document.getElementById('priceDescYears').textContent = p.accessYears;
-            document.getElementById('priceMonthly').textContent = p.monthlyEquiv;
-            document.getElementById('pricingPartnerName').textContent = p.name;
-            
-            // Footer
-            document.getElementById('footerPartnerName').textContent = p.name;
-            
-            // Preview mode
-            if (p.status === 'preview') {
-                document.getElementById('previewBanner').classList.add('visible');
+        // Dynamic partner loading from partners.json
+        (async function initPartner() {
+            // Read slug from URL path (e.g., slotlycare.com/unimed → "unimed")
+            const parts = location.pathname.split('/').filter(Boolean);
+            const slug = parts[0] || null;
+
+            if (!slug) return;
+
+            try {
+                const res = await fetch('/partners.json');
+                if (!res.ok) return;
+                const data = await res.json();
+                const partner = data.partners && data.partners[slug];
+
+                if (!partner) {
+                    // Not a partner slug — redirect to homepage
+                    window.location.replace('https://slotlycare.com');
+                    return;
+                }
+
+                // Populate PARTNER object
+                PARTNER.name = partner.organization;
+                PARTNER.discount = partner.discount || 30;
+                PARTNER.originalPrice = partner.originalPrice || 948;
+                PARTNER.accessYears = partner.accessYears || 3;
+                PARTNER.checkoutUrl = partner.checkoutUrl || null;
+                PARTNER.status = partner.status || 'preview';
+                PARTNER.finalPrice = Math.round(PARTNER.originalPrice * (1 - PARTNER.discount / 100));
+                PARTNER.savings = PARTNER.originalPrice - PARTNER.finalPrice;
+                PARTNER.monthlyEquiv = (PARTNER.finalPrice / (PARTNER.accessYears * 12)).toFixed(2);
+
+                const p = PARTNER;
+
+                // Partner bar
+                document.getElementById('partnerBarName').textContent = p.name;
+
+                // Page title
+                document.title = 'SlotlyCare — Exclusive Benefit · ' + p.name;
+
+                // Hero badge
+                document.getElementById('heroBadge').textContent = p.name + ' exclusive — launch condition';
+
+                // Pricing section
+                document.getElementById('pricingYears').textContent = p.accessYears;
+                document.getElementById('pricingBadge').textContent = p.name + ' Exclusive — Not Available Publicly';
+                document.getElementById('pricingAccessYears').textContent = p.accessYears;
+                document.getElementById('priceOriginal').textContent = p.originalPrice;
+                document.getElementById('priceFinal').textContent = p.finalPrice;
+                document.getElementById('priceSavings').textContent = p.savings;
+                document.getElementById('priceDiscountPct').textContent = p.discount;
+                document.getElementById('priceDescYears').textContent = p.accessYears;
+                document.getElementById('priceMonthly').textContent = p.monthlyEquiv;
+                document.getElementById('pricingPartnerName').textContent = p.name;
+
+                // Footer
+                document.getElementById('footerPartnerName').textContent = p.name;
+
+                // Preview mode
+                if (p.status === 'preview') {
+                    document.getElementById('previewBanner').classList.add('visible');
+                }
+            } catch(e) {
+                // If partners.json fails, page shows with default values
             }
         })();
     </script>
