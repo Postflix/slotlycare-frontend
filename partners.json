@@ -1,12 +1,36 @@
 {
   "prospects": {
-    "exemplo": {
-      "organization": "Example Organization"
+    "cremesp": {
+      "organization": "Conselho Regional de Medicina"
+    },
+    "medvet": {
+      "organization": "Medicina Veterinária"
+    },
+    "apcd": {
+      "organization": "Associação Paulista de Crianças com Deficiência"
     }
   },
   "partners": {
-    "exemplo-partner": {
-      "organization": "Example Partner Org",
+    "cremesp": {
+      "organization": "Conselho Regional de Medicina",
+      "status": "preview",
+      "discount": 30,
+      "originalPrice": 948,
+      "accessYears": 3,
+      "checkoutUrl": null,
+      "coupon": null
+    },
+    "medvet": {
+      "organization": "Medicina Veterinária",
+      "status": "preview",
+      "discount": 30,
+      "originalPrice": 948,
+      "accessYears": 3,
+      "checkoutUrl": null,
+      "coupon": null
+    },
+    "apcd": {
+      "organization": "Associação Paulista de Crianças com Deficiência",
       "status": "preview",
       "discount": 30,
       "originalPrice": 948,
