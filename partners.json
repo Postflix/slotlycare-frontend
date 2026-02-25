@@ -1,7 +1,18 @@
 {
   "prospects": {
-    "usp": {
-      "organization": "Universidade de São Paulo"
+    "exemplo": {
+      "organization": "Example Organization"
+    }
+  },
+  "partners": {
+    "exemplo-partner": {
+      "organization": "Example Partner Org",
+      "status": "preview",
+      "discount": 30,
+      "originalPrice": 948,
+      "accessYears": 3,
+      "checkoutUrl": null,
+      "coupon": null
     }
   }
 }
