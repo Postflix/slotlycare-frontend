@@ -22,12 +22,12 @@
     },
     "medvet": {
       "organization": "Medicina Veterinária",
-      "status": "preview",
+      "status": "active",
       "discount": 30,
       "originalPrice": 948,
       "accessYears": 3,
-      "checkoutUrl": null,
-      "coupon": null
+      "checkoutUrl": "https://buy.stripe.com/aFa7sL1c11jb7vP0F1dwc05",
+      "coupon": "MEDVET30"
     },
     "apcd": {
       "organization": "Associação Paulista de Crianças com Deficiência",
