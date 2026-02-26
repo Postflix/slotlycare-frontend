@@ -1568,7 +1568,7 @@
         </a>
         <div class="nav-links">
             <a href="login.html" class="nav-login">Log in</a>
-            <a href="#" onclick="handleReserveLink(); return false;" class="nav-cta">Start Free Trial →</a>
+            <a href="#" onclick="handleReserveLink(); return false;" class="nav-cta">Get Started →</a>
         </div>
     </nav>
 
@@ -1614,11 +1614,11 @@
                         <circle cx="12" cy="12" r="10" stroke-width="2"/>
                         <path stroke-linecap="round" stroke-width="2" d="M12 6v6l4 2"/>
                     </svg>
-                    <span>Reserved for <strong id="timerCount">15:00</strong> — start your free trial to secure it.</span>
+                    <span>Reserved for <strong id="timerCount">15:00</strong> — subscribe now to secure it.</span>
                 </div>
             </div>
 
-            <a href="#" onclick="handleReserveLink(); return false;" class="reserve-btn">Start Free Trial →</a>
+            <a href="#" onclick="handleReserveLink(); return false;" class="reserve-btn">Reserve Your Link →</a>
 
 
         </div>
@@ -1892,7 +1892,7 @@
         
         <div class="pricing-card">
             <h3>3-Year Access</h3>
-            <p style="color: var(--accent); font-size: 0.9rem; font-weight: 600; margin-bottom: 1.25rem; background: var(--accent-light); padding: 0.6rem 1rem; border-radius: 8px; display: inline-block;">🎁 Start with a free 7-day trial. No credit card required.</p>
+            <p style="color: var(--accent); font-size: 0.9rem; font-weight: 600; margin-bottom: 1.25rem; background: var(--accent-light); padding: 0.6rem 1rem; border-radius: 8px; display: inline-block;">🔒 Founders-only pricing. Limited availability.</p>
             <div class="price">$948</div>
             <p class="price-description">One payment. <strong>3 years</strong> of access.</p>
             <p style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">$26/month — less than one consultation.</p>
@@ -1908,8 +1908,8 @@
                 <li>Priority founder support</li>
             </ul>
             
-            <button class="pricing-cta" onclick="handleReserveLink()">START FREE TRIAL — NO CREDIT CARD REQUIRED</button>
-            <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 1rem;">Your link becomes permanently yours when you subscribe.</p>
+            <button class="pricing-cta" onclick="handleReserveLink()">RESERVE YOUR PERSONAL LINK</button>
+            <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 1rem;">7-day money-back guarantee. Your link is permanently yours.</p>
         </div>
     </section>
 
@@ -1941,8 +1941,8 @@
                     <p class="faq-answer">Yes! When you subscribe, you get a personalized booking link and a simple embed code. Just share it with your webdesigner or whoever manages your site — they can add it in under 2 minutes, no technical skills required. And if you don't have a website, no worries — your SlotlyCare link works perfectly on its own. Share it on social media, WhatsApp, email signature, or anywhere you connect with patients.</p>
                 </div>
                 <div class="faq-item">
-                    <h3 class="faq-question">How does the free trial work?</h3>
-                    <p class="faq-answer">You get full access to all features for 7 days — no credit card required. Your personalized link is yours to test during this period. Your link becomes permanently yours once you subscribe.</p>
+                    <h3 class="faq-question">Is there a money-back guarantee?</h3>
+                    <p class="faq-answer">Yes. If you're not satisfied within 7 days of subscribing, contact us and we'll issue a full refund — no questions asked.</p>
                 </div>
                 <div class="faq-item">
                     <h3 class="faq-question">What happens after 3 years?</h3>
@@ -2244,7 +2244,7 @@
             } else {
                 result.className = 'link-result available';
                 resultIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>';
-                resultText.innerHTML = `<strong>slotlycare.com/${slug}</strong> is available. Start your free trial to secure it.`;
+                resultText.innerHTML = `<strong>slotlycare.com/${slug}</strong> is available. Subscribe now to secure it.`;
                 lastVerifiedSlug = slug;
                 lastSlugAvailable = true;
                 startReservationTimer();
