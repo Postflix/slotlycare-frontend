@@ -1,4 +1,18 @@
 {
-  "prospects": {},
-  "partners": {}
+  "prospects": {
+    "hmo": {
+      "organization": "Hospital Medicina dos Olhos"
+    }
+  },
+  "partners": {
+    "hmo": {
+      "organization": "Hospital Medicina dos Olhos",
+      "status": "preview",
+      "discount": 30,
+      "originalPrice": 948,
+      "accessYears": 3,
+      "checkoutUrl": null,
+      "coupon": null
+    }
+  }
 }
