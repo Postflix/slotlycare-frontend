@@ -7,12 +7,12 @@
   "partners": {
     "acm": {
       "organization": "Associação Cristã de Moços",
-      "status": "preview",
+      "status": "active",
       "discount": 30,
       "originalPrice": 948,
       "accessYears": 3,
-      "checkoutUrl": null,
-      "coupon": null
+      "checkoutUrl": "https://buy.stripe.com/7sYbJ14od2nf17rcnJdwc0b?prefilled_promo_code=ACMPARTNER30",
+      "coupon": "ACMPARTNER30"
     }
   }
 }
