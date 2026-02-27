@@ -7,12 +7,12 @@
   "partners": {
     "hmo": {
       "organization": "Hospital Medicina dos Olhos",
-      "status": "preview",
+      "status": "active",
       "discount": 30,
       "originalPrice": 948,
       "accessYears": 3,
-      "checkoutUrl": null,
-      "coupon": null
+      "checkoutUrl": "https://buy.stripe.com/28E3cv5shaTLeYh87tdwc08?prefilled_promo_code=HMO30",
+      "coupon": "HMO30"
     }
   }
 }
