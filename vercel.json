@@ -28,6 +28,10 @@
       "destination": "/partners.html"
     },
     {
+      "source": "/hmo",
+      "destination": "/partner-page.html"
+    },
+    {
       "source": "/:doctor",
       "destination": "/paciente.html"
     }
