@@ -1,42 +1,4 @@
 {
-  "prospects": {
-    "cremesp": {
-      "organization": "Conselho Regional de Medicina"
-    },
-    "medvet": {
-      "organization": "Medicina Veterinária"
-    },
-    "apcd": {
-      "organization": "Associação Paulista de Crianças com Deficiência"
-    }
-  },
-  "partners": {
-    "cremesp": {
-      "organization": "Conselho Regional de Medicina",
-      "status": "preview",
-      "discount": 30,
-      "originalPrice": 948,
-      "accessYears": 3,
-      "checkoutUrl": null,
-      "coupon": null
-    },
-    "medvet": {
-      "organization": "Medicina Veterinária",
-      "status": "active",
-      "discount": 30,
-      "originalPrice": 948,
-      "accessYears": 3,
-      "checkoutUrl": "https://buy.stripe.com/fZu3cv6wlfa1bM587tdwc07?prefilled_promo_code=MEDVET30",
-      "coupon": "MEDVET30"
-    },
-    "apcd": {
-      "organization": "Associação Paulista de Crianças com Deficiência",
-      "status": "preview",
-      "discount": 30,
-      "originalPrice": 948,
-      "accessYears": 3,
-      "checkoutUrl": null,
-      "coupon": null
-    }
-  }
+  "prospects": {},
+  "partners": {}
 }
