@@ -1,18 +1,18 @@
 {
   "prospects": {
-    "hmo": {
-      "organization": "Hospital Medicina dos Olhos"
+    "acm": {
+      "organization": "Associação Cristã de Moços"
     }
   },
   "partners": {
-    "hmo": {
-      "organization": "Hospital Medicina dos Olhos",
-      "status": "active",
+    "acm": {
+      "organization": "Associação Cristã de Moços",
+      "status": "preview",
       "discount": 30,
       "originalPrice": 948,
       "accessYears": 3,
-      "checkoutUrl": "https://buy.stripe.com/28E14nbQFe5X4jD4Vhdwc0a?prefilled_promo_code=HMOPARTNER30",
-      "coupon": "HMOPARTNER30"
+      "checkoutUrl": null,
+      "coupon": null
     }
   }
 }
