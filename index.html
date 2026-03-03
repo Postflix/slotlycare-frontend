@@ -2445,12 +2445,11 @@
                 return;
             }
 
-            // Slug is verified and available — save to localStorage and redirect to trial signup
-            localStorage.setItem('slotlycare_trial_slug', slug);
-            localStorage.setItem('slotlycare_trial_name', nameInput.value.trim());
-            localStorage.setItem('slotlycare_trial_source', 'landing');
+            // Slug is verified and available — save to localStorage and redirect to checkout
+            localStorage.setItem('slotlycare_reserved_slug', slug);
+            localStorage.setItem('slotlycare_reserved_name', nameInput.value.trim());
 
-            window.location.href = '/signup-trial.html';
+            window.location.href = '/subscribe.html';
         }
 
         // Scroll to element, highlight it, and show hint
