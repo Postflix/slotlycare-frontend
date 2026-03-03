@@ -39,10 +39,66 @@
             font-family: 'Instrument Serif', Georgia, serif;
         }
 
+        /* Ticker Bar */
+        .ticker-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            background: var(--text);
+            color: var(--white);
+            height: 36px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .ticker-bar a {
+            color: var(--white);
+            text-decoration: none;
+            display: block;
+            height: 100%;
+        }
+
+        .ticker-track {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            white-space: nowrap;
+            animation: ticker-scroll 20s linear infinite;
+        }
+
+        .ticker-track:hover {
+            animation-play-state: paused;
+        }
+
+        .ticker-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0 2.5rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .ticker-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        @keyframes ticker-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
         /* Navigation */
         nav {
             position: fixed;
-            top: 0;
+            top: 36px;
             left: 0;
             right: 0;
             padding: 1.25rem 2rem;
@@ -122,7 +178,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: center;
-            padding: 8rem 4rem 4rem;
+            padding: 10rem 4rem 4rem;
             max-width: 1300px;
             margin: 0 auto;
         }
@@ -1185,25 +1241,6 @@
             overflow: hidden;
         }
 
-        .pricing-card::before {
-            content: "FOUNDERS ONLY";
-            position: absolute;
-            top: -35px;
-            right: -35px;
-            width: 150px;
-            height: 150px;
-            background-color: var(--accent);
-            color: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-weight: 800;
-            font-size: 0.75rem;
-            transform: rotate(45deg);
-            box-shadow: 0 8px 24px rgba(13, 148, 136, 0.3);
-        }
-
         .pricing-card h3 {
             font-size: 1.75rem;
             font-weight: 800;
@@ -1275,6 +1312,40 @@
             background-color: var(--accent-dark);
             transform: translateY(-2px);
             box-shadow: 0 12px 32px rgba(13, 148, 136, 0.3);
+        }
+
+        /* Founding Progress Bar */
+        .founding-progress {
+            margin-top: 1.5rem;
+            padding: 1rem 0 0;
+        }
+
+        .founding-progress-label {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .founding-progress-bar {
+            height: 6px;
+            background: var(--border);
+            border-radius: 100px;
+            overflow: hidden;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        .founding-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+            border-radius: 100px;
+            transition: width 1.5s ease-out;
+            width: 0%;
         }
 
         /* FAQ Section */
@@ -1441,7 +1512,7 @@
         @media (max-width: 1000px) {
             .hero {
                 grid-template-columns: 1fr;
-                padding: 7rem 2rem 4rem;
+                padding: 9rem 2rem 4rem;
                 text-align: center;
             }
 
@@ -1479,7 +1550,17 @@
         }
 
         @media (max-width: 600px) {
+            .ticker-bar {
+                height: 32px;
+            }
+
+            .ticker-item {
+                font-size: 0.75rem;
+                padding: 0 2rem;
+            }
+
             nav {
+                top: 32px;
                 padding: 1rem;
                 gap: 0.5rem;
             }
@@ -1504,11 +1585,10 @@
             .pricing-card h3 {
                 font-size: 1.25rem;
                 word-break: break-word;
-                padding-right: 70px;
             }
 
             .hero {
-                padding: 6rem 1.5rem 3rem;
+                padding: 8rem 1.5rem 3rem;
             }
 
             h1 {
@@ -1556,6 +1636,20 @@
     </style>
 </head>
 <body>
+    <!-- Ticker Bar -->
+    <div class="ticker-bar">
+        <a href="#pricing">
+            <div class="ticker-track">
+                <span class="ticker-item"><span class="ticker-dot"></span>SlotlyCare is opening worldwide — Be a founding member in your country</span>
+                <span class="ticker-item"><span class="ticker-dot"></span>5-year access at founding price — Limited early access</span>
+                <span class="ticker-item"><span class="ticker-dot"></span>A new global scheduling platform for health professionals</span>
+                <span class="ticker-item"><span class="ticker-dot"></span>SlotlyCare is opening worldwide — Be a founding member in your country</span>
+                <span class="ticker-item"><span class="ticker-dot"></span>5-year access at founding price — Limited early access</span>
+                <span class="ticker-item"><span class="ticker-dot"></span>A new global scheduling platform for health professionals</span>
+            </div>
+        </a>
+    </div>
+
     <!-- Navigation -->
     <nav>
         <a href="#" class="logo">
@@ -1575,8 +1669,8 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <span class="badge">Founders Access — Limited Spots</span>
-            <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.5rem; margin-top: -0.75rem;">Pay for 1 year. Get 3 years. Price locked for 36 months.</p>
+            <span class="badge">Founding Members — Limited Early Access</span>
+            <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.5rem; margin-top: -0.75rem;">Pay for 1 year. Get 5 years. Your founding price, locked.</p>
             <h1>Marketplaces help patients find you. <span class="serif">Now control what happens next.</span></h1>
             <p class="hero-tagline">Your scheduling. Your rules. Your patients.</p>
             <p class="hero-sub">One link. Your name. Full control.<br>No chaos. No back-and-forth. No lost appointments.<br><strong>Professional scheduling infrastructure.</strong></p>
@@ -1885,31 +1979,38 @@
 
     <!-- Pricing Section -->
     <section id="pricing" class="pricing">
-        <h2>Founders Access</h2>
-        <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.1rem;">Pay for 1 year. Get 3 years. Price locked for 36 months.</p>
+        <h2>Founding Members</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.1rem;">Pay for 1 year. Get 5 years. Your founding price, locked.</p>
         
-        <div class="pricing-badge">67% OFF — Early Adopters Only</div>
+        <div class="pricing-badge">80% OFF — Founding Members Only</div>
         
         <div class="pricing-card">
-            <h3>3-Year Access</h3>
-            <p style="color: var(--accent); font-size: 0.9rem; font-weight: 600; margin-bottom: 1.25rem; background: var(--accent-light); padding: 0.6rem 1rem; border-radius: 8px; display: inline-block;">🔒 Founders-only pricing. Limited availability.</p>
+            <h3>5-Year Founding Access</h3>
+            <p style="color: var(--accent); font-size: 0.9rem; font-weight: 600; margin-bottom: 1.25rem; background: var(--accent-light); padding: 0.6rem 1rem; border-radius: 8px; display: inline-block;">🔒 Founding members pricing. Limited availability.</p>
             <div class="price">$948</div>
-            <p class="price-description">One payment. <strong>3 years</strong> of access.</p>
-            <p style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">$26/month — less than one consultation.</p>
-            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem;">This is the only founders round. After that, standard pricing applies.</p>
+            <p class="price-description">One payment. <strong>5 years</strong> of access.</p>
+            <p style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">Less than $16/month — less than one consultation.</p>
+            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem;">This is the only founding round. After that, standard pricing applies.</p>
             
             <ul class="pricing-features">
                 <li>Your personalized booking link — reserved now</li>
                 <li>Unlimited bookings — no per-booking fees, no commissions</li>
                 <li>Automatic patient reminders</li>
                 <li>AI-powered schedule generation</li>
-                <li>All new features released during the next 36 months included</li>
-                <li>No upgrade fees for founders during this period</li>
+                <li>All new features released during the next 60 months included</li>
+                <li>No upgrade fees for founding members during this period</li>
                 <li>Priority founder support</li>
             </ul>
             
             <button class="pricing-cta" onclick="handleReserveLink()">RESERVE YOUR PERSONAL LINK</button>
             <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 1rem;">7-day money-back guarantee. Your link is permanently yours.</p>
+            
+            <div class="founding-progress">
+                <div class="founding-progress-label">Early access filling up</div>
+                <div class="founding-progress-bar">
+                    <div class="founding-progress-fill" id="foundingProgress"></div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1945,8 +2046,8 @@
                     <p class="faq-answer">Yes. If you're not satisfied within 7 days of subscribing, contact us and we'll issue a full refund — no questions asked.</p>
                 </div>
                 <div class="faq-item">
-                    <h3 class="faq-question">What happens after 3 years?</h3>
-                    <p class="faq-answer">You'll have the option to renew at the then-current price. Founders who stay active will always have priority access to renewal offers. Your link remains reserved as long as your account is active.</p>
+                    <h3 class="faq-question">What happens after 5 years?</h3>
+                    <p class="faq-answer">You'll have the option to renew at the then-current price. Founding members who stay active will always have priority access to renewal offers. Your link remains reserved as long as your account is active.</p>
                 </div>
             </div>
         </div>
@@ -1990,7 +2091,7 @@
                 <li>Communicating with patients</li>
                 <li>Complying with local laws, regulations, and professional standards</li>
             </ul>
-            <p>SlotlyCare provides the platform on an "as is" basis and continuously improves its features. Pricing, access plans, and availability may evolve over time, except where explicitly stated (such as founders pricing conditions).</p>
+            <p>SlotlyCare provides the platform on an "as is" basis and continuously improves its features. Pricing, access plans, and availability may evolve over time, except where explicitly stated (such as founding members pricing conditions).</p>
             <p>SlotlyCare reserves the right to suspend or terminate accounts that violate these terms or misuse the platform.</p>
             <p>If you have questions regarding these terms, please contact us.</p>
             <p><strong>Contact:</strong> <a class="email-legal" href="#">[carregando email...]</a></p>
@@ -2005,7 +2106,7 @@
             <p>SlotlyCare supports healthcare professionals at the beginning of their independent practice.</p>
             <p>The Early Practice Program is designed for professionals who are in the early years of their career and are building their patient flow, scheduling structure, and operational processes.</p>
             <p>Eligible professionals may receive access to special conditions under this program. Eligibility criteria, availability, and conditions are evaluated individually and are not publicly advertised.</p>
-            <p>This program is separate from founders access and does not affect existing plans or pricing for other users.</p>
+            <p>This program is separate from founding members access and does not affect existing plans or pricing for other users.</p>
             <p>If you believe you may be eligible, please contact us to learn more.</p>
             <p><strong>Contact:</strong> <a class="email-programs" href="#">[carregando email...]</a></p>
         </div>
@@ -2439,6 +2540,21 @@
           element.innerHTML = email;
           element.href = 'mailto:' + email;
         });
+
+        // Founding progress bar — update this value as needed (0-100)
+        const foundingPercent = 14;
+        const progressBar = document.getElementById('foundingProgress');
+        if (progressBar) {
+          const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                progressBar.style.width = foundingPercent + '%';
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.5 });
+          observer.observe(progressBar.closest('.founding-progress'));
+        }
       });
     </script>
 </body>
