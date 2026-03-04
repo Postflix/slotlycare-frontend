@@ -1315,16 +1315,11 @@ textarea {
             <!-- ASSOCIATIONS PANEL -->
             <div id="panelAssociations" style="display: none;">
                 <!-- Description -->
-                <div style="background: #FFF7ED; border: 1px solid #FED7AA; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; text-align: center;">
-                    <div style="font-size: 0.82rem; color: #9A3412;" data-i18n="assoc_description">Register associations or groups and we'll reach out to them on your behalf.</div>
+                <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; text-align: center;">
+                    <div style="font-size: 0.82rem; color: #059669;" data-i18n="assoc_description">Register associations or groups and we'll reach out to them on your behalf.</div>
                 </div>
 
                 <div id="assocRows" style="max-height: 260px; overflow-y: auto; padding-right: 4px; margin-bottom: 4px;"><!-- Dynamic rows --></div>
-
-                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding: 8px 12px; background: #F5F3FF; border: 1px solid #DDD6FE; border-radius: 8px;">
-                    <input type="checkbox" id="assocEmailToggle" onchange="toggleAssocFields()" style="accent-color: #7C3AED; width: 16px; height: 16px; cursor: pointer;">
-                    <label for="assocEmailToggle" style="font-size: 0.83rem; color: #5B21B6; cursor: pointer; line-height: 1.3;" data-i18n="assoc_we_send_toggle">Want SlotlyCare to reach out for you?</label>
-                </div>
 
                 <button onclick="addAssocRow()" style="
                     background: none; border: 1px dashed #BBF7D0; color: #10B981; padding: 8px 16px;
@@ -3065,14 +3060,13 @@ function onAssocNameInput(input, index) {
 }
 
 function createAssocRowHTML(index) {
-    const showContact = document.getElementById('assocEmailToggle') && document.getElementById('assocEmailToggle').checked;
     return `
     <div class="referral-row" id="aRow${index}" style="margin-bottom: 10px;">
         <div style="display: flex; gap: 8px; align-items: center;">
             <input type="text" placeholder="Association / Group name" class="assoc-name-input" oninput="onAssocNameInput(this, ${index})" style="flex: 1; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem;">
             ${index > 0 ? `<button onclick="removeAssocRow(${index})" style="background: none; border: none; color: #EF4444; cursor: pointer; font-size: 0.8rem; padding: 4px 8px; white-space: nowrap;">✕</button>` : '<div style="width: 30px;"></div>'}
         </div>
-        <div class="assoc-contact-row" id="aContact${index}" style="display: ${showContact ? 'flex' : 'none'}; gap: 6px; align-items: center; margin-top: 6px;">
+        <div class="assoc-contact-row" id="aContact${index}" style="display: flex; gap: 6px; align-items: center; margin-top: 6px;">
             <select class="referral-contact-type" onchange="updateContactPlaceholder(this)" style="padding: 8px 6px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.8rem; color: #5B21B6; background: #F5F3FF; cursor: pointer; min-width: 95px;">
                 <option value="whatsapp">WhatsApp</option>
                 <option value="email">Email</option>
@@ -3096,14 +3090,7 @@ function removeAssocRow(index) {
 }
 
 function toggleAssocFields() {
-    const show = document.getElementById('assocEmailToggle').checked;
-    document.querySelectorAll('.assoc-contact-row').forEach(el => {
-        el.style.display = show ? 'flex' : 'none';
-        if (!show) {
-            el.querySelector('.referral-contact-input').value = '';
-            el.querySelector('.referral-contact-type').value = 'whatsapp';
-        }
-    });
+    // No-op: contact fields are always visible for associations
 }
 
 function saveOpinion() {
@@ -3289,7 +3276,7 @@ async function sendBatchReferrals() {
     const isAssocTab = document.getElementById('panelAssociations').style.display !== 'none';
     
     const contactToggleOn = isAssocTab
-        ? document.getElementById('assocEmailToggle').checked
+        ? true
         : document.getElementById('referralEmailToggle').checked;
     
     // Collect rows from the active panel
