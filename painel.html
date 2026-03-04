@@ -3755,7 +3755,7 @@ function toggleBellDropdown() {
         dropdown.classList.remove('active');
     } else {
         dropdown.classList.add('active');
-        markAllAsRead();
+        loadMessages().then(() => markAllAsRead());
     }
 }
 
@@ -3800,7 +3800,7 @@ async function dismissMessage(messageId, event) {
     if (!customerId) return;
 
     try {
-        // Upsert: create or update read record with dismissed = true
+        // First ensure a read record exists
         await fetch(`${SUPABASE_URL}/rest/v1/message_reads`, {
             method: 'POST',
             headers: {
@@ -3810,6 +3810,18 @@ async function dismissMessage(messageId, event) {
                 'Prefer': 'return=minimal,resolution=merge-duplicates'
             },
             body: JSON.stringify({ message_id: messageId, customer_id: customerId, dismissed: true })
+        });
+
+        // Then update dismissed flag (in case upsert didn't merge)
+        await fetch(`${SUPABASE_URL}/rest/v1/message_reads?message_id=eq.${messageId}&customer_id=eq.${customerId}`, {
+            method: 'PATCH',
+            headers: {
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({ dismissed: true })
         });
 
         // Remove from local list and re-render
