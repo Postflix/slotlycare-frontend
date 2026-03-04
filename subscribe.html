@@ -225,6 +225,8 @@
             <p>AI-Powered Scheduling for Healthcare Professionals</p>
         </div>
 
+        <p id="welcomeName" style="display:none; font-size: 1.25rem; font-weight: 600; color: #0F172A; margin-bottom: 20px;">You're one step away, <strong id="subscriberName"></strong></p>
+
         <div class="launch-banner">
             <div class="highlight">🚀 5-year access for the price of 1 year!</div>
             <div class="limited">Founding members only — Limited early access</div>
@@ -296,6 +298,13 @@
 
     <script>
         const API_BASE = 'https://slotlycare-backend.vercel.app';
+
+        // Personalize with name from localStorage
+        const reservedName = localStorage.getItem('slotlycare_reserved_name') || localStorage.getItem('slotlycare_trial_name') || '';
+        if (reservedName) {
+            document.getElementById('subscriberName').textContent = reservedName;
+            document.getElementById('welcomeName').style.display = 'block';
+        }
 
         async function handleSubscribe() {
             const btn = document.getElementById('btnSubscribe');
