@@ -3692,16 +3692,19 @@ async function loadMessages() {
 
         // Fetch read status
         const readsResponse = await fetch(
-            `${SUPABASE_URL}/rest/v1/message_reads?customer_id=eq.${customerId}&select=message_id`,
+            `${SUPABASE_URL}/rest/v1/message_reads?customer_id=eq.${customerId}&select=message_id,dismissed`,
             { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
         );
         const reads = await readsResponse.json();
         const readIds = new Set((reads || []).map(r => r.message_id));
+        const dismissedIds = new Set((reads || []).filter(r => r.dismissed).map(r => r.message_id));
 
-        userMessages = messages.map(m => ({
-            ...m,
-            read: readIds.has(m.id)
-        }));
+        userMessages = messages
+            .filter(m => !dismissedIds.has(m.id))
+            .map(m => ({
+                ...m,
+                read: readIds.has(m.id)
+            }));
 
         renderMessages();
     } catch (error) {
@@ -3733,8 +3736,13 @@ function renderMessages() {
         const date = new Date(m.created_at).toLocaleDateString();
         return `
         <div class="bell-message ${m.read ? '' : 'unread'}" data-id="${m.id}">
-            <div class="bell-message-text">${m.text}</div>
-            <div class="bell-message-date">${date}</div>
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+                <div style="flex: 1; min-width: 0;">
+                    <div class="bell-message-text">${m.text}</div>
+                    <div class="bell-message-date">${date}</div>
+                </div>
+                <button onclick="dismissMessage(${m.id}, event)" style="background: none; border: none; color: #9CA3AF; cursor: pointer; font-size: 0.8rem; padding: 2px 6px; margin-left: 8px; border-radius: 4px; flex-shrink: 0;" onmouseover="this.style.color='#EF4444'" onmouseout="this.style.color='#9CA3AF'" title="Dismiss">✕</button>
+            </div>
         </div>`;
     }).join('');
 }
@@ -3785,6 +3793,32 @@ document.addEventListener('click', function(e) {
         document.getElementById('bellDropdown').classList.remove('active');
     }
 });
+
+async function dismissMessage(messageId, event) {
+    event.stopPropagation();
+    const customerId = localStorage.getItem('slotlycare_customer_id');
+    if (!customerId) return;
+
+    try {
+        // Upsert: create or update read record with dismissed = true
+        await fetch(`${SUPABASE_URL}/rest/v1/message_reads`, {
+            method: 'POST',
+            headers: {
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=minimal,resolution=merge-duplicates'
+            },
+            body: JSON.stringify({ message_id: messageId, customer_id: customerId, dismissed: true })
+        });
+
+        // Remove from local list and re-render
+        userMessages = userMessages.filter(m => m.id !== messageId);
+        renderMessages();
+    } catch (error) {
+        console.log('Could not dismiss message:', error);
+    }
+}
 </script>
 </body>
 </html>
