@@ -2597,6 +2597,11 @@
                 const referrerNameEl = document.getElementById('referrerNameDisplay');
                 if (referrerNameEl) referrerNameEl.textContent = i.referrerName;
             }
+
+            // Auto-verify slug so visitor can click "Get Started" directly
+            if (i.slug) {
+                setTimeout(() => { checkAvailability(); }, 300);
+            }
         }
 
         async function handleReserveLink() {
