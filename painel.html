@@ -3465,14 +3465,6 @@ async function loadReferralStats() {
             let html = `<div>👥 <strong>${stats.total}</strong> ${lang.referral_stats_invited}</div>`;
             html += `<div style="margin-top: 4px;"><a onclick="openReferralDetails()" style="cursor: pointer; font-size: 0.78rem; color: #059669; text-decoration: underline; font-weight: 500;">${lang.referral_see_details || 'See details'} ▸</a></div>`;
             
-            const opened = stats.clicked + stats.trial_started + stats.converted;
-            if (opened > 0) {
-                html += `<div>🔗 <strong>${opened}</strong> ${lang.referral_stats_opened}</div>`;
-            }
-            if (stats.trial_started + stats.converted > 0) {
-                html += `<div>🎉 <strong>${stats.trial_started + stats.converted}</strong> ${lang.referral_stats_trial}</div>`;
-            }
-            
             content.innerHTML = html;
             panel.style.display = 'block';
         }
@@ -3509,23 +3501,16 @@ async function openReferralDetails() {
         }
         
         const doctorSlug = savedDoctorLink || '';
-        const statusConfig = {
-            'pending':       { icon: '🔗', color: '#6B7280', key: 'referral_status_pending' },
-            'clicked':       { icon: '👀', color: '#D97706', key: 'referral_status_clicked' },
-            'trial_started': { icon: '🎉', color: '#7C3AED', key: 'referral_status_trial' },
-            'converted':     { icon: '✅', color: '#059669', key: 'referral_status_converted' }
-        };
         
         contentEl.innerHTML = invites.map(inv => {
-            const sc = statusConfig[inv.status] || statusConfig['pending'];
-            const statusText = lang[sc.key] || inv.status;
             const linkUrl = `slotlycare.com/invite/${doctorSlug}/${inv.slug}`;
+            const date = new Date(inv.created_at).toLocaleDateString();
             return `
             <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #E2E8F0;">
                 <div style="min-width: 0; flex: 1;">
                     <div style="font-weight: 600; font-size: 0.88rem; color: var(--text-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${inv.invited_name}</div>
                     <div style="font-size: 0.75rem; color: #10B981; font-family: monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${linkUrl}</div>
-                    <div style="font-size: 0.75rem; color: ${sc.color}; margin-top: 2px;">${sc.icon} ${statusText}</div>
+                    <div style="font-size: 0.72rem; color: #9CA3AF; margin-top: 2px;">📅 ${date}</div>
                 </div>
                 <button onclick="copySingleLink('${doctorSlug}', '${inv.slug}', this)" style="background: none; border: 1px solid #D1D5DB; color: var(--text-muted); padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; white-space: nowrap; margin-left: 8px;">📋</button>
             </div>`;
