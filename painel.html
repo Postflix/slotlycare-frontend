@@ -2376,6 +2376,11 @@ async function saveConfiguration() {
             const fullLink = `https://slotlycare.com/${doctorId}`;
             document.getElementById('bookingLink').textContent = fullLink;
             
+            // Mostrar caixa de indicação imediatamente após salvar
+            document.getElementById('referralLinkPreviewSlug').textContent = doctorId;
+            document.getElementById('referralLinkPreview').style.display = 'block';
+            loadReferralStats();
+            
             // Calcular data de expiração (180 dias)
             const today = new Date();
             const expirationDate = new Date(today);
