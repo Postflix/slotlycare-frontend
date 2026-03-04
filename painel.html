@@ -1314,11 +1314,9 @@ textarea {
 
             <!-- ASSOCIATIONS PANEL -->
             <div id="panelAssociations" style="display: none;">
-                <!-- Link preview -->
-                <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; text-align: center;">
-                    <div style="font-family: monospace; font-size: 0.82rem; color: #059669; word-break: break-all;">
-                        slotlycare.com/invite/<span id="assocLinkDoctorSlug" style="font-weight: 700;"></span>/<span id="assocLinkInviteeSlug" style="font-weight: 700; color: #10B981;">___</span>
-                    </div>
+                <!-- Description -->
+                <div style="background: #FFF7ED; border: 1px solid #FED7AA; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; text-align: center;">
+                    <div style="font-size: 0.82rem; color: #9A3412;" data-i18n="assoc_description">Register associations or groups and we'll reach out to them on your behalf.</div>
                 </div>
 
                 <div id="assocRows" style="max-height: 260px; overflow-y: auto; padding-right: 4px; margin-bottom: 4px;"><!-- Dynamic rows --></div>
@@ -1433,6 +1431,9 @@ const translations = {
         tab_associations: "🏥 Associations & Groups",
         assoc_we_send_toggle: "Want SlotlyCare to reach out for you?",
         assoc_add_another: "+ Add another association",
+        assoc_description: "Register associations or groups and we'll reach out to them on your behalf.",
+        assoc_success_title: "Registered!",
+        assoc_success: "✅ Registered! We'll reach out to {names} on your behalf.",
         referral_name: "Name",
         referral_email: "Email",
         referral_add_another: "+ Add another colleague",
@@ -1527,6 +1528,9 @@ const translations = {
         tab_associations: "🏥 Associações e Grupos",
         assoc_we_send_toggle: "Quer que a SlotlyCare entre em contato por você?",
         assoc_add_another: "+ Adicionar outra associação",
+        assoc_description: "Registre associações ou grupos e entraremos em contato com eles em seu nome.",
+        assoc_success_title: "Registrado!",
+        assoc_success: "✅ Registrado! Entraremos em contato com {names} em seu nome.",
         referral_name: "Nome",
         referral_email: "Email",
         referral_add_another: "+ Adicionar outro colega",
@@ -1621,6 +1625,9 @@ const translations = {
         tab_associations: "🏥 Asociaciones y Grupos",
         assoc_we_send_toggle: "¿Quieres que SlotlyCare contacte por ti?",
         assoc_add_another: "+ Agregar otra asociación",
+        assoc_description: "Registre asociaciones o grupos y nos comunicaremos con ellos en su nombre.",
+        assoc_success_title: "¡Registrado!",
+        assoc_success: "✅ ¡Registrado! Nos comunicaremos con {names} en su nombre.",
         referral_name: "Nombre",
         referral_email: "Email",
         referral_add_another: "+ Agregar otro colega",
@@ -1715,6 +1722,9 @@ const translations = {
         tab_associations: "🏥 Associations et Groupes",
         assoc_we_send_toggle: "Vous voulez que SlotlyCare vous contacte à votre place ?",
         assoc_add_another: "+ Ajouter une autre association",
+        assoc_description: "Enregistrez des associations ou groupes et nous les contacterons en votre nom.",
+        assoc_success_title: "Enregistré !",
+        assoc_success: "✅ Enregistré ! Nous contacterons {names} en votre nom.",
         referral_name: "Nom",
         referral_email: "Email",
         referral_add_another: "+ Ajouter un autre collègue",
@@ -1809,6 +1819,9 @@ const translations = {
         tab_associations: "🏥 Verbände und Gruppen",
         assoc_we_send_toggle: "Möchten Sie, dass SlotlyCare für Sie Kontakt aufnimmt?",
         assoc_add_another: "+ Weiteren Verband hinzufügen",
+        assoc_description: "Registrieren Sie Verbände oder Gruppen und wir werden sie in Ihrem Namen kontaktieren.",
+        assoc_success_title: "Registriert!",
+        assoc_success: "✅ Registriert! Wir werden {names} in Ihrem Namen kontaktieren.",
         referral_name: "Name",
         referral_email: "Email",
         referral_add_another: "+ Weiteren Kollegen hinzufügen",
@@ -1903,6 +1916,9 @@ const translations = {
         tab_associations: "🏥 Associazioni e Gruppi",
         assoc_we_send_toggle: "Vuoi che SlotlyCare ti contatti al posto tuo?",
         assoc_add_another: "+ Aggiungi un'altra associazione",
+        assoc_description: "Registra associazioni o gruppi e li contatteremo a tuo nome.",
+        assoc_success_title: "Registrato!",
+        assoc_success: "✅ Registrato! Contatteremo {names} a tuo nome.",
         referral_name: "Nome",
         referral_email: "Email",
         referral_add_another: "+ Aggiungi un altro collega",
@@ -3179,6 +3195,9 @@ function openReferralModal() {
     document.getElementById('referralLinksButtons').style.display = 'none';
     document.getElementById('referralStatusMessage').style.display = 'none';
     document.getElementById('btnSendReferral').disabled = false;
+    document.getElementById('btnCopyAll').style.display = '';
+    const noteEl = document.querySelector('#referralLinksView [data-i18n="referral_personalized_note"]');
+    if (noteEl) noteEl.style.display = '';
 
     const lang = translations[currentLanguage] || translations['en'];
     document.getElementById('btnSendReferral').textContent = lang.referral_send;
@@ -3330,7 +3349,24 @@ async function sendBatchReferrals() {
         const data = await response.json();
 
         if (response.ok && data.success && data.invites && data.invites.length > 0) {
-            showInviteLinks(data.invites, lang, referrals);
+            if (isAssocTab) {
+                // Associations: show confirmation message, no invite links
+                const names = data.invites.map(i => i.name).join(', ');
+                const assocMsg = (lang.assoc_success || "✅ Registered! We'll reach out to {names} on your behalf.").replace('{names}', '<strong>' + names + '</strong>');
+                document.getElementById('referralTabs').style.display = 'none';
+                document.getElementById('panelColleagues').style.display = 'none';
+                document.getElementById('panelAssociations').style.display = 'none';
+                document.getElementById('referralLinksView').style.display = 'block';
+                document.getElementById('referralFormButtons').style.display = 'none';
+                document.getElementById('referralLinksButtons').style.display = 'flex';
+                document.getElementById('referralLinksTitle').textContent = lang.assoc_success_title || 'Registered!';
+                document.getElementById('referralLinksList').innerHTML = '<div style="padding: 16px; text-align: center; font-size: 0.9rem; color: var(--text-main); line-height: 1.6;">' + assocMsg + '</div>';
+                document.getElementById('btnCopyAll').style.display = 'none';
+                const noteEl = document.querySelector('#referralLinksView [data-i18n="referral_personalized_note"]');
+                if (noteEl) noteEl.style.display = 'none';
+            } else {
+                showInviteLinks(data.invites, lang, referrals);
+            }
         } else {
             showReferralMessage(data.error || lang.referral_error, 'error');
             btn.disabled = false;
