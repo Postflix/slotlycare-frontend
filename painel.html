@@ -132,6 +132,103 @@ body {
     background: #DC2626;
 }
 
+.bell-wrapper {
+    position: relative;
+    cursor: pointer;
+}
+
+.bell-icon {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.bell-icon:hover {
+    background: #F1F5F9;
+}
+
+.bell-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: #EF4444;
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.bell-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    width: 320px;
+    max-height: 400px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    z-index: 2000;
+}
+
+.bell-dropdown.active {
+    display: block;
+}
+
+.bell-dropdown-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-main);
+}
+
+.bell-message {
+    padding: 12px 16px;
+    border-bottom: 1px solid #F1F5F9;
+    cursor: default;
+}
+
+.bell-message:last-child {
+    border-bottom: none;
+}
+
+.bell-message.unread {
+    background: #F0FDF4;
+}
+
+.bell-message-text {
+    font-size: 0.85rem;
+    color: var(--text-main);
+    line-height: 1.5;
+}
+
+.bell-message-date {
+    font-size: 0.72rem;
+    color: #9CA3AF;
+    margin-top: 4px;
+}
+
+.bell-empty {
+    padding: 24px 16px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
 .btn-change-password {
     background: #8B5CF6;
     color: white;
@@ -919,6 +1016,14 @@ textarea {
     <div class="top-bar-actions">
         <a href="dashboard.html" class="btn-dashboard">📊 Dashboard</a>
         <button class="btn-change-password" onclick="openChangePasswordModal()">🔑 Password</button>
+        <div class="bell-wrapper" id="bellWrapper">
+            <button class="bell-icon" onclick="toggleBellDropdown()" title="Messages">🔔</button>
+            <span class="bell-badge" id="bellBadge">0</span>
+            <div class="bell-dropdown" id="bellDropdown">
+                <div class="bell-dropdown-header" data-i18n="messages_title">Messages</div>
+                <div id="bellMessages"></div>
+            </div>
+        </div>
         <button class="btn-logout" onclick="logout()">Logout</button>
     </div>
 </div>
@@ -1462,6 +1567,8 @@ const translations = {
         referral_stats_opened: "opened your link",
         referral_stats_trial: "started a free trial",
         referral_stats_thanks: "SlotlyCare thanks you for your trust. 💚",
+        messages_title: "Messages",
+        messages_empty: "No messages yet.",
         opinion_label: "Your opinion matters",
         opinion_hint: "Feel free to suggest any improvement to SlotlyCare. We'll get back to you with a honest answer on whether it's something we can build.",
         opinion_placeholder: "I'd love to see...",
@@ -1559,6 +1666,8 @@ const translations = {
         referral_stats_opened: "abriram seu link",
         referral_stats_trial: "iniciaram o teste gratuito",
         referral_stats_thanks: "A SlotlyCare agradece sua confiança. 💚",
+        messages_title: "Mensagens",
+        messages_empty: "Nenhuma mensagem ainda.",
         opinion_label: "Sua opinião importa",
         opinion_hint: "Fique à vontade para sugerir melhorias para o SlotlyCare. Daremos um retorno honesto sobre o que é possível construir.",
         opinion_placeholder: "Eu adoraria ver...",
@@ -1656,6 +1765,8 @@ const translations = {
         referral_stats_opened: "abrieron tu enlace",
         referral_stats_trial: "iniciaron la prueba gratuita",
         referral_stats_thanks: "SlotlyCare agradece tu confianza. 💚",
+        messages_title: "Mensajes",
+        messages_empty: "No hay mensajes aún.",
         opinion_label: "Tu opinión importa",
         opinion_hint: "Siéntete libre de sugerir mejoras para SlotlyCare. Te responderemos con honestidad sobre si es algo que podemos construir.",
         opinion_placeholder: "Me encantaría ver...",
@@ -1753,6 +1864,8 @@ const translations = {
         referral_stats_opened: "ont ouvert votre lien",
         referral_stats_trial: "ont commencé l'essai gratuit",
         referral_stats_thanks: "SlotlyCare vous remercie pour votre confiance. 💚",
+        messages_title: "Messages",
+        messages_empty: "Aucun message pour le moment.",
         opinion_label: "Votre avis compte",
         opinion_hint: "N'hésitez pas à suggérer des améliorations pour SlotlyCare. Nous vous répondrons honnêtement sur ce que nous pouvons construire.",
         opinion_placeholder: "J'aimerais voir...",
@@ -1850,6 +1963,8 @@ const translations = {
         referral_stats_opened: "haben Ihren Link geöffnet",
         referral_stats_trial: "haben die Testversion gestartet",
         referral_stats_thanks: "SlotlyCare dankt Ihnen für Ihr Vertrauen. 💚",
+        messages_title: "Nachrichten",
+        messages_empty: "Noch keine Nachrichten.",
         opinion_label: "Ihre Meinung zählt",
         opinion_hint: "Schlagen Sie gerne Verbesserungen für SlotlyCare vor. Wir antworten ehrlich, ob wir es umsetzen können.",
         opinion_placeholder: "Ich würde gerne sehen...",
@@ -1947,6 +2062,8 @@ const translations = {
         referral_stats_opened: "hanno aperto il tuo link",
         referral_stats_trial: "hanno iniziato la prova gratuita",
         referral_stats_thanks: "SlotlyCare ti ringrazia per la tua fiducia. 💚",
+        messages_title: "Messaggi",
+        messages_empty: "Nessun messaggio ancora.",
         opinion_label: "La tua opinione conta",
         opinion_hint: "Sentiti libero di suggerire miglioramenti per SlotlyCare. Ti risponderemo onestamente su ciò che possiamo costruire.",
         opinion_placeholder: "Mi piacerebbe vedere...",
@@ -2779,6 +2896,9 @@ window.onload = () => {
     
     // Load existing doctor data if any
     loadExistingDoctorData();
+    
+    // Load messages for bell icon
+    loadMessages();
 };
 
 // Authentication functions
@@ -3552,6 +3672,119 @@ async function openReferralDetails() {
 function closeReferralListModal() {
     document.getElementById('referralListModal').classList.remove('active');
 }
+
+// ==================== MESSAGES (BELL) ====================
+
+let userMessages = [];
+
+async function loadMessages() {
+    const customerId = localStorage.getItem('slotlycare_customer_id');
+    if (!customerId) return;
+
+    try {
+        // Fetch messages for this user + global messages
+        const response = await fetch(
+            `${SUPABASE_URL}/rest/v1/messages?or=(customer_id.eq.${customerId},customer_id.eq.all)&select=*&order=created_at.desc`,
+            { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
+        );
+        const messages = await response.json();
+        if (!messages || !Array.isArray(messages)) return;
+
+        // Fetch read status
+        const readsResponse = await fetch(
+            `${SUPABASE_URL}/rest/v1/message_reads?customer_id=eq.${customerId}&select=message_id`,
+            { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
+        );
+        const reads = await readsResponse.json();
+        const readIds = new Set((reads || []).map(r => r.message_id));
+
+        userMessages = messages.map(m => ({
+            ...m,
+            read: readIds.has(m.id)
+        }));
+
+        renderMessages();
+    } catch (error) {
+        console.log('Could not load messages:', error);
+    }
+}
+
+function renderMessages() {
+    const container = document.getElementById('bellMessages');
+    const badge = document.getElementById('bellBadge');
+    const unreadCount = userMessages.filter(m => !m.read).length;
+
+    // Update badge
+    if (unreadCount > 0) {
+        badge.style.display = 'flex';
+        badge.textContent = unreadCount;
+    } else {
+        badge.style.display = 'none';
+    }
+
+    // Render message list
+    if (userMessages.length === 0) {
+        const lang = translations[currentLanguage] || translations['en'];
+        container.innerHTML = `<div class="bell-empty">${lang.messages_empty || 'No messages yet.'}</div>`;
+        return;
+    }
+
+    container.innerHTML = userMessages.map(m => {
+        const date = new Date(m.created_at).toLocaleDateString();
+        return `
+        <div class="bell-message ${m.read ? '' : 'unread'}" data-id="${m.id}">
+            <div class="bell-message-text">${m.text}</div>
+            <div class="bell-message-date">${date}</div>
+        </div>`;
+    }).join('');
+}
+
+function toggleBellDropdown() {
+    const dropdown = document.getElementById('bellDropdown');
+    const isOpen = dropdown.classList.contains('active');
+
+    if (isOpen) {
+        dropdown.classList.remove('active');
+    } else {
+        dropdown.classList.add('active');
+        markAllAsRead();
+    }
+}
+
+async function markAllAsRead() {
+    const customerId = localStorage.getItem('slotlycare_customer_id');
+    if (!customerId) return;
+
+    const unread = userMessages.filter(m => !m.read);
+    if (unread.length === 0) return;
+
+    try {
+        for (const m of unread) {
+            await fetch(`${SUPABASE_URL}/rest/v1/message_reads`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_ANON_KEY,
+                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify({ message_id: m.id, customer_id: customerId })
+            });
+            m.read = true;
+        }
+        renderMessages();
+    } catch (error) {
+        console.log('Could not mark messages as read:', error);
+    }
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+    const wrapper = document.getElementById('bellWrapper');
+    if (wrapper && !wrapper.contains(e.target)) {
+        document.getElementById('bellDropdown').classList.remove('active');
+    }
+});
 </script>
 </body>
 </html>
