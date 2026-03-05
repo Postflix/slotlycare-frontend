@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SlotlyCare — DM Card Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: #F1F5F9; min-height: 100vh; padding: 32px 20px; }
+.app { max-width: 960px; margin: 0 auto; }
+h1 { font-family: 'DM Serif Display', serif; font-size: 28px; color: #0F172A; margin-bottom: 4px; }
+.subtitle { color: #64748B; font-size: 14px; margin-bottom: 24px; }
+
+/* Mode tabs */
+.mode-tabs { display: flex; background: white; border-radius: 12px; padding: 4px; gap: 4px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); width: fit-content; }
+.mode-tab { padding: 9px 28px; border: none; border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; background: transparent; color: #64748B; }
+.mode-tab.active { background: #0D9488; color: white; box-shadow: 0 1px 4px rgba(13,148,136,0.3); }
+
+/* Controls */
+.controls { background: white; border-radius: 16px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.controls-row { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.controls-row:last-child { margin-bottom: 0; }
+.field { flex: 1; min-width: 200px; }
+.field label { display: block; font-size: 12px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.field input, .field textarea { width: 100%; padding: 10px 14px; border: 1.5px solid #E2E8F0; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: #0F172A; transition: border-color 0.2s; background: #FAFBFC; resize: none; }
+.field textarea { min-height: 72px; line-height: 1.5; }
+.field input:focus, .field textarea:focus { outline: none; border-color: #0D9488; background: white; }
+.field-hint { font-size: 11px; color: #94A3B8; margin-top: 4px; }
+.section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94A3B8; margin-bottom: 12px; }
+.divider-line { border: none; border-top: 1px solid #F1F5F9; margin: 16px 0; }
+
+/* Buttons */
+.btn-primary { padding: 11px 24px; background: #0D9488; color: white; border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.btn-primary:hover { background: #0F766E; }
+.btn-primary:disabled { background: #94A3B8; cursor: not-allowed; }
+.btn-secondary { padding: 11px 24px; background: white; color: #0D9488; border: 1.5px solid #0D9488; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.btn-secondary:hover { background: #F0FDFA; }
+
+/* Slug row */
+.slug-row { display: flex; gap: 10px; align-items: flex-end; }
+.slug-row .field { flex: 1; }
+.btn-check { padding: 10px 18px; background: #0D9488; color: white; border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s; white-space: nowrap; height: 42px; }
+.btn-check:hover { background: #0F766E; }
+.btn-check:disabled { background: #94A3B8; cursor: not-allowed; }
+.slug-status { margin-top: 8px; font-size: 13px; font-weight: 500; min-height: 20px; }
+.slug-status.available { color: #059669; }
+.slug-status.taken { color: #DC2626; }
+.slug-status.checking { color: #94A3B8; }
+.link-result { margin-top: 12px; background: #F0FDF4; border: 1.5px solid #6EE7B7; border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; }
+.link-result.hidden { display: none; }
+.link-result-url { flex: 1; font-size: 14px; font-weight: 600; color: #065F46; word-break: break-all; }
+.btn-copy { padding: 6px 14px; background: #059669; color: white; border: none; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+.btn-copy:hover { background: #047857; }
+.btn-copy.copied { background: #065F46; }
+
+/* Type toggle */
+.type-toggle { display: flex; background: #F1F5F9; border-radius: 10px; padding: 3px; gap: 3px; }
+.type-btn { flex: 1; padding: 8px 16px; border: none; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.25s; background: transparent; color: #64748B; }
+.type-btn.active { background: white; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+/* Lang pills */
+.lang-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+.lang-pill { padding: 6px 12px; border: 1.5px solid #E2E8F0; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; background: white; color: #64748B; font-family: 'DM Sans', sans-serif; }
+.lang-pill.active { border-color: #0D9488; background: #F0FDFA; color: #0F766E; }
+
+/* Card wrapper */
+.card-wrapper { display: flex; justify-content: center; margin-bottom: 20px; }
+.tip { text-align: center; color: #94A3B8; font-size: 13px; margin-top: 12px; }
+.tip strong { color: #64748B; }
+
+/* ============================
+   DOCTOR CARD
+   ============================ */
+.card-doctor { width: 480px; background: linear-gradient(145deg, #134E4A, #0F766E, #14B8A6); border-radius: 20px; padding: 40px 36px; position: relative; overflow: hidden; color: white; }
+.card-doctor::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; border-radius: 50%; background: rgba(255,255,255,0.06); }
+.card-doctor::after { content: ''; position: absolute; bottom: -40px; left: -40px; width: 150px; height: 150px; border-radius: 50%; background: rgba(255,255,255,0.04); }
+.card-doctor .logo-area { display: flex; align-items: center; gap: 8px; margin-bottom: 32px; position: relative; z-index: 1; }
+.card-doctor .logo-text { font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
+.card-doctor .logo-text span { color: inherit; }
+.card-doctor .greeting { font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.6); margin-bottom: 8px; position: relative; z-index: 1; }
+.card-doctor .name { font-family: 'DM Serif Display', serif; font-size: 32px; line-height: 1.2; margin-bottom: 24px; position: relative; z-index: 1; }
+.card-doctor .divider { width: 48px; height: 2px; background: rgba(255,255,255,0.3); margin-bottom: 20px; position: relative; z-index: 1; }
+.card-doctor .message { font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.85); margin-bottom: 28px; position: relative; z-index: 1; }
+.card-doctor .campaign { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.85); letter-spacing: 0.2px; margin-bottom: 16px; position: relative; z-index: 1; }
+.card-doctor .link-box { background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 10px; position: relative; z-index: 1; }
+.card-doctor .link-icon { width: 32px; height: 32px; background: rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.card-doctor .link-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.5); margin-bottom: 2px; }
+.card-doctor .link-url { font-size: 14px; font-weight: 600; color: #5EEAD4; word-break: break-all; }
+.card-doctor .badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border-radius: 20px; padding: 6px 14px; font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 16px; position: relative; z-index: 1; }
+
+/* ============================
+   PARTNER CARD
+   ============================ */
+.card-partner { width: 480px; background: linear-gradient(145deg, #1E293B, #334155, #475569); border-radius: 20px; padding: 40px 36px; position: relative; overflow: hidden; color: white; }
+.card-partner::before { content: ''; position: absolute; top: -50px; right: -50px; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,0.06); }
+.card-partner::after { content: ''; position: absolute; bottom: -30px; left: -30px; width: 130px; height: 130px; border-radius: 50%; background: rgba(255,255,255,0.04); }
+.card-partner .logo-area { display: flex; align-items: center; gap: 8px; margin-bottom: 32px; position: relative; z-index: 1; }
+.card-partner .logo-text { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
+.card-partner .logo-text span { color: inherit; }
+.card-partner .greeting { font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.6); margin-bottom: 8px; position: relative; z-index: 1; }
+.card-partner .name { font-family: 'DM Serif Display', serif; font-size: 28px; line-height: 1.2; margin-bottom: 24px; position: relative; z-index: 1; }
+.card-partner .divider { width: 48px; height: 2px; background: rgba(255,255,255,0.3); margin-bottom: 20px; position: relative; z-index: 1; }
+.card-partner .message { font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.85); margin-bottom: 28px; position: relative; z-index: 1; }
+.card-partner .highlights { display: flex; gap: 12px; margin-bottom: 24px; position: relative; z-index: 1; }
+.card-partner .highlight-item { flex: 1; background: rgba(255,255,255,0.1); border-radius: 10px; padding: 12px; text-align: center; }
+.card-partner .hi-value { font-size: 20px; font-weight: 700; margin-bottom: 2px; }
+.card-partner .hi-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); }
+.card-partner .link-box { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 10px; position: relative; z-index: 1; }
+.card-partner .link-icon { width: 32px; height: 32px; background: rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.card-partner .link-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.5); margin-bottom: 2px; }
+.card-partner .link-url { font-size: 14px; font-weight: 600; color: #CBD5E1; word-break: break-all; }
+.card-partner .badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border-radius: 20px; padding: 6px 14px; font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 16px; position: relative; z-index: 1; }
+
+/* ============================
+   BATCH MODE
+   ============================ */
+.batch-list-textarea { width: 100%; min-height: 160px; padding: 12px 14px; border: 1.5px solid #E2E8F0; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: #0F172A; background: #FAFBFC; line-height: 1.7; resize: vertical; transition: border-color 0.2s; }
+.batch-list-textarea:focus { outline: none; border-color: #0D9488; background: white; }
+
+.batch-results { background: white; border-radius: 16px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.batch-results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+.batch-results-title { font-size: 15px; font-weight: 700; color: #0F172A; }
+.batch-summary { font-size: 13px; color: #64748B; }
+.batch-summary .ok { color: #059669; font-weight: 600; }
+.batch-summary .err { color: #DC2626; font-weight: 600; }
+
+.batch-table { width: 100%; border-collapse: collapse; }
+.batch-table th { text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #94A3B8; padding: 8px 10px; border-bottom: 1px solid #F1F5F9; }
+.batch-table td { padding: 10px 10px; border-bottom: 1px solid #F8FAFC; font-size: 13px; vertical-align: middle; }
+.batch-table tr:last-child td { border-bottom: none; }
+.td-name { font-weight: 600; color: #0F172A; }
+.td-specialty { color: #64748B; font-size: 12px; margin-top: 2px; }
+
+.slug-input { padding: 5px 10px; border: 1.5px solid #E2E8F0; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: #0F172A; background: #FAFBFC; width: 170px; transition: border-color 0.2s; }
+.slug-input:focus { outline: none; border-color: #0D9488; }
+.slug-input.conflict { border-color: #DC2626; background: #FFF5F5; }
+
+.status-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.status-badge.pending { background: #F1F5F9; color: #64748B; }
+.status-badge.checking { background: #FEF9C3; color: #92400E; }
+.status-badge.available { background: #DCFCE7; color: #15803D; }
+.status-badge.conflict { background: #FEE2E2; color: #DC2626; }
+
+.td-link { font-size: 12px; color: #0D9488; font-weight: 500; }
+
+.batch-action-bar { display: flex; gap: 12px; align-items: flex-start; margin-top: 20px; padding-top: 16px; border-top: 1px solid #F1F5F9; flex-wrap: wrap; }
+.batch-progress { font-size: 13px; color: #64748B; flex: 1; min-width: 200px; line-height: 1.5; }
+.progress-bar-wrap { background: #F1F5F9; border-radius: 10px; height: 6px; overflow: hidden; margin-top: 8px; }
+.progress-bar-fill { height: 100%; background: #0D9488; border-radius: 10px; transition: width 0.4s ease; width: 0%; }
+
+/* Hidden render area */
+#renderArea { position: fixed; left: -9999px; top: 0; pointer-events: none; opacity: 0; }
+</style>
+</head>
+<body>
+<div class="app">
+  <h1>SlotlyCare DM Cards</h1>
+  <p class="subtitle">Gere cards personalizados para enviar por Instagram DM.</p>
+
+  <div class="mode-tabs">
+    <button class="mode-tab active" onclick="setMode('individual')" id="tabIndividual">Individual</button>
+    <button class="mode-tab" onclick="setMode('batch')" id="tabBatch">Lote</button>
+  </div>
+
+  <!-- INDIVIDUAL MODE -->
+  <div id="modeIndividual">
+    <div class="controls">
+      <div class="controls-row">
+        <div class="field" style="flex:0 0 auto;min-width:auto;">
+          <label>Tipo</label>
+          <div class="type-toggle">
+            <button class="type-btn active" onclick="setType('doctor')" id="btnDoctor">Médico</button>
+            <button class="type-btn" onclick="setType('partner')" id="btnPartner">Empresa / Associação</button>
+          </div>
+        </div>
+      </div>
+      <div class="controls-row">
+        <div class="field" style="flex:2;">
+          <label>Nome</label>
+          <input type="text" id="inputName" placeholder="Dr. João Silva" oninput="onNameInput()">
+        </div>
+        <div class="field" style="flex:1;">
+          <label>Especialidade <span style="color:#94A3B8;">(opcional)</span></label>
+          <input type="text" id="inputSpecialty" placeholder="Cardiologia" oninput="updateCard()">
+        </div>
+      </div>
+      <div class="controls-row">
+        <div class="field">
+          <label>Idioma</label>
+          <div class="lang-pills">
+            <button class="lang-pill active" onclick="setLang('pt')" data-lang="pt">🇧🇷 PT</button>
+            <button class="lang-pill" onclick="setLang('en')" data-lang="en">🇺🇸 EN</button>
+            <button class="lang-pill" onclick="setLang('es')" data-lang="es">🇪🇸 ES</button>
+            <button class="lang-pill" onclick="setLang('fr')" data-lang="fr">🇫🇷 FR</button>
+            <button class="lang-pill" onclick="setLang('de')" data-lang="de">🇩🇪 DE</button>
+            <button class="lang-pill" onclick="setLang('it')" data-lang="it">🇮🇹 IT</button>
+          </div>
+        </div>
+      </div>
+      <hr class="divider-line">
+      <div class="section-label">Textos do card — editáveis</div>
+      <div class="controls-row">
+        <div class="field">
+          <label>Frase de abertura</label>
+          <input type="text" id="inputGreeting" oninput="updateCard()">
+        </div>
+      </div>
+      <div class="controls-row">
+        <div class="field">
+          <label>Mensagem</label>
+          <textarea id="inputMessage" oninput="updateCard()"></textarea>
+        </div>
+      </div>
+      <div class="controls-row">
+        <div class="field">
+          <label>Linha de campanha <span style="color:#94A3B8;">(opcional)</span></label>
+          <input type="text" id="inputCampaign" placeholder="Ex: Expanding to cardiologists in Canada" oninput="updateCard()">
+          <div class="field-hint">Aparece no card apenas quando preenchido.</div>
+        </div>
+      </div>
+      <hr class="divider-line" id="slugSection">
+      <div id="slugBlock">
+        <div class="section-label">Link personalizado</div>
+        <div class="slug-row">
+          <div class="field">
+            <label>Slug gerado</label>
+            <input type="text" id="inputSlug" placeholder="drjoaosilva" oninput="onSlugManualEdit()">
+          </div>
+          <button class="btn-check" id="btnCheck" onclick="checkSlug()">Verificar disponibilidade</button>
+        </div>
+        <div class="slug-status" id="slugStatus"></div>
+        <div class="link-result hidden" id="linkResult">
+          <span class="link-result-url" id="linkResultUrl"></span>
+          <button class="btn-copy" id="btnCopy" onclick="copyLink()">Copiar</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-wrapper" id="cardWrapper"></div>
+    <p class="tip"><strong>Dica:</strong> Verifique o slug, copie o link, tire screenshot do card e envie junto na DM.</p>
+  </div>
+
+  <!-- BATCH MODE -->
+  <div id="modeBatch" style="display:none;">
+    <div class="controls">
+      <div class="controls-row">
+        <div class="field">
+          <label>Lista de médicos</label>
+          <textarea class="batch-list-textarea" id="batchList" placeholder="Dr. João Silva, Cardiologia&#10;Dra. Ana Costa&#10;Dr. Carlos Mendes, Ortopedia&#10;..."></textarea>
+          <div class="field-hint">Um médico por linha. Especialidade é opcional: <strong>Nome, Especialidade</strong></div>
+        </div>
+      </div>
+      <div class="controls-row">
+        <div class="field">
+          <label>Idioma do lote</label>
+          <div class="lang-pills">
+            <button class="lang-pill active" onclick="setBatchLang('pt')" data-blang="pt">🇧🇷 PT</button>
+            <button class="lang-pill" onclick="setBatchLang('en')" data-blang="en">🇺🇸 EN</button>
+            <button class="lang-pill" onclick="setBatchLang('es')" data-blang="es">🇪🇸 ES</button>
+            <button class="lang-pill" onclick="setBatchLang('fr')" data-blang="fr">🇫🇷 FR</button>
+            <button class="lang-pill" onclick="setBatchLang('de')" data-blang="de">🇩🇪 DE</button>
+            <button class="lang-pill" onclick="setBatchLang('it')" data-blang="it">🇮🇹 IT</button>
+          </div>
+        </div>
+      </div>
+      <hr class="divider-line">
+      <div class="section-label">Textos do lote — aplicados a todos os cards</div>
+      <div class="controls-row">
+        <div class="field">
+          <label>Frase de abertura</label>
+          <input type="text" id="batchGreeting">
+        </div>
+      </div>
+      <div class="controls-row">
+        <div class="field">
+          <label>Mensagem</label>
+          <textarea id="batchMessage"></textarea>
+        </div>
+      </div>
+      <div class="controls-row">
+        <div class="field">
+          <label>Linha de campanha <span style="color:#94A3B8;">(opcional — igual para todos)</span></label>
+          <input type="text" id="batchCampaign" placeholder="Ex: Expanding to cardiologists in Canada">
+        </div>
+      </div>
+      <hr class="divider-line">
+      <button class="btn-primary" onclick="runBatchCheck()">🔍 Verificar todos os slugs</button>
+    </div>
+
+    <!-- Results table -->
+    <div class="batch-results" id="batchResults" style="display:none;">
+      <div class="batch-results-header">
+        <div class="batch-results-title">Resultado da verificação</div>
+        <div class="batch-summary" id="batchSummary"></div>
+      </div>
+      <table class="batch-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Slug</th>
+            <th>Status</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody id="batchTableBody"></tbody>
+      </table>
+      <div class="batch-action-bar">
+        <div style="flex:1;">
+          <div class="batch-progress" id="batchProgressText"></div>
+          <div class="progress-bar-wrap" id="batchProgressWrap" style="display:none;">
+            <div class="progress-bar-fill" id="batchProgressFill"></div>
+          </div>
+        </div>
+        <button class="btn-secondary" onclick="runBatchCheck()">↺ Reverificar</button>
+        <button class="btn-primary" id="btnGenerate" onclick="generateBatch()" disabled>⬇ Gerar cards e criar convites</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="renderArea"></div>
+
+<script>
+const SUPABASE_URL = 'https://hyfqxuvzesbqndglzabi.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5ZnF4dXZ6ZXNicW5kZ2x6YWJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg0MTQ4NDEsImV4cCI6MjA4Mzk5MDg0MX0.Holl4gTk-2bNmHjN2nlIRHBr4-THkZVj0Ws481-PMn4';
+const BACKEND_URL = 'https://slotlycare-backend.vercel.app';
+
+let currentType = 'doctor';
+let currentLang = 'pt';
+let batchLang = 'pt';
+let slugManuallyEdited = false;
+let batchItems = [];
+
+const i18n = {
+  doctor: {
+    pt: { greeting: 'Preparamos algo para você', message: 'Sua página de agendamento personalizada está pronta. Acesso Founding Member — 5 anos por um único pagamento.', badge: 'Founding Member · 5 anos de acesso', linkLabel: 'Seu link exclusivo' },
+    en: { greeting: 'We prepared something for you', message: 'Your personalized scheduling page is ready. Founding Member access — 5 years for a single payment.', badge: 'Founding Member · 5-year access', linkLabel: 'Your exclusive link' },
+    es: { greeting: 'Preparamos algo para usted', message: 'Su página de agendamiento personalizada está lista. Acceso Founding Member — 5 años por un único pago.', badge: 'Founding Member · Acceso 5 años', linkLabel: 'Su enlace exclusivo' },
+    fr: { greeting: 'Nous avons préparé quelque chose pour vous', message: 'Votre page de prise de rendez-vous personnalisée est prête. Accès Founding Member — 5 ans pour un seul paiement.', badge: 'Founding Member · Accès 5 ans', linkLabel: 'Votre lien exclusif' },
+    de: { greeting: 'Wir haben etwas für Sie vorbereitet', message: 'Ihre personalisierte Terminbuchungsseite ist bereit. Founding Member Zugang — 5 Jahre für eine einmalige Zahlung.', badge: 'Founding Member · 5 Jahre Zugang', linkLabel: 'Ihr exklusiver Link' },
+    it: { greeting: 'Abbiamo preparato qualcosa per te', message: 'La tua pagina di prenotazione personalizzata è pronta. Accesso Founding Member — 5 anni per un unico pagamento.', badge: 'Founding Member · Accesso 5 anni', linkLabel: 'Il tuo link esclusivo' }
+  },
+  partner: {
+    pt: { greeting: 'Uma proposta exclusiva', message: 'Temos um programa de parceria com condições especiais para os membros da sua organização.', badge: 'Parceria exclusiva', linkLabel: 'Página da proposta', h1:'30%',h1l:'Desconto',h2:'40%',h2l:'Comissão',h3:'5 anos',h3l:'Acesso' },
+    en: { greeting: 'An exclusive proposal', message: "We have a partnership program with special conditions for your organization's members.", badge: 'Exclusive partnership', linkLabel: 'Proposal page', h1:'30%',h1l:'Discount',h2:'40%',h2l:'Commission',h3:'5 years',h3l:'Access' },
+    es: { greeting: 'Una propuesta exclusiva', message: 'Tenemos un programa de alianzas con condiciones especiales para los miembros de su organización.', badge: 'Alianza exclusiva', linkLabel: 'Página de la propuesta', h1:'30%',h1l:'Descuento',h2:'40%',h2l:'Comisión',h3:'5 años',h3l:'Acceso' },
+    fr: { greeting: 'Une proposition exclusive', message: 'Nous avons un programme de partenariat avec des conditions spéciales pour les membres de votre organisation.', badge: 'Partenariat exclusif', linkLabel: 'Page de la proposition', h1:'30%',h1l:'Réduction',h2:'40%',h2l:'Commission',h3:'5 ans',h3l:'Accès' },
+    de: { greeting: 'Ein exklusives Angebot', message: 'Wir haben ein Partnerschaftsprogramm mit Sonderkonditionen für die Mitglieder Ihrer Organisation.', badge: 'Exklusive Partnerschaft', linkLabel: 'Angebotsseite', h1:'30%',h1l:'Rabatt',h2:'40%',h2l:'Provision',h3:'5 Jahre',h3l:'Zugang' },
+    it: { greeting: 'Una proposta esclusiva', message: 'Abbiamo un programma di partnership con condizioni speciali per i membri della vostra organizzazione.', badge: 'Partnership esclusiva', linkLabel: 'Pagina della proposta', h1:'30%',h1l:'Sconto',h2:'40%',h2l:'Commissione',h3:'5 anni',h3l:'Accesso' }
+  }
+};
+
+function nameToSlug(name) {
+  return name.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/\.\s*/g, '')
+    .replace(/[^a-z0-9]/g, '')
+    .substring(0, 30);
+}
+
+async function isSlugTaken(slug) {
+  const [r1, r2] = await Promise.all([
+    fetch(`${SUPABASE_URL}/rest/v1/doctors?id=eq.${encodeURIComponent(slug)}&select=id`, { headers: { 'apikey': SUPABASE_ANON, 'Authorization': `Bearer ${SUPABASE_ANON}` } }),
+    fetch(`${SUPABASE_URL}/rest/v1/invites?slug=eq.${encodeURIComponent(slug)}&select=slug`, { headers: { 'apikey': SUPABASE_ANON, 'Authorization': `Bearer ${SUPABASE_ANON}` } })
+  ]);
+  const [d, i] = await Promise.all([r1.json(), r2.json()]);
+  return d.length > 0 || i.length > 0;
+}
+
+function buildDoctorCardHTML(name, specialty, slug, lang, greeting, message, campaign) {
+  const t = i18n.doctor[lang];
+  const campaignHtml = campaign ? `<div class="campaign">📍 ${campaign}</div>` : '';
+  return `
+    <div class="card-doctor" style="width:480px;">
+      <div class="logo-area"><div class="logo-text">Slotly<span>Care</span></div></div>
+      <div class="greeting">${greeting || t.greeting}</div>
+      <div class="name">${name}${specialty ? `<br><span style="font-family:'DM Sans',sans-serif;font-size:15px;font-weight:400;color:rgba(255,255,255,0.55);">${specialty}</span>` : ''}</div>
+      <div class="divider"></div>
+      <div class="message" style="${campaign ? 'margin-bottom:16px;' : ''}">${message || t.message}</div>
+      ${campaignHtml}
+      <div class="link-box">
+        <div class="link-icon">🔗</div>
+        <div>
+          <div class="link-label">${t.linkLabel}</div>
+          <div class="link-url">slotlycare.com/invite/${slug}</div>
+        </div>
+      </div>
+      <div class="badge">🌍 ${t.badge}</div>
+    </div>`;
+}
+
+// ========================
+// MODE
+// ========================
+function setMode(mode) {
+  document.getElementById('modeIndividual').style.display = mode === 'individual' ? 'block' : 'none';
+  document.getElementById('modeBatch').style.display = mode === 'batch' ? 'block' : 'none';
+  document.getElementById('tabIndividual').classList.toggle('active', mode === 'individual');
+  document.getElementById('tabBatch').classList.toggle('active', mode === 'batch');
+}
+
+// ========================
+// INDIVIDUAL
+// ========================
+function setType(type) {
+  currentType = type;
+  document.getElementById('btnDoctor').classList.toggle('active', type === 'doctor');
+  document.getElementById('btnPartner').classList.toggle('active', type === 'partner');
+  document.getElementById('slugBlock').style.display = type === 'doctor' ? 'block' : 'none';
+  document.getElementById('slugSection').style.display = type === 'doctor' ? 'block' : 'none';
+  document.getElementById('inputName').placeholder = type === 'doctor' ? 'Dr. João Silva' : 'Associação Médica Regional';
+  document.getElementById('inputSpecialty').placeholder = type === 'doctor' ? 'Cardiologia' : 'Odontologia';
+  populateEditableFields();
+  updateCard();
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-pill[data-lang]').forEach(p => p.classList.toggle('active', p.dataset.lang === lang));
+  populateEditableFields();
+  updateCard();
+}
+
+function populateEditableFields() {
+  const t = i18n[currentType][currentLang];
+  document.getElementById('inputGreeting').value = t.greeting;
+  document.getElementById('inputMessage').value = t.message;
+}
+
+function onNameInput() {
+  if (!slugManuallyEdited) document.getElementById('inputSlug').value = nameToSlug(document.getElementById('inputName').value);
+  resetSlugStatus();
+  updateCard();
+}
+
+function onSlugManualEdit() { slugManuallyEdited = true; resetSlugStatus(); updateCard(); }
+
+function resetSlugStatus() {
+  document.getElementById('slugStatus').textContent = '';
+  document.getElementById('slugStatus').className = 'slug-status';
+  document.getElementById('linkResult').classList.add('hidden');
+}
+
+async function checkSlug() {
+  const slug = document.getElementById('inputSlug').value.trim();
+  if (!slug) return;
+  const btn = document.getElementById('btnCheck');
+  const statusEl = document.getElementById('slugStatus');
+  btn.disabled = true; btn.textContent = 'Verificando...';
+  statusEl.className = 'slug-status checking';
+  statusEl.textContent = 'Consultando banco de dados...';
+  document.getElementById('linkResult').classList.add('hidden');
+  try {
+    const taken = await isSlugTaken(slug);
+    if (taken) {
+      statusEl.className = 'slug-status taken';
+      statusEl.textContent = '❌ Slug já está em uso — tente outro.';
+    } else {
+      statusEl.className = 'slug-status available';
+      statusEl.textContent = '✅ Disponível!';
+      document.getElementById('linkResultUrl').textContent = `slotlycare.com/invite/${slug}`;
+      document.getElementById('linkResult').classList.remove('hidden');
+      document.getElementById('btnCopy').textContent = 'Copiar';
+      document.getElementById('btnCopy').classList.remove('copied');
+      updateCard();
+    }
+  } catch(e) {
+    statusEl.className = 'slug-status checking';
+    statusEl.textContent = '⚠️ Erro de conexão. Tente novamente.';
+  }
+  btn.disabled = false; btn.textContent = 'Verificar disponibilidade';
+}
+
+function copyLink() {
+  navigator.clipboard.writeText('https://' + document.getElementById('linkResultUrl').textContent).then(() => {
+    const btn = document.getElementById('btnCopy');
+    btn.textContent = '✓ Copiado'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function updateCard() {
+  const name = document.getElementById('inputName').value || (currentType === 'doctor' ? 'Dr. João Silva' : 'Associação Médica');
+  const specialty = document.getElementById('inputSpecialty').value;
+  const slugEl = document.getElementById('inputSlug');
+  const slug = slugEl ? (slugEl.value || nameToSlug(name)) : nameToSlug(name);
+  const greeting = document.getElementById('inputGreeting').value;
+  const message = document.getElementById('inputMessage').value;
+  const campaign = document.getElementById('inputCampaign') ? document.getElementById('inputCampaign').value.trim() : '';
+  const t = i18n[currentType][currentLang];
+  const wrapper = document.getElementById('cardWrapper');
+
+  if (currentType === 'doctor') {
+    wrapper.innerHTML = buildDoctorCardHTML(name, specialty, slug || 'drjoaosilva', currentLang, greeting, message, campaign);
+  } else {
+    const linkSlug = slug || nameToSlug(name) || 'associacaomedica';
+    wrapper.innerHTML = `
+      <div class="card-partner">
+        <div class="logo-area"><div class="logo-text">Slotly<span>Care</span></div></div>
+        <div class="greeting">${greeting || t.greeting}</div>
+        <div class="name">${name}${specialty ? `<br><span style="font-family:'DM Sans',sans-serif;font-size:15px;font-weight:400;color:rgba(255,255,255,0.55);">${specialty}</span>` : ''}</div>
+        <div class="divider"></div>
+        <div class="message">${message || t.message}</div>
+        <div class="highlights">
+          <div class="highlight-item"><div class="hi-value">${t.h1}</div><div class="hi-label">${t.h1l}</div></div>
+          <div class="highlight-item"><div class="hi-value">${t.h2}</div><div class="hi-label">${t.h2l}</div></div>
+          <div class="highlight-item"><div class="hi-value">${t.h3}</div><div class="hi-label">${t.h3l}</div></div>
+        </div>
+        <div class="link-box">
+          <div class="link-icon">🤝</div>
+          <div>
+            <div class="link-label">${t.linkLabel}</div>
+            <div class="link-url">slotlycare.com/partnership-invitation/${linkSlug}</div>
+          </div>
+        </div>
+        <div class="badge">⭐ ${t.badge}</div>
+      </div>`;
+  }
+}
+
+// ========================
+// BATCH
+// ========================
+function setBatchLang(lang) {
+  batchLang = lang;
+  document.querySelectorAll('.lang-pill[data-blang]').forEach(p => p.classList.toggle('active', p.dataset.blang === lang));
+  const t = i18n.doctor[lang];
+  document.getElementById('batchGreeting').value = t.greeting;
+  document.getElementById('batchMessage').value = t.message;
+}
+
+function parseBatchList() {
+  return document.getElementById('batchList').value
+    .split('\n')
+    .map(l => l.trim())
+    .filter(l => l.length > 0)
+    .map(l => {
+      const parts = l.split(',');
+      return { name: parts[0].trim(), specialty: parts[1] ? parts[1].trim() : '', slug: nameToSlug(parts[0].trim()), status: 'pending' };
+    });
+}
+
+async function runBatchCheck() {
+  batchItems = parseBatchList();
+  if (batchItems.length === 0) { alert('Cole pelo menos um nome na lista.'); return; }
+
+  document.getElementById('batchResults').style.display = 'block';
+  document.getElementById('btnGenerate').disabled = true;
+  document.getElementById('batchProgressWrap').style.display = 'none';
+  document.getElementById('batchProgressText').textContent = '';
+  renderBatchTable();
+
+  const checks = batchItems.map(async (item, i) => {
+    try {
+      batchItems[i].status = await isSlugTaken(item.slug) ? 'conflict' : 'available';
+    } catch(e) {
+      batchItems[i].status = 'conflict';
+    }
+    updateBatchRow(i);
+    updateBatchSummary();
+  });
+
+  await Promise.all(checks);
+  updateBatchSummary();
+}
+
+function renderBatchTable() {
+  document.getElementById('batchTableBody').innerHTML = batchItems.map((item, i) => `
+    <tr id="batchRow${i}">
+      <td>
+        <div class="td-name">${item.name}</div>
+        ${item.specialty ? `<div class="td-specialty">${item.specialty}</div>` : ''}
+      </td>
+      <td><input type="text" class="slug-input" id="slugInput${i}" value="${item.slug}" oninput="onBatchSlugEdit(${i}, this.value)"></td>
+      <td><span class="status-badge checking" id="statusBadge${i}">⏳ Verificando…</span></td>
+      <td class="td-link" id="tdLink${i}" style="color:#94A3B8;">—</td>
+    </tr>`).join('');
+  document.getElementById('batchSummary').textContent = `${batchItems.length} médico${batchItems.length > 1 ? 's' : ''}`;
+}
+
+function updateBatchRow(i) {
+  const item = batchItems[i];
+  const badge = document.getElementById(`statusBadge${i}`);
+  const input = document.getElementById(`slugInput${i}`);
+  const link = document.getElementById(`tdLink${i}`);
+  if (item.status === 'available') {
+    badge.className = 'status-badge available'; badge.textContent = '✅ Disponível';
+    input.classList.remove('conflict');
+    link.textContent = `slotlycare.com/invite/${item.slug}`; link.style.color = '#0D9488';
+  } else {
+    badge.className = 'status-badge conflict'; badge.textContent = '❌ Conflito';
+    input.classList.add('conflict');
+    link.textContent = 'Edite o slug'; link.style.color = '#DC2626';
+  }
+}
+
+function onBatchSlugEdit(i, value) {
+  batchItems[i].slug = value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+  document.getElementById(`slugInput${i}`).value = batchItems[i].slug;
+  batchItems[i].status = 'pending';
+  const badge = document.getElementById(`statusBadge${i}`);
+  badge.className = 'status-badge pending'; badge.textContent = '— Não verificado';
+  const link = document.getElementById(`tdLink${i}`);
+  link.textContent = '—'; link.style.color = '#94A3B8';
+  document.getElementById(`slugInput${i}`).classList.remove('conflict');
+  updateBatchSummary();
+}
+
+function updateBatchSummary() {
+  const available = batchItems.filter(i => i.status === 'available').length;
+  const conflicts = batchItems.filter(i => i.status === 'conflict').length;
+  const pending = batchItems.filter(i => i.status === 'pending').length;
+  const checking = batchItems.filter(i => i.status === 'checking').length;
+
+  let s = `<span class="ok">${available} disponíve${available === 1 ? 'l' : 'is'}</span>`;
+  if (conflicts > 0) s += ` · <span class="err">${conflicts} com conflito</span>`;
+  if (pending > 0) s += ` · ${pending} não verificado${pending > 1 ? 's' : ''}`;
+  if (checking > 0) s += ` · verificando…`;
+  document.getElementById('batchSummary').innerHTML = s;
+
+  const canGenerate = available > 0 && conflicts === 0 && pending === 0 && checking === 0;
+  document.getElementById('btnGenerate').disabled = !canGenerate;
+
+  const pt = document.getElementById('batchProgressText');
+  if (canGenerate) {
+    pt.textContent = `✅ Tudo pronto — ${available} card${available > 1 ? 's' : ''} será${available > 1 ? 'ão' : ''} gerado${available > 1 ? 's' : ''} e ${available} convite${available > 1 ? 's' : ''} criado${available > 1 ? 's' : ''} no Supabase.`;
+  } else if (conflicts > 0 && pending === 0 && checking === 0) {
+    pt.textContent = `Corrija os slugs em conflito e clique "↺ Reverificar".`;
+  } else {
+    pt.textContent = '';
+  }
+}
+
+async function generateBatch() {
+  const available = batchItems.filter(i => i.status === 'available');
+  if (available.length === 0) return;
+
+  const greeting = document.getElementById('batchGreeting').value;
+  const message = document.getElementById('batchMessage').value;
+  const campaign = document.getElementById('batchCampaign').value.trim();
+
+  const btn = document.getElementById('btnGenerate');
+  btn.disabled = true; btn.textContent = '⏳ Gerando…';
+
+  const pt = document.getElementById('batchProgressText');
+  const pw = document.getElementById('batchProgressWrap');
+  const pf = document.getElementById('batchProgressFill');
+  pw.style.display = 'block'; pf.style.width = '0%';
+
+  const zip = new JSZip();
+  const renderArea = document.getElementById('renderArea');
+
+  // Step 1 — Generate PNGs
+  for (let i = 0; i < available.length; i++) {
+    const item = available[i];
+    pt.textContent = `Gerando card ${i + 1} de ${available.length}: ${item.name}…`;
+    pf.style.width = `${(i / available.length) * 60}%`;
+
+    renderArea.innerHTML = buildDoctorCardHTML(item.name, item.specialty, item.slug, batchLang, greeting, message, campaign);
+    const cardEl = renderArea.querySelector('.card-doctor');
+
+    try {
+      const canvas = await html2canvas(cardEl, { scale: 2, useCORS: true, backgroundColor: null, logging: false });
+      const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
+      zip.file(`${item.slug}.png`, blob);
+    } catch(e) { console.error('Canvas error:', item.name, e); }
+  }
+  renderArea.innerHTML = '';
+
+  // Step 2 — Create invites in Supabase
+  pt.textContent = `Criando ${available.length} convites no Supabase…`;
+  pf.style.width = '70%';
+
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/dm-invites`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        invites: available.map(item => ({ name: item.name, specialty: item.specialty, slug: item.slug })),
+        language: batchLang
+      })
+    });
+    if (!res.ok) {
+      console.error('Backend error:', await res.text());
+      pt.innerHTML = `⚠️ Cards prontos, mas houve erro ao criar convites. Baixe o ZIP e crie os convites manualmente no Supabase.`;
+    }
+  } catch(e) {
+    pt.innerHTML = `⚠️ Sem conexão com o backend. ZIP gerado — crie os convites manualmente.`;
+  }
+
+  // Step 3 — Download ZIP
+  pf.style.width = '90%';
+  pt.textContent = 'Empacotando ZIP…';
+  const zipBlob = await zip.generateAsync({ type: 'blob' });
+  const url = URL.createObjectURL(zipBlob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `slotlycare-cards-${new Date().toISOString().slice(0,10)}.zip`;
+  a.click(); URL.revokeObjectURL(url);
+
+  pf.style.width = '100%';
+  pt.innerHTML = `✅ <strong>${available.length} card${available.length > 1 ? 's' : ''}</strong> baixado${available.length > 1 ? 's' : ''} com sucesso.`;
+  btn.textContent = '⬇ Gerar cards e criar convites'; btn.disabled = false;
+}
+
+// Init
+populateEditableFields();
+updateCard();
+setBatchLang('pt');
+</script>
+</body>
+</html>
