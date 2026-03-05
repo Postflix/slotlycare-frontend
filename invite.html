@@ -1768,7 +1768,7 @@
 
     <!-- Referrer message (shown when invite comes from another doctor) -->
     <div id="referrerMessage" class="referrer-msg">
-        <strong id="referrerNameDisplay"></strong> uses SlotlyCare and believes you'll like it too.
+        <span id="referrerNameDisplay"></span>
     </div>
 
     <!-- Ticker Bar -->
@@ -2595,7 +2595,13 @@
                     document.querySelector('nav').style.top = (36 + referrerHeight) + 'px';
                 }
                 const referrerNameEl = document.getElementById('referrerNameDisplay');
-                if (referrerNameEl) referrerNameEl.textContent = i.referrerName;
+                if (referrerNameEl) {
+                    if (i.referrerName === 'SlotlyCare') {
+                        referrerNameEl.innerHTML = '<strong style="color:#15803D;">SlotlyCare</strong> selected you for an exclusive early access invite.';
+                    } else {
+                        referrerNameEl.innerHTML = '<strong style="color:#15803D;">' + i.referrerName + '</strong> uses SlotlyCare and believes you\'ll like it too.';
+                    }
+                }
             }
 
             // Auto-verify slug so visitor can click "Get Started" directly
