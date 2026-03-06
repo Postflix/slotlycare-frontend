@@ -671,14 +671,14 @@
       <div class="preview-card" style="box-shadow: 0 8px 32px rgba(13,148,136,0.12); border: 2px solid var(--accent-light);">
         <div class="preview-inner">
           <div class="preview-exclusive-badge" style="background:#FFFBEB;color:#92400E;border:1px solid #FDE68A;">✦ Exclusive for <span id="badgeOrg">[Your Organization]</span> members</div>
-          <div class="preview-title" style="font-weight:700;">Get SlotlyCare with <span data-config="discount"></span> off and <span data-config="accessYearsText"></span> years of access</div>
+          <div class="preview-title" style="font-weight:700;">Get SlotlyCare with 30% off and three years of access</div>
           <div class="preview-price">
-            <span class="price-old" data-config="basePrice"></span>
-            <span class="price-new" data-config="partnerPrice"></span>
+            <span class="price-old">US$ 948</span>
+            <span class="price-new">US$ 663.60</span>
           </div>
           <div class="preview-access">
             <span class="access-old">1 year access</span>
-            <span class="access-new" data-config="accessYearsText" data-config-suffix=" years access"></span>
+            <span class="access-new">3 years access</span>
           </div>
           <div class="preview-monthly">
             <div class="monthly-item monthly-old">
@@ -688,7 +688,7 @@
             <div class="monthly-divider">→</div>
             <div class="monthly-item monthly-new">
               <span class="monthly-label">Per month (through your link)</span>
-              <span class="monthly-val accent" id="monthlyPartner"></span>
+              <span class="monthly-val accent">US$ 18.43<span class="monthly-period">/mo</span></span>
             </div>
           </div>
           <div class="preview-note">These conditions are not available on the public site. They exist only through <span id="previewNoteOrg">[Your Organization]</span>.</div>
@@ -700,11 +700,11 @@
     <!-- NUMBERS -->
     <div class="hero-numbers fade-up" style="animation-delay:0.2s">
       <div class="hero-num">
-        <strong data-config="commissionPerConversion"></strong>
+        <strong>US$ 265.44</strong>
         <span>per conversion</span>
       </div>
       <div class="hero-num">
-        <strong data-config="commission"></strong>
+        <strong>40%</strong>
         <span>commission rate</span>
       </div>
       <div class="hero-num">
@@ -723,61 +723,46 @@
         <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent-dark);opacity:0.7;">This is what your partner page looks like</span>
         <div style="display:flex;align-items:center;gap:0.6rem;">
           <span style="font-size:1.1rem;">🔗</span>
-          <span style="font-size:1rem;font-weight:700;color:var(--accent-dark);">slotlycare.com/<strong id="partnerSlug">yourorganization</strong></span>
+          <a id="partnerPageLink" href="https://slotlycare.com/yourorganization" target="_blank" style="font-size:1rem;font-weight:700;color:var(--accent-dark);text-decoration:underline;text-underline-offset:3px;">slotlycare.com/<strong id="partnerSlug">yourorganization</strong></a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ABOUT US -->
-  <section class="about" style="padding-top:40px;">
+  <!-- REVENUE SIMULATOR -->
+  <section class="revenue" style="background:#1E293B;">
     <div class="container">
-      <div class="about-grid">
-        <div class="fade-up">
-          <div class="section-badge">Who we are</div>
-          <div class="about-quote"><strong>Built by people who understand what health professionals <span>actually need.</span></strong></div>
-          <p class="about-body">
-            SlotlyCare was designed from the ground up for healthcare professionals — not adapted from a generic scheduling tool. The team combines deep product experience with a genuine understanding of how clinics and private practices operate day-to-day.
-          </p>
-          <p class="about-body">
-            From AI-powered slot generation to multilingual booking pages, every feature was built with one goal: give health professionals a booking infrastructure they fully own — without recurring fees, marketplace interference, or technical complexity.
-          </p>
-          <p class="about-body">
-            We operate internationally, process payments through Stripe, and support professionals in six languages across multiple countries. This is a focused, purposeful product — not a platform trying to do everything.
-          </p>
+      <div style="text-align:center; margin-bottom:2.5rem">
+        <div class="section-badge" style="background:rgba(255,255,255,0.1);color:#5EEAD4;border:none;">Revenue simulator</div>
+        <h2 class="section-title" style="margin:0 auto;color:white;">How much can you earn?</h2>
+        <p class="section-sub" style="margin:0.75rem auto 0;color:#94A3B8;">Drag the sliders to simulate your potential commission.</p>
+      </div>
+      <div class="sim-wrapper fade-up">
+        <div class="sim-row">
+          <span class="sim-label">Health professionals in your base</span>
+          <span class="sim-value" id="baseSize">500</span>
+        </div>
+        <input type="range" id="baseSlider" min="50" max="50000" step="50" value="500" oninput="updateSim()" />
 
+        <div class="sim-row">
+          <span class="sim-label">Estimated conversion rate</span>
+          <span class="sim-value" id="convRate">3%</span>
+        </div>
+        <input type="range" id="convSlider" min="1" max="20" step="1" value="10" oninput="updateSim()" />
+
+        <div class="sim-result">
+          <div class="sim-result-label">Your estimated commission</div>
+          <div class="sim-result-amount" id="totalCommission">US$ 4,977</div>
+          <div class="sim-result-note" id="convCount">Based on ~15 conversions</div>
         </div>
 
-        <ul class="about-values fade-up" style="animation-delay:0.1s">
-          <li>
-            <div class="about-val-icon">🎯</div>
-            <div>
-              <div class="about-val-title">Purpose-built for healthcare</div>
-              <div class="about-val-text">Not a generic tool adapted for health professionals. Designed from day one for doctors, dentists, physiotherapists, psychologists, and more.</div>
-            </div>
-          </li>
-          <li>
-            <div class="about-val-icon">🔒</div>
-            <div>
-              <div class="about-val-title">No interference, no middlemen</div>
-              <div class="about-val-text">The professional owns their booking link. No competitor ads, no marketplace dynamics, no per-appointment fees cutting into their revenue.</div>
-            </div>
-          </li>
-          <li>
-            <div class="about-val-icon">🌐</div>
-            <div>
-              <div class="about-val-title">Built for international use</div>
-              <div class="about-val-text">Available in English, Portuguese, Spanish, French, German, and Italian — designed to work for professionals anywhere in the world.</div>
-            </div>
-          </li>
-          <li>
-            <div class="about-val-icon">💬</div>
-            <div>
-              <div class="about-val-title">Honest partnerships</div>
-              <div class="about-val-text">We say what we mean, document what we do, and pay what we owe. No ambiguity in attribution, reports, or timelines.</div>
-            </div>
-          </li>
-        </ul>
+        <div class="sim-breakdown">
+          <div class="sim-item"><strong id="convNum">15</strong><span>Estimated conversions</span></div>
+          <div class="sim-item"><strong>US$ 265.44</strong><span>Per conversion</span></div>
+          <div class="sim-item"><strong>D+45</strong><span>Payment timeline</span></div>
+        </div>
+
+        <p class="sim-disclaimer">Illustrative simulation only. Results depend on audience engagement and product fit.</p>
       </div>
     </div>
   </section>
@@ -812,6 +797,32 @@
       </div>
     </div>
   </section>
+  <!-- WHY -->
+  <section class="why">
+    <div class="container">
+      <div class="section-badge">The opportunity</div>
+      <h2 class="section-title">You already have what's most valuable.</h2>
+      <p class="section-sub">Reaching healthcare professionals individually is slow and expensive. You already have their trust. That's the asset.</p>
+      <div class="why-grid">
+        <div class="why-card fade-up">
+          <div class="why-icon">💼</div>
+          <h3>For you</h3>
+          <p>A new revenue stream on top of what you already do. No investment, no operational cost. The only requirement is communicating the benefit to your base.</p>
+        </div>
+        <div class="why-card fade-up" style="animation-delay:0.07s">
+          <div class="why-icon">🏥</div>
+          <h3>For your clients</h3>
+          <p>Exclusive price and access conditions not available on the public site. A professional tool at launch pricing, accessible only through you — it reinforces your value to them.</p>
+        </div>
+        <div class="why-card fade-up" style="animation-delay:0.14s">
+          <div class="why-icon">🚀</div>
+          <h3>For SlotlyCare</h3>
+          <p>Qualified access to professionals through a trusted channel. A partnership built on transparency — not on empty promises or aggressive tactics.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- JOURNEY -->
   <section class="journey" style="padding-top:40px;">
     <div class="container">
@@ -886,32 +897,6 @@
 
 
 
-  <!-- WHY -->
-  <section class="why">
-    <div class="container">
-      <div class="section-badge">The opportunity</div>
-      <h2 class="section-title">You already have what's most valuable.</h2>
-      <p class="section-sub">Reaching healthcare professionals individually is slow and expensive. You already have their trust. That's the asset.</p>
-      <div class="why-grid">
-        <div class="why-card fade-up">
-          <div class="why-icon">💼</div>
-          <h3>For you</h3>
-          <p>A new revenue stream on top of what you already do. No investment, no operational cost. The only requirement is communicating the benefit to your base.</p>
-        </div>
-        <div class="why-card fade-up" style="animation-delay:0.07s">
-          <div class="why-icon">🏥</div>
-          <h3>For your clients</h3>
-          <p>Exclusive price and access conditions not available on the public site. A professional tool at launch pricing, accessible only through you — it reinforces your value to them.</p>
-        </div>
-        <div class="why-card fade-up" style="animation-delay:0.14s">
-          <div class="why-icon">🚀</div>
-          <h3>For SlotlyCare</h3>
-          <p>Qualified access to professionals through a trusted channel. A partnership built on transparency — not on empty promises or aggressive tactics.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- IDEAL PARTNERS -->
   <section class="profiles" style="background:var(--bg); padding-top:40px;">
     <div class="container">
@@ -953,40 +938,54 @@
     </div>
   </section>
 
-  <!-- REVENUE SIMULATOR -->
-  <section class="revenue" style="background:#1E293B;">
+  <section class="about" style="padding-top:40px;">
     <div class="container">
-      <div style="text-align:center; margin-bottom:2.5rem">
-        <div class="section-badge" style="background:rgba(255,255,255,0.1);color:#5EEAD4;border:none;">Revenue simulator</div>
-        <h2 class="section-title" style="margin:0 auto;color:white;">How much can you earn?</h2>
-        <p class="section-sub" style="margin:0.75rem auto 0;color:#94A3B8;">Drag the sliders to simulate your potential commission.</p>
-      </div>
-      <div class="sim-wrapper fade-up">
-        <div class="sim-row">
-          <span class="sim-label">Health professionals in your base</span>
-          <span class="sim-value" id="baseSize">500</span>
-        </div>
-        <input type="range" id="baseSlider" min="50" max="50000" step="50" value="500" oninput="updateSim()" />
+      <div class="about-grid">
+        <div class="fade-up">
+          <div class="section-badge">Who we are</div>
+          <div class="about-quote"><strong>Built by people who understand what health professionals <span>actually need.</span></strong></div>
+          <p class="about-body">
+            SlotlyCare was designed from the ground up for healthcare professionals — not adapted from a generic scheduling tool. The team combines deep product experience with a genuine understanding of how clinics and private practices operate day-to-day.
+          </p>
+          <p class="about-body">
+            From AI-powered slot generation to multilingual booking pages, every feature was built with one goal: give health professionals a booking infrastructure they fully own — without recurring fees, marketplace interference, or technical complexity.
+          </p>
+          <p class="about-body">
+            We operate internationally, process payments through Stripe, and support professionals in six languages across multiple countries. This is a focused, purposeful product — not a platform trying to do everything.
+          </p>
 
-        <div class="sim-row">
-          <span class="sim-label">Estimated conversion rate</span>
-          <span class="sim-value" id="convRate">3%</span>
-        </div>
-        <input type="range" id="convSlider" min="1" max="20" step="1" value="10" oninput="updateSim()" />
-
-        <div class="sim-result">
-          <div class="sim-result-label">Your estimated commission</div>
-          <div class="sim-result-amount" id="totalCommission">US$ 4,977</div>
-          <div class="sim-result-note" id="convCount">Based on ~15 conversions</div>
         </div>
 
-        <div class="sim-breakdown">
-          <div class="sim-item"><strong id="convNum">15</strong><span>Estimated conversions</span></div>
-          <div class="sim-item"><strong data-config="commissionPerConversion"></strong><span>Per conversion</span></div>
-          <div class="sim-item"><strong>D+45</strong><span>Payment timeline</span></div>
-        </div>
-
-        <p class="sim-disclaimer">Illustrative simulation only. Results depend on audience engagement and product fit.</p>
+        <ul class="about-values fade-up" style="animation-delay:0.1s">
+          <li>
+            <div class="about-val-icon">🎯</div>
+            <div>
+              <div class="about-val-title">Purpose-built for healthcare</div>
+              <div class="about-val-text">Not a generic tool adapted for health professionals. Designed from day one for doctors, dentists, physiotherapists, psychologists, and more.</div>
+            </div>
+          </li>
+          <li>
+            <div class="about-val-icon">🔒</div>
+            <div>
+              <div class="about-val-title">No interference, no middlemen</div>
+              <div class="about-val-text">The professional owns their booking link. No competitor ads, no marketplace dynamics, no per-appointment fees cutting into their revenue.</div>
+            </div>
+          </li>
+          <li>
+            <div class="about-val-icon">🌐</div>
+            <div>
+              <div class="about-val-title">Built for international use</div>
+              <div class="about-val-text">Available in English, Portuguese, Spanish, French, German, and Italian — designed to work for professionals anywhere in the world.</div>
+            </div>
+          </li>
+          <li>
+            <div class="about-val-icon">💬</div>
+            <div>
+              <div class="about-val-title">Honest partnerships</div>
+              <div class="about-val-text">We say what we mean, document what we do, and pay what we owe. No ambiguity in attribution, reports, or timelines.</div>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </section>
@@ -1017,7 +1016,7 @@
         </div>
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">Will these launch conditions last forever? <span class="faq-arrow">+</span></button>
-          <p class="faq-a">No. The current conditions — <span data-config="discount"></span> discount for subscribers from partners, <span data-config="accessYearsText"></span>-year access, and <span data-config="commission"></span> commission — are valid during SlotlyCare's launch phase only. They may change at any time, but active partners will be notified 30 days in advance. Conversions confirmed before any change keep their original conditions, with guaranteed payment.</p>
+          <p class="faq-a">No. The current conditions — 30% discount for subscribers from partners, three-year access, and 40% commission — are valid during SlotlyCare's launch phase only. They may change at any time, but active partners will be notified 30 days in advance. Conversions confirmed before any change keep their original conditions, with guaranteed payment.</p>
         </div>
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">What if SlotlyCare doesn't pay? <span class="faq-arrow">+</span></button>
@@ -1147,7 +1146,7 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
           <p>SlotlyCare sends a monthly report to each partner by the 10th of the following month. The report includes: subscriptions attributed, subscription value, commission owed, and payment status. Every conversion is documented in Stripe — full traceability on every transaction.</p>
 
           <h3>3. Commissions and payments</h3>
-          <p>The commission is <span data-config="commission"></span> of each subscription completed through your coupon — <span data-config="commissionPerConversion"></span> per conversion, based on the partner price of <span data-config="partnerPrice"></span>.</p>
+          <p>The commission is 40% of each subscription completed through your coupon — US$ 265.44 per conversion, based on the partner price of US$ 663.60.</p>
           <p>Payment is made within 30 days after the 7-day money-back guarantee window closes. In practice, this means approximately D+45 from the purchase date. Payment method: international bank transfer or mutually agreed platform.</p>
           <p>If a refund is requested within the 7-day window, no commission is owed. After 7 days, the subscription is final and the commission remains valid regardless of any dispute.</p>
 
@@ -1156,7 +1155,7 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
           <p>In return, the partner may not use the SlotlyCare brand, logo, or content for purposes outside this program without prior written authorization.</p>
 
           <h3>5. Launch phase conditions</h3>
-          <p>The current conditions — <span data-config="basePrice"></span> product price, <span data-config="discount"></span> exclusive discount for your base, and <span data-config="commission"></span> commission — are valid during SlotlyCare's launch phase. They may change at any time, with 30 days notice to active partners. Conversions confirmed before any change keep their original conditions and payment is guaranteed.</p>
+          <p>The current conditions — US$ 948.00 product price, 30% exclusive discount for your base, and 40% commission — are valid during SlotlyCare's launch phase. They may change at any time, with 30 days notice to active partners. Conversions confirmed before any change keep their original conditions and payment is guaranteed.</p>
 
           <h3>6. Ending the partnership</h3>
           <p>Either party may end the partnership with 30 days notice. SlotlyCare may terminate immediately in cases of brand misuse, spam, or conduct that causes reputational damage. Commissions for conversions confirmed before termination remain due and will be paid normally.</p>
@@ -1168,40 +1167,6 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
   </div>
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // ========================
-    // PARTNER CONFIG — edite aqui para atualizar toda a página
-    // ========================
-    const PARTNER_CONFIG = {
-      discount: 20,           // % de desconto para membros
-      commission: 30,         // % de comissão para a associação
-      accessYears: 5,         // anos de acesso
-      basePrice: 948.00       // preço base do produto (USD)
-    };
-    // Valores derivados — calculados automaticamente
-    PARTNER_CONFIG.partnerPrice = +(PARTNER_CONFIG.basePrice * (1 - PARTNER_CONFIG.discount / 100)).toFixed(2);
-    PARTNER_CONFIG.commissionPerConversion = +(PARTNER_CONFIG.partnerPrice * PARTNER_CONFIG.commission / 100).toFixed(2);
-    PARTNER_CONFIG.accessYearsText = PARTNER_CONFIG.accessYears === 3 ? 'three' : PARTNER_CONFIG.accessYears === 5 ? 'five' : String(PARTNER_CONFIG.accessYears);
-
-    // Inject config values into page on load
-    document.addEventListener('DOMContentLoaded', function() {
-      // All elements with data-config attribute
-      document.querySelectorAll('[data-config]').forEach(function(el) {
-        const key = el.getAttribute('data-config');
-        const suffix = el.getAttribute('data-config-suffix') || '';
-        if (key === 'discount') el.textContent = PARTNER_CONFIG.discount + '%';
-        else if (key === 'commission') el.textContent = PARTNER_CONFIG.commission + '%';
-        else if (key === 'accessYears') el.textContent = PARTNER_CONFIG.accessYears + suffix;
-        else if (key === 'accessYearsText') el.textContent = PARTNER_CONFIG.accessYearsText + suffix;
-        else if (key === 'partnerPrice') el.textContent = 'US$ ' + PARTNER_CONFIG.partnerPrice.toFixed(2);
-        else if (key === 'commissionPerConversion') el.textContent = 'US$ ' + PARTNER_CONFIG.commissionPerConversion.toFixed(2);
-        else if (key === 'basePrice') el.textContent = 'US$ ' + PARTNER_CONFIG.basePrice.toFixed(2);
-      });
-      // Monthly partner price
-      const monthlyPartner = PARTNER_CONFIG.partnerPrice / (PARTNER_CONFIG.accessYears * 12);
-      const monthlyEl = document.getElementById('monthlyPartner');
-      if (monthlyEl) monthlyEl.innerHTML = 'US$ ' + monthlyPartner.toFixed(2) + '<span class="monthly-period">/mo</span>';
-    });
-
     function toggleFaq(btn) {
       const item = btn.parentElement;
       const isOpen = item.classList.contains('open');
@@ -1257,7 +1222,7 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
       const base = parseInt(document.getElementById('baseSlider').value);
       const rate = parseInt(document.getElementById('convSlider').value);
       const conversions = Math.round(base * rate / 100);
-      const commission = conversions * PARTNER_CONFIG.commissionPerConversion;
+      const commission = conversions * 265.44;
       document.getElementById('baseSize').textContent = base.toLocaleString();
       document.getElementById('convRate').textContent = rate + '%';
       document.getElementById('convNum').textContent = conversions;
@@ -1284,6 +1249,7 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
         document.getElementById('badgeOrg').textContent = org;
         document.getElementById('previewNoteOrg').textContent = org;
         document.getElementById('partnerSlug').textContent = slug;
+        document.getElementById('partnerPageLink').href = 'https://slotlycare.com/' + slug;
         document.getElementById('exploreBtn').href = 'https://slotlycare.com/' + slug;
         document.title = 'SlotlyCare — Partner Program · ' + org;
         // Footer exclusive line
