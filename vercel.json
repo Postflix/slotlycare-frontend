@@ -25,7 +25,7 @@
     },
     {
       "source": "/partnership-invitation/:slug",
-      "destination": "/partners.html"
+      "destination": "/partnership-invitation.html"
     },
     {
       "source": "/acm",
