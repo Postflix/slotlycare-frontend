@@ -678,7 +678,7 @@
           </div>
           <div class="preview-access">
             <span class="access-old">1 year access</span>
-            <span class="access-new">3 years access</span>
+            <span class="access-new" data-config="accessYearsText" data-config-suffix=" years access"></span>
           </div>
           <div class="preview-monthly">
             <div class="monthly-item monthly-old">
@@ -688,7 +688,7 @@
             <div class="monthly-divider">→</div>
             <div class="monthly-item monthly-new">
               <span class="monthly-label">Per month (through your link)</span>
-              <span class="monthly-val accent">US$ 18.43<span class="monthly-period">/mo</span></span>
+              <span class="monthly-val accent" id="monthlyPartner"></span>
             </div>
           </div>
           <div class="preview-note">These conditions are not available on the public site. They exist only through <span id="previewNoteOrg">[Your Organization]</span>.</div>
@@ -1172,8 +1172,8 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
     // PARTNER CONFIG — edite aqui para atualizar toda a página
     // ========================
     const PARTNER_CONFIG = {
-      discount: 20,           // % de desconto para membros
-      commission: 30,         // % de comissão para a associação
+      discount: 30,           // % de desconto para membros
+      commission: 40,         // % de comissão para a associação
       accessYears: 5,         // anos de acesso
       basePrice: 948.00       // preço base do produto (USD)
     };
@@ -1187,14 +1187,19 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
       // All elements with data-config attribute
       document.querySelectorAll('[data-config]').forEach(function(el) {
         const key = el.getAttribute('data-config');
+        const suffix = el.getAttribute('data-config-suffix') || '';
         if (key === 'discount') el.textContent = PARTNER_CONFIG.discount + '%';
         else if (key === 'commission') el.textContent = PARTNER_CONFIG.commission + '%';
-        else if (key === 'accessYears') el.textContent = PARTNER_CONFIG.accessYears;
-        else if (key === 'accessYearsText') el.textContent = PARTNER_CONFIG.accessYearsText;
+        else if (key === 'accessYears') el.textContent = PARTNER_CONFIG.accessYears + suffix;
+        else if (key === 'accessYearsText') el.textContent = PARTNER_CONFIG.accessYearsText + suffix;
         else if (key === 'partnerPrice') el.textContent = 'US$ ' + PARTNER_CONFIG.partnerPrice.toFixed(2);
         else if (key === 'commissionPerConversion') el.textContent = 'US$ ' + PARTNER_CONFIG.commissionPerConversion.toFixed(2);
         else if (key === 'basePrice') el.textContent = 'US$ ' + PARTNER_CONFIG.basePrice.toFixed(2);
       });
+      // Monthly partner price
+      const monthlyPartner = PARTNER_CONFIG.partnerPrice / (PARTNER_CONFIG.accessYears * 12);
+      const monthlyEl = document.getElementById('monthlyPartner');
+      if (monthlyEl) monthlyEl.innerHTML = 'US$ ' + monthlyPartner.toFixed(2) + '<span class="monthly-period">/mo</span>';
     });
 
     function toggleFaq(btn) {
