@@ -671,10 +671,10 @@
       <div class="preview-card" style="box-shadow: 0 8px 32px rgba(13,148,136,0.12); border: 2px solid var(--accent-light);">
         <div class="preview-inner">
           <div class="preview-exclusive-badge" style="background:#FFFBEB;color:#92400E;border:1px solid #FDE68A;">✦ Exclusive for <span id="badgeOrg">[Your Organization]</span> members</div>
-          <div class="preview-title" style="font-weight:700;">Get SlotlyCare with 30% off and three years of access</div>
+          <div class="preview-title" style="font-weight:700;">Get SlotlyCare with <span data-config="discount"></span> off and <span data-config="accessYearsText"></span> years of access</div>
           <div class="preview-price">
-            <span class="price-old">US$ 948</span>
-            <span class="price-new">US$ 663.60</span>
+            <span class="price-old" data-config="basePrice"></span>
+            <span class="price-new" data-config="partnerPrice"></span>
           </div>
           <div class="preview-access">
             <span class="access-old">1 year access</span>
@@ -700,11 +700,11 @@
     <!-- NUMBERS -->
     <div class="hero-numbers fade-up" style="animation-delay:0.2s">
       <div class="hero-num">
-        <strong>US$ 265.44</strong>
+        <strong data-config="commissionPerConversion"></strong>
         <span>per conversion</span>
       </div>
       <div class="hero-num">
-        <strong>40%</strong>
+        <strong data-config="commission"></strong>
         <span>commission rate</span>
       </div>
       <div class="hero-num">
@@ -982,7 +982,7 @@
 
         <div class="sim-breakdown">
           <div class="sim-item"><strong id="convNum">15</strong><span>Estimated conversions</span></div>
-          <div class="sim-item"><strong>US$ 265.44</strong><span>Per conversion</span></div>
+          <div class="sim-item"><strong data-config="commissionPerConversion"></strong><span>Per conversion</span></div>
           <div class="sim-item"><strong>D+45</strong><span>Payment timeline</span></div>
         </div>
 
@@ -1017,7 +1017,7 @@
         </div>
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">Will these launch conditions last forever? <span class="faq-arrow">+</span></button>
-          <p class="faq-a">No. The current conditions — 30% discount for subscribers from partners, three-year access, and 40% commission — are valid during SlotlyCare's launch phase only. They may change at any time, but active partners will be notified 30 days in advance. Conversions confirmed before any change keep their original conditions, with guaranteed payment.</p>
+          <p class="faq-a">No. The current conditions — <span data-config="discount"></span> discount for subscribers from partners, <span data-config="accessYearsText"></span>-year access, and <span data-config="commission"></span> commission — are valid during SlotlyCare's launch phase only. They may change at any time, but active partners will be notified 30 days in advance. Conversions confirmed before any change keep their original conditions, with guaranteed payment.</p>
         </div>
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">What if SlotlyCare doesn't pay? <span class="faq-arrow">+</span></button>
@@ -1147,7 +1147,7 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
           <p>SlotlyCare sends a monthly report to each partner by the 10th of the following month. The report includes: subscriptions attributed, subscription value, commission owed, and payment status. Every conversion is documented in Stripe — full traceability on every transaction.</p>
 
           <h3>3. Commissions and payments</h3>
-          <p>The commission is 40% of each subscription completed through your coupon — US$ 265.44 per conversion, based on the partner price of US$ 663.60.</p>
+          <p>The commission is <span data-config="commission"></span> of each subscription completed through your coupon — <span data-config="commissionPerConversion"></span> per conversion, based on the partner price of <span data-config="partnerPrice"></span>.</p>
           <p>Payment is made within 30 days after the 7-day money-back guarantee window closes. In practice, this means approximately D+45 from the purchase date. Payment method: international bank transfer or mutually agreed platform.</p>
           <p>If a refund is requested within the 7-day window, no commission is owed. After 7 days, the subscription is final and the commission remains valid regardless of any dispute.</p>
 
@@ -1156,7 +1156,7 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
           <p>In return, the partner may not use the SlotlyCare brand, logo, or content for purposes outside this program without prior written authorization.</p>
 
           <h3>5. Launch phase conditions</h3>
-          <p>The current conditions — US$ 948.00 product price, 30% exclusive discount for your base, and 40% commission — are valid during SlotlyCare's launch phase. They may change at any time, with 30 days notice to active partners. Conversions confirmed before any change keep their original conditions and payment is guaranteed.</p>
+          <p>The current conditions — <span data-config="basePrice"></span> product price, <span data-config="discount"></span> exclusive discount for your base, and <span data-config="commission"></span> commission — are valid during SlotlyCare's launch phase. They may change at any time, with 30 days notice to active partners. Conversions confirmed before any change keep their original conditions and payment is guaranteed.</p>
 
           <h3>6. Ending the partnership</h3>
           <p>Either party may end the partnership with 30 days notice. SlotlyCare may terminate immediately in cases of brand misuse, spam, or conduct that causes reputational damage. Commissions for conversions confirmed before termination remain due and will be paid normally.</p>
@@ -1168,6 +1168,35 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
   </div>
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // ========================
+    // PARTNER CONFIG — edite aqui para atualizar toda a página
+    // ========================
+    const PARTNER_CONFIG = {
+      discount: 30,           // % de desconto para membros
+      commission: 40,         // % de comissão para a associação
+      accessYears: 5,         // anos de acesso
+      basePrice: 948.00       // preço base do produto (USD)
+    };
+    // Valores derivados — calculados automaticamente
+    PARTNER_CONFIG.partnerPrice = +(PARTNER_CONFIG.basePrice * (1 - PARTNER_CONFIG.discount / 100)).toFixed(2);
+    PARTNER_CONFIG.commissionPerConversion = +(PARTNER_CONFIG.partnerPrice * PARTNER_CONFIG.commission / 100).toFixed(2);
+    PARTNER_CONFIG.accessYearsText = PARTNER_CONFIG.accessYears === 3 ? 'three' : PARTNER_CONFIG.accessYears === 5 ? 'five' : String(PARTNER_CONFIG.accessYears);
+
+    // Inject config values into page on load
+    document.addEventListener('DOMContentLoaded', function() {
+      // All elements with data-config attribute
+      document.querySelectorAll('[data-config]').forEach(function(el) {
+        const key = el.getAttribute('data-config');
+        if (key === 'discount') el.textContent = PARTNER_CONFIG.discount + '%';
+        else if (key === 'commission') el.textContent = PARTNER_CONFIG.commission + '%';
+        else if (key === 'accessYears') el.textContent = PARTNER_CONFIG.accessYears;
+        else if (key === 'accessYearsText') el.textContent = PARTNER_CONFIG.accessYearsText;
+        else if (key === 'partnerPrice') el.textContent = 'US$ ' + PARTNER_CONFIG.partnerPrice.toFixed(2);
+        else if (key === 'commissionPerConversion') el.textContent = 'US$ ' + PARTNER_CONFIG.commissionPerConversion.toFixed(2);
+        else if (key === 'basePrice') el.textContent = 'US$ ' + PARTNER_CONFIG.basePrice.toFixed(2);
+      });
+    });
+
     function toggleFaq(btn) {
       const item = btn.parentElement;
       const isOpen = item.classList.contains('open');
@@ -1223,7 +1252,7 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
       const base = parseInt(document.getElementById('baseSlider').value);
       const rate = parseInt(document.getElementById('convSlider').value);
       const conversions = Math.round(base * rate / 100);
-      const commission = conversions * 265.44;
+      const commission = conversions * PARTNER_CONFIG.commissionPerConversion;
       document.getElementById('baseSize').textContent = base.toLocaleString();
       document.getElementById('convRate').textContent = rate + '%';
       document.getElementById('convNum').textContent = conversions;
