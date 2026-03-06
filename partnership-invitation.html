@@ -678,7 +678,7 @@
           </div>
           <div class="preview-access">
             <span class="access-old">1 year access</span>
-            <span class="access-new" data-config="accessYearsText" data-config-suffix=" years access"></span>
+            <span class="access-new">5 years access</span>
           </div>
           <div class="preview-monthly">
             <div class="monthly-item monthly-old">
@@ -723,7 +723,7 @@
         <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent-dark);opacity:0.7;">This is what your partner page looks like</span>
         <div style="display:flex;align-items:center;gap:0.6rem;">
           <span style="font-size:1.1rem;">🔗</span>
-          <span style="font-size:1rem;font-weight:700;color:var(--accent-dark);">slotlycare.com/<strong id="partnerSlug">yourorganization</strong></span>
+          <a id="partnerPageLink" href="https://slotlycare.com/yourorganization" target="_blank" style="font-size:1rem;font-weight:700;color:var(--accent-dark);text-decoration:underline;text-underline-offset:3px;">slotlycare.com/<strong id="partnerSlug">yourorganization</strong></a>
         </div>
       </div>
     </div>
@@ -1284,6 +1284,7 @@ When a partner communicates a benefit to their base, it carries real weight. Tha
         document.getElementById('badgeOrg').textContent = org;
         document.getElementById('previewNoteOrg').textContent = org;
         document.getElementById('partnerSlug').textContent = slug;
+        document.getElementById('partnerPageLink').href = 'https://slotlycare.com/' + slug;
         document.getElementById('exploreBtn').href = 'https://slotlycare.com/' + slug;
         document.title = 'SlotlyCare — Partner Program · ' + org;
         // Footer exclusive line
